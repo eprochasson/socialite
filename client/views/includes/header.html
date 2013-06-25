@@ -3,6 +3,9 @@
         <div class="navbar-inner">
             <a class="brand" href="/">Socialite</a>
             <ul class="nav">
+                <li class="{{activeRouteClass 'profile'}}">
+                    <a href="{{profilePath}}">Profile</a>
+                </li>
             </ul>
             <ul class="nav pull-right">
                 <li>{{loginButtons}}</li>

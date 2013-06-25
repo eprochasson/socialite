@@ -5,5 +5,11 @@ Meteor.Router.add({
         } else{
             return 'front'
         }
+    },
+    '/profile': 'profile',
+    '/profile/edit': 'editProfile',
+    '/profile/:_id': {
+        to: 'profile',
+        and: function(id){ Session.set('currentUserProfile', id);}
     }
 });
