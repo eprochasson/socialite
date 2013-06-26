@@ -5,6 +5,7 @@
   },
   "packages": {
     "accounts-ui-bootstrap-dropdown": {},
-    "router": {}
+    "router": {},
+    "i18n": {}
   }
 }

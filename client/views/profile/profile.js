@@ -5,5 +5,9 @@ Template.profile.helpers({
         } else {
             return Meteor.user();
         }
+    },
+    lexicon: function(k, options){
+        console.log(k, options);
+        return __(k, options.hash);
     }
 });
