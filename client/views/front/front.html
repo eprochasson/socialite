@@ -1,4 +1,9 @@
 <template name="front">
     <h1>Welcome</h1>
     <p>You are not logged in :/</p>
+    {{#if showregister}}
+        {{> register}}
+    {{else}}
+        {{> login}}
+    {{/if}}
 </template>

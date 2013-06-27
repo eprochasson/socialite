@@ -9,6 +9,7 @@ Meteor.Router.add({
     '/profile': 'profile',
     '/profile/edit': 'editProfile',
     '/profile/:_id': {
+        as: 'profile',
         to: 'profile',
         and: function(id){ Session.set('currentUserProfile', id);}
     },
