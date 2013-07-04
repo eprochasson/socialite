@@ -6,6 +6,7 @@
   "packages": {
     "accounts-ui-bootstrap-dropdown": {},
     "router": {},
-    "i18n": {}
+    "i18n": {},
+    "momentjs": {}
   }
 }

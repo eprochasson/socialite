@@ -14,7 +14,8 @@ Meteor.i18nMessages.default = {
     password_confirmation: 'Confirm Password',
     login: 'login',
     account_create: 'Create an account',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    save: 'Save'
 };
 
 Meteor.i18nMessages.errors = {
@@ -22,10 +23,17 @@ Meteor.i18nMessages.errors = {
     invalid_password: 'Invalid password',
     password_confirmation_mismatch: 'Password do not match',
     account_already_exists: 'This account already exists',
-    'Email already exists.': 'This email is already in use'
+    name_between_3_and_30: 'Your name must contain between 3 and 30 characters',
+    undefined: 'Undefined error',
+    field_required: 'This field is required',
+    date_of_birth: 'Please select a valid date. You must be more than 18 years old.'
 };
 
-// Helper to call lexicon from anywhere.
-Handlebars.registerHelper('Lex', function(k, options){
-    return __(k, options.hash);
-});
+Meteor.i18nMessages.question = {
+    name: 'Name',
+    name_placeholder: 'Your Screen Name',
+    name_help: 'This is the name other people will see',
+
+    dob: 'Date of Birth',
+    dob_help: 'Select your date of birth'
+};

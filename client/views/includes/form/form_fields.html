@@ -1,0 +1,38 @@
+<template name="form_field_text">
+    <div class="control-group">
+        <label class="control-label {{class}}" for="{{domid}}">{{Lex label}}</label>
+        <div class="controls">
+            <input type="{{type}}" id="{{domid}}" data-validate='{{validation}}' data-id="{{docid}}" placeholder="{{Lex placeholder}}" value="{{value}}" />
+            {{#if required}}<span class="required">* </span>{{/if}}
+            <span class="help-inline">{{Lex help}}</span>
+        </div>
+    </div>
+</template>
+
+
+<template name="form_field_datepicker">
+    <div class="control-group">
+        <label class="control-label {{class}}" for="{{domid}}">{{Lex label}}</label>
+
+        <div class="input-append date" id="{{domid}}" data-date="{{value}}" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+            <input type="text" value="{{value}}" data-validate='{{validation}}'  data-id="{{docid}}" readonly>
+            <span class="add-on"><i class="icon-calendar"></i></span>
+            {{#if required}}<span class="required">* </span>{{/if}}
+            <span class="help-inline">{{Lex help}}</span>
+        </div>
+    </div>
+</template>
+
+<template name="form_field_dropdown">
+    <div class="control-group">
+        <label class="control-label {{class}}" for="{{domid}}">{{Lex label}}</label>
+
+        <div class="controls">
+            <select id="{{domid}}" data-validate='{{validation}}' data-id="{{docid}}">
+                {{#each options}}
+                    <option value="{{value}}">{{Lex text}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</template>

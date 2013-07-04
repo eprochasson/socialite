@@ -8,7 +8,8 @@
     "basePackages": {
       "accounts-ui-bootstrap-dropdown": {},
       "router": {},
-      "i18n": {}
+      "i18n": {},
+      "momentjs": {}
     },
     "packages": {
       "accounts-ui-bootstrap-dropdown": {
@@ -25,6 +26,11 @@
         "git": "https://github.com/jerico-dev/meteor-i18n.git",
         "tag": "v0.0.9",
         "commit": "2cd6c72107a0d4afde57fb765ce9d57ad8ba43e2"
+      },
+      "momentjs": {
+        "git": "https://github.com/crapthings/meteor-momentjs.git",
+        "tag": "v2.0.0.1",
+        "commit": "2200ae0f0472164b7cc33dfd9b3ba729a7deb805"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

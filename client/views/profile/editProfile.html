@@ -1,0 +1,13 @@
+<template name="editProfile">
+
+    <h1>Hello World. PE</h1>
+
+    <form action="action" id="editProfile">
+    {{#each questions}}
+        {{{callPartial tpl this 'form_field_text'}}}
+    {{/each}}
+
+        <button class="btn btn-submit">{{Lex 'default.save'}}</button>
+    </form>
+
+</template>
