@@ -4,8 +4,8 @@ Meteor.i18nMessages.default = {
         fr: 'Bienvenue sur Socialite'
     },
     title_profile: {
-        en: 'Profile of {{email}}',
-        fr: 'Profile de {{email}}'
+        en: 'Profile of {{name}}',
+        fr: 'Profile de {{name}}'
     },
     email: 'email',
     password: 'password',

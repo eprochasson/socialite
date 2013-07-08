@@ -1,9 +1,12 @@
 Meteor.Router.add({
-    '/': function(){
-        if(Meteor.userId()){
-            return 'home'
-        } else{
-            return 'front'
+    '/': {
+        as: 'home',
+        to: function(){
+            if(Meteor.userId()){
+                return 'home'
+            } else{
+                return 'front'
+            }
         }
     },
     '/profile': 'profile',
@@ -18,10 +21,14 @@ Meteor.Router.add({
 
 Meteor.Router.filters({
     'requireLogin': function(page) {
-        if (Meteor.user())
+        if (Meteor.loggingIn()) {
+            return 'loading';
+        } else if (Meteor.user()) {
             return page;
-        else
-            return false;
+        } else {
+            return 'front';
+        }
     }
 });
+
 Meteor.Router.filter('requireLogin', {except: 'front'});

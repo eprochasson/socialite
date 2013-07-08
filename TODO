@@ -1,0 +1,12 @@
+Make sure logout users are redirected to the front page, always.
+
+Add the profile page
+Add permission between users:
+    - view the profile
+    - view all information
+    - block users
+
+Browse users
+Setting page
+Add a messaging system (instant chat)
+

@@ -25,12 +25,25 @@ if(Questions.find().count() == 0){
     });
     Questions.insert({
         name: 'qcm',
+        domid: 'qcm',
         label: 'Multiple choice',
         tpl: 'form_field_dropdown',
-        validation: {'dropdown': [a,b]},
+        validation: {'dropdown': ['a','b']},
         help: 'dropdown_help',
         value: 'a',
         options: {a : 'A', b: 'B'}
+    });
+    Questions.insert({
+        name: 'gender',
+        domid: 'gender',
+        label: 'question.gender',
+        tpl: 'form_field_dropdown',
+        validation: {'dropdown': ['M','F']},
+        help: 'dropdown_help',
+        value: 'null',
+        options: {'null': '', M : 'Male', F: 'Female'},
+        sortorder: 3,
+        required: true
     });
 }
 

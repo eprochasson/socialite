@@ -1,3 +1,15 @@
 <template name="profile">
-    <h1>{{Lex 'default.title_profile' email=currentUser.emails.0.address}}</h1>
+    {{#if selfUser}}
+    <h1>This is your profile</h1>
+    {{else}}
+    <h1>{{Lex 'default.title_profile' name=currentUser.profile.name}}</h1>
+    {{/if}}
+
+    <ul>
+        <li>{{Lex 'question.name'}}: {{question 'name'}}</li>
+        <li>Age: {{age}}</li>
+    </ul>
+
+
+
 </template>
