@@ -62,7 +62,7 @@ Meteor.methods({
         }
         var path = cleanPath(path), fs = Npm.require('fs'),
             name = cleanName(name || 'file'), encoding = encoding || 'binary',
-            chroot = Meteor.chroot || 'images';
+            chroot = Meteor.chroot || 'public/uploads';
 
         var name = Meteor.FileUpload.getName(blob,name);
 
