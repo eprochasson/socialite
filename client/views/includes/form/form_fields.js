@@ -11,9 +11,6 @@ Template.form_field_datepicker.rendered = function() {
     $('#'+this.data.domid).datepicker();
 };
 Template.form_field_dropdown.rendered = function(){
-    //TODO
-    console.log('rendering dropdown, ',this.data, 'value', getInputValue(this.data));
-
     $('#'+this.data.domid).val(getInputValue(this.data));
 };
 Template.form_field_datepicker.helpers({
