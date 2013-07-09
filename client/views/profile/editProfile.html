@@ -2,6 +2,11 @@
 
     <h1>Hello World. PE</h1>
 
+
+    {{> profile_picture_edit}}
+
+    {{> profile_pictures}}
+
     <form id="editProfile">
         {{#each questions}}
             {{{callPartial tpl this 'form_field_text'}}}
@@ -10,6 +15,5 @@
         <button class="btn btn-submit">{{Lex 'default.save'}}</button>
     </form>
 
-    {{> profile_picture_edit}}
 
 </template>

@@ -46,36 +46,6 @@ Meteor.methods({
                 });
             }
         })
-    },
-    uploadPicture: function(blob, name, path, encoding) {
-
-        function cleanPath(str) {
-            if (str) {
-                return str.replace(/\.\./g,'').replace(/\/+/g,'').
-                    replace(/^\/+/,'').replace(/\/+$/,'');
-            } else {
-                return '';
-            }
-        }
-        function cleanName(str) {
-            return str.replace(/\.\./g,'').replace(/\//g,'');
-        }
-        var path = cleanPath(path), fs = Npm.require('fs'),
-            name = cleanName(name || 'file'), encoding = encoding || 'binary',
-            chroot = Meteor.chroot || 'public/uploads';
-
-        var name = Meteor.FileUpload.getName(blob,name);
-
-        path = chroot + (path ? '/' + path + '/' : '/');
-
-        // TODO Add file existance checks, etc...
-        try{
-            fs.writeFileSync(path + name, blob, encoding);
-        } catch (e){
-            throw (new Meteor.Error(500, 'Failed to save file.', e));
-        }
-
-        return path+name;
     }
 });
 

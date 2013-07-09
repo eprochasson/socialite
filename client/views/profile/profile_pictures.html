@@ -1,0 +1,11 @@
+<template name="profile_pictures">
+    {{#each pictures}}
+        {{#if thumbnail50x50}}
+            <img src="{{thumbnail50x50}}">
+        {{else}}
+            No Thumbnail available.
+        {{/if}}
+    {{else}}
+        You haven't upload any picture
+    {{/each}}
+</template>

@@ -5,11 +5,10 @@
     <h1>{{Lex 'default.title_profile' name=currentUser.profile.name}}</h1>
     {{/if}}
 
+    {{> profile_pictures}}
+
     <ul>
         <li>{{Lex 'question.name'}}: {{question 'name'}}</li>
         <li>Age: {{age}}</li>
     </ul>
-
-
-
 </template>

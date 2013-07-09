@@ -22,7 +22,13 @@ var validateControlGroup = function(input){
 
 Template.editProfile.helpers({
     questions: function(){
-        return questions = Questions.find({}, {sort: {sortorder: 1}});
+        return Questions.find({}, {sort: {sortorder: 1}});
+    },
+    pictures: function(){
+        return Pictures.find({owner: Meteor.userId()}, {sort: {sortorder: -1}});
+    },
+    image: function(){
+
     }
 });
 

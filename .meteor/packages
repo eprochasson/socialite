@@ -14,3 +14,5 @@ router
 email
 i18n
 momentjs
+collectionFS
+imagemagick

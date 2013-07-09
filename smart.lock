@@ -9,13 +9,15 @@
       "accounts-ui-bootstrap-dropdown": {},
       "router": {},
       "i18n": {},
-      "momentjs": {}
+      "momentjs": {},
+      "collectionFS": {},
+      "imagemagick": {}
     },
     "packages": {
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
-        "tag": "v0.1.3",
-        "commit": "42aa4d95070a2bd2aa200dcfd6c0edc69e3815c3"
+        "tag": "v0.1.5",
+        "commit": "e12b128f140caa2797720cbd5fae084de7810c6a"
       },
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
@@ -31,6 +33,16 @@
         "git": "https://github.com/crapthings/meteor-momentjs.git",
         "tag": "v2.0.0.1",
         "commit": "2200ae0f0472164b7cc33dfd9b3ba729a7deb805"
+      },
+      "collectionFS": {
+        "git": "https://github.com/raix/Meteor-CollectionFS.git",
+        "tag": "v0.2.3",
+        "commit": "4a1b9298a7ce64269fd14be29d9c4797b9253103"
+      },
+      "imagemagick": {
+        "git": "https://github.com/sylvaingi/meteor-imagemagick.git",
+        "tag": "v0.1.1",
+        "commit": "da8e0f23c2ef456ad6c591430d7898b4c787bde9"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

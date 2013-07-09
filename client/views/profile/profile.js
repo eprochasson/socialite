@@ -27,5 +27,8 @@ Template.profile.helpers({
         } else {
             return 0;
         }
+    },
+    pictures: function(){
+        return Pictures.find({}, {sort: { sortorder: -1 }});
     }
 });
