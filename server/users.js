@@ -49,7 +49,7 @@ Meteor.methods({
     },
     denormalizeProfilePicture: function(pixHandler){
         if(pixHandler){
-            Meteor.users.update(Meteor.userId(), {$set: {'profile.picture': pixHandler}});
+            Meteor.users.update(Meteor.userId(), {$set: {'picture': pixHandler}});
             return true;
         } else {
             throw new Meteor.Error(500, 'Internal Error');

@@ -45,9 +45,9 @@ Template.profile_pictures.events({
 
         Meteor.call('denormalizeProfilePicture', urls, function(err, res){
             if(err){
-                console.log(err);
+                console.log('profile picture change not ok');
             } else {
-                console.log(res);
+                console.log('profile picture change ok');
             }
         })
 

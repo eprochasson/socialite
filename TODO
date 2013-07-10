@@ -8,3 +8,4 @@ Activities: what did one do, what can of activity can the others see.
 Upload pictures
 
 Check picture security, make sure users can't change their picture URL
+Check user security: do not allow user to change all their profile.

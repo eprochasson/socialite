@@ -9,7 +9,7 @@ Pictures.allow({
         return isValidImage(myFile.contentType) && myFile.length < 1024*1024 && Pictures.find({owner: userId}).count() < 8 && userId && myFile.owner === userId;
     },
     update: function(userId, file, fields, modifier) {
-        return file.owner === userId;
+        return fields == 'main' && file.owner === userId; // Only allow user to change the 'main' field (which indicate the profile picture).
     },
     remove: function(userId, files) { return false; }
 });
