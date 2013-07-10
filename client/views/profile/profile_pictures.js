@@ -10,7 +10,6 @@ Template.profile_pictures.helpers({
         }
     },
     thumbnail50x50: function(){
-        console.log('fileHandler', this.fileHandler);
         if(this.fileHandler && this.fileHandler.thumbnail50x50){
             return this.fileHandler.thumbnail50x50.url;
         } else {

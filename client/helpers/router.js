@@ -21,21 +21,6 @@ Meteor.Router.add({
         and: function(id){ Session.set('currentUserProfile', id);}
     },
     '/settings': 'settings',
-    '/images/:_id': function(id){
-        console.log(id);
-
-
-        Pictures.retrieveBlob(id, function(fileItem) {
-            console.log('file', fileItem);
-            if (fileItem.blob) {
-                return fileItem.blob;
-//                saveAs(fileItem.blob, fileItem.filename);
-            } else {
-                return fileItem.file;
-//                saveAs(fileItem.file, fileItem.filename);
-            }
-        });
-    },
     '*': 'p404'
 });
 
