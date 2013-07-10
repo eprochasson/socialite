@@ -1,42 +1,38 @@
 Pictures = new CollectionFS('pictures', {autopublish: false});
 
+var isValidImage = function(type){
+    return _.contains(['image/png','image/jpeg','image/gif'], type);
+};
+
 Pictures.allow({
     insert: function(userId, myFile) {
-        return Pictures.find({owner: userId}).count() < 8 && userId && myFile.owner === userId;
+        return isValidImage(myFile.contentType) && myFile.length < 1024*1024 && Pictures.find({owner: userId}).count() < 8 && userId && myFile.owner === userId;
     },
     update: function(userId, files, fields, modifier) {
         return _.all(files, function (myFile) {
             return (userId == myFile.owner);
-        });  //EO iterate through files
+        });
     },
     remove: function(userId, files) { return false; }
 });
 
-var isImage = function(type){
-    return type == 'image/jpeg';
-};
-
 Pictures.fileHandlers({
     save: function(options){
-        console.log('Running fileHandler save');
-        if (options.fileRecord.length > 5000000 || !isImage(options.fileRecord.contentType)){
+        if (options.fileRecord.length > 5000000 || !isValidImage(options.fileRecord.contentType)){
             return null;
         }
         return { blob: options.blob, fileRecord: options.fileRecord };
     },
     thumbnail50x50: function(options){
-        console.log('running thumbnail 50x50');
-        if (isImage(options.fileRecord.contentType)){
-            console.log('resizing');
-            var res = Imagemagick.resize({
+        if (isValidImage(options.fileRecord.contentType)){
+            var destination = options.destination();
+            Imagemagick.resize({
                 srcData: options.blob,
+                dstPath: destination.serverFilename,
                 width: 50,
-                height: 50,
-                quality: 0.8,
-                format: 'jpg'
+                height: 50
             });
-
-            return { blob: res, fileRecord: options.fileRecord };
+            return destination.fileData;
         } else {
             return null;
         }

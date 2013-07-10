@@ -9,6 +9,7 @@
     "i18n": {},
     "momentjs": {},
     "collectionFS": {},
-    "imagemagick": {}
+    "imagemagick": {},
+    "loadpicker": {}
   }
 }

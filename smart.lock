@@ -11,7 +11,8 @@
       "i18n": {},
       "momentjs": {},
       "collectionFS": {},
-      "imagemagick": {}
+      "imagemagick": {},
+      "loadpicker": {}
     },
     "packages": {
       "accounts-ui-bootstrap-dropdown": {
@@ -43,6 +44,11 @@
         "git": "https://github.com/sylvaingi/meteor-imagemagick.git",
         "tag": "v0.1.1",
         "commit": "da8e0f23c2ef456ad6c591430d7898b4c787bde9"
+      },
+      "loadpicker": {
+        "git": "https://github.com/guido4000/loadpicker.git",
+        "tag": "v1.0.0",
+        "commit": "9f8aa83427b21e2d6279db3f018900bf09560352"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
