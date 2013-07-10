@@ -1,11 +1,29 @@
 <template name="profile_pictures">
     {{#each pictures}}
         {{#if thumbnail50x50}}
-            <img src="{{thumbnail50x50}}">
+            <a href="#modalImage" class="showImage" data-toggle="modal"><img src="{{thumbnail50x50}}"></a>
+            <a href="#" class="setAsProfilePicture">Set as main profile picture</a>
         {{else}}
             No Thumbnail available.
         {{/if}}
     {{else}}
         You haven't upload any picture
     {{/each}}
+
+    {{> modalImage}}
+</template>
+
+<template name="modalImage">
+    <div id="modalImage" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+            <p><img id="previewImage" src=""/></p>
+            <div id="description"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
 </template>

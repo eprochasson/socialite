@@ -1,13 +1,17 @@
 <template name="online_friends">
+
+    {{#if count}}
+    You have {{count}} friend(s) online
     <ul>
-    {{#each friends}}
-    {{> online_friend}}
+        {{#each friends}}
+        {{> online_friend}}
+        {{/each}}
+    </ul>
     {{else}}
     No friend online
-    {{/each}}
-    </ul>
+    {{/if}}
 </template>
 
 <template name="online_friend">
-    <li>Name: {{profile.name}} is online</li>
+    <li><img src="{{profile.picture.thumbnail50x50}}" /><a href="{{profilePath}}/{{_id}}">{{profile.name}}</a> is online (<a class="startChat" href="#">chat</a>)</a></li>
 </template>

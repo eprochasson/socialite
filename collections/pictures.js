@@ -8,10 +8,8 @@ Pictures.allow({
     insert: function(userId, myFile) {
         return isValidImage(myFile.contentType) && myFile.length < 1024*1024 && Pictures.find({owner: userId}).count() < 8 && userId && myFile.owner === userId;
     },
-    update: function(userId, files, fields, modifier) {
-        return _.all(files, function (myFile) {
-            return (userId == myFile.owner);
-        });
+    update: function(userId, file, fields, modifier) {
+        return file.owner === userId;
     },
     remove: function(userId, files) { return false; }
 });
@@ -36,5 +34,19 @@ Pictures.fileHandlers({
         } else {
             return null;
         }
+    },
+    thumbnail150x150: function(options){
+    if (isValidImage(options.fileRecord.contentType)){
+        var destination = options.destination();
+        Imagemagick.resize({
+            srcData: options.blob,
+            dstPath: destination.serverFilename,
+            width: 150,
+            height: 150
+        });
+        return destination.fileData;
+    } else {
+        return null;
     }
+}
 });
