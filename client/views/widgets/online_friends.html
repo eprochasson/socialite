@@ -1,0 +1,13 @@
+<template name="online_friends">
+    <ul>
+    {{#each friends}}
+    {{> online_friend}}
+    {{else}}
+    No friend online
+    {{/each}}
+    </ul>
+</template>
+
+<template name="online_friend">
+    <li>Name: {{profile.name}} is online</li>
+</template>
