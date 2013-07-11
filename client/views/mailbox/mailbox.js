@@ -3,7 +3,6 @@ Template.mailbox.helpers({
         return Conversations.find({owner: Meteor.userId()});
     },
     userInfo: function(){
-
         return this.with;
     }
 });

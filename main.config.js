@@ -12,7 +12,7 @@ if(Meteor.isClient){
 
 /*
     Messages
- */
+*/
 // Duration to measure velocity (default 2 minutes).
 //Messages.velocityCaliber = 60*1000*2;
 Messages.velocityCaliber = 30*1000;
@@ -25,7 +25,7 @@ Messages.cooldownPenalty = 10*1000;
 
 /*
     User posted Pictures.
- */
+*/
 // Fields people can change
 Pictures.authorizedFields = ['main'];
 // Max file size allowed for upload
@@ -35,7 +35,7 @@ Pictures.maxFilePerUser = -1;
 
 /*
     Check user presence
- */
+*/
 Presence = {};
 // How often do we update presence (ms)
 Presence.checkInterval = 2000;

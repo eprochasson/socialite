@@ -1,7 +1,10 @@
 Template.compose.helpers({
     friendsList: function(){
-        var me = Meteor.users.findOne(Meteor.userId());
-        return Meteor.users.find({_id : {$in : me.friends}}, {reactive: false});
+        if(Meteor.user()){
+            return Meteor.users.find({_id : {$in : Meteor.user().friends}}, {reactive: false});
+        } else {
+            return {};
+        }
     }
 });
 
