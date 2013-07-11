@@ -31,7 +31,6 @@ Meteor.methods({
             if(!valid){
                 throw new Meteor.Error(300, 'errors.not_saved');
             } else {
-
                 // Account only visible if at least those two information are made available.
                 var visible = 0;
                 if(cleaned.name && cleaned.gender){

@@ -15,6 +15,61 @@ Meteor.publish("myData", function () {
     );
 });
 
+//Meteor.publish("myConversations", function() {
+//    Meteor.publishWithRelations({
+//        handle: this,
+//        collection: Conversations,
+//        filter: {owner: this.userId},
+//        mappings: [{
+//            key: 'with',
+//            collection: Meteor.users
+//        }]
+//    });
+//});
+//
+//Meteor.publish("myConversations", function(limit, skip){
+//    // We need basic information about the people we're talking to.
+//    var self = this, conversationsHandle = null, profileHandle = [];
+//
+//    function publishProfile(conversation){
+////        console.log('conversation', conversation);
+//        var profile = Meteor.users.find(conversation.with);
+//        profileHandle[conversation._id] = profile.observe({
+//            added: function(profile){
+//                self.added(profile);
+//            }
+//        });
+//    }
+//    conversationsHandle = Conversations.find({}, {limit: limit, skip: skip}).observe({
+////    conversationsHandle = Conversations.find({owner: this.userId}, {limit: limit, skip: skip}).observe({
+//        added: function(conversation){
+////            publishProfile(conversation);
+//            self.added(conversation);
+//        }
+//
+//    });
+//
+//    self.ready();
+//
+//    self.onStop(function(){
+//        conversationsHandle.stop();
+//        _.each(profileHandle, function(p){ p.stop()});
+//    });
+//});
+
+Meteor.publish("myConversations", function(limit, skip){
+    return Conversations.find({owner: this.userId}, {limit: limit, skip: skip});
+});
+
+Meteor.publish("myMessages", function(limit, skip){
+    return Messages.find({ $or: { to: this.userId, from: this.userId}}, {limit: limit, skip: skip});
+});
+
+Meteor.publish("myFriends", function(limit, skip){
+    var me = Meteor.users.findOne(this.userId);
+    return Meteor.users.find({_id : {$in : me.friends}}, {fields: { profile: 1 } });
+});
+
 // Also maintains user online/offline status
 Meteor.publish("myOnlineFriends", function(){
     var friends = Meteor.users.findOne(this.userId).friends || [];

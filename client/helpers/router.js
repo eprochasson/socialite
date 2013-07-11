@@ -9,6 +9,9 @@ Meteor.Router.add({
             }
         }
     },
+    '/mailbox/compose': 'compose',
+    '/mailbox': 'mailbox',
+    '/settings': 'settings',
     '/profile': {
         as: 'profile',
         to: 'profile',
@@ -20,7 +23,6 @@ Meteor.Router.add({
         to: 'profile',
         and: function(id){ Session.set('currentUserProfile', id);}
     },
-    '/settings': 'settings',
     '*': 'p404'
 });
 

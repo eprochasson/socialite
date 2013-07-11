@@ -1,0 +1,11 @@
+<template name="mailbox">
+
+<a href="{{composePath}}">Compose a new message</a>
+
+    <ul>
+    {{#each conversations}}
+        <li>{{lastMessage}} with {{userInfo}}</li>
+    {{/each}}
+    </ul>
+
+</template>

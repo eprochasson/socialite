@@ -10,6 +10,18 @@ if(Meteor.isClient){
     filePickerKey = "Av2HCAqJSM2aHdX5yKTZtz";
 }
 
+/*
+    Messages
+ */
+// Duration to measure velocity (default 2 minutes).
+//Messages.velocityCaliber = 60*1000*2;
+Messages.velocityCaliber = 30*1000;
+// If target user is online, how many messages per velocityCaliber millisecond can the emitter send
+Messages.onlineMaxVelocity = 5;
+// If target is offline
+Messages.offlineMaxVelocity = 5;
+// Cooldown penalty (def: 1 minute)
+Messages.cooldownPenalty = 10*1000;
 
 /*
     User posted Pictures.

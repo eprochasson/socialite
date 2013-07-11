@@ -46,4 +46,58 @@ if(Questions.find().count() == 0){
         required: true
     });
 }
-
+if(Meteor.users.find({}).count() <= 2){
+    Meteor.users.insert({
+        "createdAt": 1372216131137,
+        "emails": [
+            {
+                "address": "whatever",
+                "verified": false
+            }
+        ],
+        "friends": [
+            "L7SLCm9mJyetnb3oD"
+        ],
+        "invisible": false,
+        "lastseen": 1373524657763,
+        "online": 1,
+        "profile": {
+            "dob": "08-11-1982",
+            "gender": "Female",
+            "name": "Fake User 1",
+            "online": 0
+        },
+        "services": {
+        },
+        "settings": {
+            "invisible": false
+        },
+        "visible": 1
+    });
+    Meteor.users.insert({
+        "createdAt": 1372216131137,
+        "emails": [
+            {
+                "address": "whatever2",
+                "verified": false
+            }
+        ],
+        "friends": [
+            "L7SLCm9mJyetnb3oD"
+        ],
+        "invisible": false,
+        "lastseen": 1373524657763,
+        "online": 1,
+        "profile": {
+            "dob": "08-11-1992",
+            "gender": "Male",
+            "name": "Fake User 2",
+            "online": 0
+        },
+        "services": {        },
+        "settings": {
+            "invisible": false
+        },
+        "visible": 1
+    });
+}

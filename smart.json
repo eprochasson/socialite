@@ -10,6 +10,7 @@
     "momentjs": {},
     "collectionFS": {},
     "imagemagick": {},
-    "loadpicker": {}
+    "loadpicker": {},
+    "publish-with-relations": {}
   }
 }
