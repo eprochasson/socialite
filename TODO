@@ -2,10 +2,8 @@ Make sure logout users are redirected to the front page, always.
 
 Browse users
 Setting page
-Add a messaging system (instant chat)
+Add a messaging system
 
 Activities: what did one do, what can of activity can the others see.
-Upload pictures
 
-Check picture security, make sure users can't change their picture URL
 Check user security: do not allow user to change all their profile.

@@ -5,18 +5,20 @@ Meteor.publish('questions', function(){
 Meteor.publish("myData", function () {
     return Meteor.users.find(
         {_id: this.userId},
-        {fields: {'profile': 1, friends: 1}}
+        {fields:
+            {
+                'profile': 1,
+                friends: 1,
+                settings: 1
+            }
+        }
     );
-});
-
-Meteor.publish("", function (){
-
 });
 
 // Also maintains user online/offline status
 Meteor.publish("myOnlineFriends", function(){
     var friends = Meteor.users.findOne(this.userId).friends || [];
-    return Meteor.users.find({ 'profile.online': 1, _id: {$in: friends}}, {sort: {lastConnected : -1}});
+    return Meteor.users.find({ 'profile.online': 1, 'settings.invisible': false, _id: {$in: friends}}, {sort: {lastConnected : -1}});
 });
 
 Meteor.publish("userProfile", function(userId){

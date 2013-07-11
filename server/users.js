@@ -54,7 +54,6 @@ Meteor.methods({
         } else {
             throw new Meteor.Error(500, 'Internal Error');
         }
-
     }
 });
 

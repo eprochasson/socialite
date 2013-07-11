@@ -6,10 +6,27 @@ var isValidImage = function(type){
 
 Pictures.allow({
     insert: function(userId, myFile) {
-        return isValidImage(myFile.contentType) && myFile.length < 1024*1024 && Pictures.find({owner: userId}).count() < 8 && userId && myFile.owner === userId;
+        var valid = true;
+        // Is a valid image
+        valid = valid && isValidImage(myFile.contentType);
+        // Is not too big.
+        valid = valid && myFile.length < (this.maxFileSize || 1024*1024);
+        // User quota is ok.
+        valid = valid && (!this.maxFilePerUser || (this.maxFilePerUser == -1) || Pictures.find({owner: userId}).count() < this.maxFilePerUser);
+        // User owns the file -- don't know how it could not, but that's in the doc.
+        valid = valid && userId && myFile.owner === userId;
+        return valid;
     },
     update: function(userId, file, fields, modifier) {
-        return fields == 'main' && file.owner === userId; // Only allow user to change the 'main' field (which indicate the profile picture).
+        var valid = true, authorized = this.authorizedFields || [];
+        // Fields are authorized for modification
+        if(authorized){
+            valid = valid && _.every(fields, function(f){_.contains(authorized, f)});
+        }
+        // Check that user owns the image...
+        valid = valid && file.owner === userId;
+
+        return  valid;
     },
     remove: function(userId, files) { return false; }
 });
