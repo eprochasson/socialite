@@ -63,23 +63,28 @@ Meteor.publish("myFriendList", function(){
     );
 });
 
-
 // Also maintains user online/offline status
 Meteor.publish("myOnlineFriends", function(){
-    var friends = Meteor.users.findOne(this.userId).friends || [];
+
+    //TODO: make work. Shit is not reactive as it should be
     Meteor.publishWithRelations({
         handle: this,
-        collection: Presences,
-        filter: {user: {$in : friends}, online: 1, invisible: false},
-        options: {fields: {user: 1}, sort:{ lastseen: -1}},
-        mappings: [{  // Publish people sending message as well, as they might not be in your friendlist.
-            key: 'user',
+        collection: Friends,
+        filter: {me: this.userId, live: 1},
+        mappings: [{
+            key: 'target',
             collection: Meteor.users,
-            options: {fields: Meteor.user.publicProfileInformation}
+            options: {fields: Meteor.user.publicProfileInformation},
+            mappings: [{
+                key: 'user',
+                reverse: true,
+                collection: Presences,
+                filter: {online: 1, invisible: false},
+                options: {fields: {user: 1}, sort:{ lastseen: -1}}
+            }]
         }]
     });
 });
-
 
 Meteor.publish("userProfile", function(userId){
     // Check that this user can see each others.

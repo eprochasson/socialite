@@ -66,3 +66,4 @@ Pictures.maxFilePerUser = -1;
 Presences.checkInterval = 2000;
 // How long before a user is considered out (ms).
 Presences.TimeOut = 10000;
+

@@ -1,10 +1,19 @@
 <template name="conversation">
 
+
         <ul>
         {{#each messages}}
             {{> message}}
         {{/each}}
         </ul>
+        {{#if messagesReady}}
+            {{#unless allMessagesLoaded}}
+            <a class="read-more" href="#">Load more</a>
+            {{/unless}}
+        {{else}}
+            <div>{{> spinner}}</div>
+        {{/if}}
+
 
 </template>
 
