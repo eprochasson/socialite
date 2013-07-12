@@ -1,9 +1,16 @@
 <template name="conversation">
 
-    yoyo
-    <ul>
-    {{#each messages}}
-    <li>To:{{to}}, From:{{from}}</li>
-    {{/each}}
-    </ul>
+        <ul>
+        {{#each messages}}
+            {{> message}}
+        {{/each}}
+        </ul>
+
+</template>
+
+<template name="message">
+    <li>
+        <p>From:{{sender}}. to:{{receiver}}, {{timestamp}}</p>
+        <p>{{body}}</p>
+    </li>
 </template>

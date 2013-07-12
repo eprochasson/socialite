@@ -37,3 +37,7 @@ Meteor.i18nMessages.question = {
     dob: 'Date of Birth',
     dob_help: 'Select your date of birth'
 };
+
+Meteor.i18nMessages.messages = {
+    you: 'you'
+};

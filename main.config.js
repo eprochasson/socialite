@@ -10,8 +10,9 @@ if(Meteor.isClient){
     filePickerKey = "Av2HCAqJSM2aHdX5yKTZtz";
 }
 
+
 /*
-    Users
+    Users configuration
  */
 // What fields are public for everyone
 Meteor.user.publicProfileInformation = {
@@ -29,15 +30,13 @@ Meteor.user.privateProfileInformation = {
 
 // What field I can see about myself
 Meteor.user.myProfileInformation = {
-    // show more information
     'profile': 1,
     'friends': 1,
     'settings': 1
 };
 
-
 /*
-    Messages
+    Messages configuration
 */
 // Duration to measure velocity (default 2 minutes).
 Messages.velocityCaliber = 30*1000;
@@ -47,9 +46,11 @@ Messages.onlineMaxVelocity = 15;
 Messages.offlineMaxVelocity = 5;
 // Cooldown penalty (def: 1 minute)
 Messages.cooldownPenalty = 10*1000;
+// How many messages to display per page.
+Messages.messagePerPage = 2;
 
 /*
-    User posted Pictures.
+    User posted Pictures configuration
 */
 // Fields people can change
 Pictures.authorizedFields = ['main'];
@@ -59,10 +60,9 @@ Pictures.maxFileSize = 1024*1024;
 Pictures.maxFilePerUser = -1;
 
 /*
-    Check user presence
+    Check user presence configuration
 */
-Presence = {};
 // How often do we update presence (ms)
-Presence.checkInterval = 2000;
+Presences.checkInterval = 2000;
 // How long before a user is considered out (ms).
-Presence.TimeOut = 10000;
+Presences.TimeOut = 10000;

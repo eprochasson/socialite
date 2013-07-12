@@ -1,11 +1,9 @@
-
 Meteor.publish("myData", function () {
     return Meteor.users.find(
         {_id: this.userId},
         { fields: Meteor.user.myProfileInformation }
     );
 });
-
 
 Meteor.publish('questions', function(){
     return Questions.find();
@@ -16,7 +14,7 @@ Meteor.publish("myConversations", function(limit) {
         handle: this,
         collection: Conversations,
         filter: {owner: this.userId},
-        options: {limit: limit},
+        options: {limit: limit, sort: {timestamp: -1}},
         mappings: [{  // Publish people sending message as well, as they might not be in your friendlist.
             key: 'with',
             collection: Meteor.users,
@@ -26,22 +24,32 @@ Meteor.publish("myConversations", function(limit) {
 });
 
 Meteor.publish("oneConversation", function(conversation, limit){
-
     if(!conversation){
         return [];
     }
-
     var conv = Conversations.findOne(conversation);
-    console.log(conv);
-    return Messages.find({
-            $or: [{from: conv.owner, to: conv.with},{from: conv.with, to: conv.owner}]
-        });
-});
+    if(!(conv.owner == this.userId)){
+        return [];
+    }
 
-Meteor.publish("myMessages", function(limit, skip){
-    return Messages.find({ $or: { to: this.userId, from: this.userId}}, {limit: limit, skip: skip});
-});
+    var query = {
+        $or: [{from: this.userId, to: conv.with},{from: conv.with, to: this.userId}]
+    };
 
+    Meteor.publishWithRelations({
+        handle: this,
+        collection: Messages,
+        filter: query,
+        options: {limit: limit, sort: {sent: -1}},
+        mappings: [{  // Publish people sending message as well, as they might not be in your friendlist.
+            key: 'from',
+            collection: Meteor.users,
+            options: {fields: Meteor.user.publicProfileInformation}
+        }]
+    });
+
+    return Messages.find(query, {limit: limit, sort: {sent: -1}});
+});
 
 Meteor.publish("myFriendList", function(){
     // load a very light version of the friendlist
@@ -55,26 +63,21 @@ Meteor.publish("myFriendList", function(){
     );
 });
 
-// Remove!
-Meteor.publish("showFuckingEveryone", function(){
-    var user = Meteor.users.findOne(this.userId);
-    if(user.isAdmin){
-        return Meteor.users.find({});
-    } else {
-        return [];
-    }
-});
 
 // Also maintains user online/offline status
 Meteor.publish("myOnlineFriends", function(){
     var friends = Meteor.users.findOne(this.userId).friends || [];
-    return Meteor.users.find(
-        { 'profile.online': 1, 'visible': 1, 'settings.invisible': false, _id: {$in: friends}},
-        {
-            sort: {lastConnected : -1},
-            fields: Meteor.user.privateProfileInformation
-        }
-    );
+    Meteor.publishWithRelations({
+        handle: this,
+        collection: Presences,
+        filter: {user: {$in : friends}, online: 1, invisible: false},
+        options: {fields: {user: 1}, sort:{ lastseen: -1}},
+        mappings: [{  // Publish people sending message as well, as they might not be in your friendlist.
+            key: 'user',
+            collection: Meteor.users,
+            options: {fields: Meteor.user.publicProfileInformation}
+        }]
+    });
 });
 
 
@@ -120,3 +123,19 @@ Meteor.publish('oneUserPictures', function(userId){
 Meteor.publish('myPictures', function(){
     return Pictures.find({owner: this.userId});
 });
+
+
+/*
+    Admin !
+ */
+
+// Remove!
+Meteor.publish("adminShowEveryone", function(){
+    var user = Meteor.users.findOne(this.userId);
+    if(user.isAdmin){
+        return Meteor.users.find({});
+    } else {
+        return [];
+    }
+});
+
