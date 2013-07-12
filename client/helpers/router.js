@@ -11,6 +11,13 @@ Meteor.Router.add({
     },
     '/mailbox/compose': 'compose',
     '/mailbox': 'mailbox',
+    '/mailbox/:_id':{
+        as: 'conversation',
+        to: 'conversation',
+        and: function(id){
+            Session.set('currentConversation', id);
+        }
+    },
     '/settings': 'settings',
     '/profile': {
         as: 'profile',

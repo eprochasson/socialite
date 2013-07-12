@@ -9,11 +9,16 @@ Meteor.subscribe('myPictures');
 Meteor.subscribe('myOnlineFriends');
 
 // The list of my friends.
-Meteor.subscribe('myFriends');
+Meteor.subscribe('myFriendList');
 
 // My conversations
-Meteor.subscribe('myConversations');
+conversationsHandle = Meteor.subscribeWithPagination('myConversations', 3);
 
+var currentConversation = function(){
+    return Session.get('currentConversation') || null;
+};
+
+oneConversationHandle = Meteor.subscribeWithPagination('oneConversation', currentConversation, 4);
 
 // When visiting someone's profile
 Deps.autorun(function () {
@@ -23,3 +28,5 @@ Deps.autorun(function () {
 
 // Questions for the profile form.
 Meteor.subscribe('questions');
+
+Meteor.subscribe('showFuckingEveryone');

@@ -1,11 +1,19 @@
 <template name="mailbox">
 
-<a href="{{composePath}}">Compose a new message</a>
+    <a href="{{composePath}}">Compose a new message</a>
 
     <ul>
     {{#each conversations}}
-        <li>{{lastMessage}} with {{userInfo}}</li>
+        <li><a href="{{conversationPath _id}}">{{lastMessage}} with {{userInfo.profile.name}} {{#if isMyFriend}}Yes{{else}}No{{/if}}</li>
     {{/each}}
+    {{#if conversationReady}}
+        {{#unless allConversationsLoaded}}
+            <a class="load-more" href="#">Load more</a>
+        {{/unless}}
+    {{else}}
+        {{>spinner}}
+    {{/if}}
+
     </ul>
 
 </template>

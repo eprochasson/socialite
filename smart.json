@@ -11,6 +11,9 @@
     "collectionFS": {},
     "imagemagick": {},
     "loadpicker": {},
-    "publish-with-relations": {}
+    "publish-with-relations": {},
+    "spin": {},
+    "paginated-subscription": {},
+    "pagination": {}
   }
 }

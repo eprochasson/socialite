@@ -2,8 +2,11 @@ Make sure logout users are redirected to the front page, always.
 
 Browse users
 Setting page
-Add a messaging system
 
 Activities: what did one do, what can of activity can the others see.
 
 Check user security: do not allow user to change all their profile.
+
+
+myFriends and myOnlineFriends are redundant. Add pagination to myFriends, for the page that lists all friends.
+

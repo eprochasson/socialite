@@ -2,13 +2,7 @@
 Meteor.publish("myData", function () {
     return Meteor.users.find(
         {_id: this.userId},
-        {fields:
-        {
-            profile: 1,
-            friends: 1,
-            settings: 1
-        }
-        }
+        { fields: Meteor.user.myProfileInformation }
     );
 });
 
@@ -17,66 +11,72 @@ Meteor.publish('questions', function(){
     return Questions.find();
 });
 
-//Meteor.publish("myConversations", function() {
-//    Meteor.publishWithRelations({
-//        handle: this,
-//        collection: Conversations,
-//        filter: {owner: this.userId},
-//        mappings: [{
-//            key: 'with',
-//            collection: Meteor.users
-//        }]
-//    });
-//});
-//
-//Meteor.publish("myConversations", function(limit, skip){
-//    // We need basic information about the people we're talking to.
-//    var self = this, conversationsHandle = null, profileHandle = [];
-//
-//    function publishProfile(conversation){
-////        console.log('conversation', conversation);
-//        var profile = Meteor.users.find(conversation.with);
-//        profileHandle[conversation._id] = profile.observe({
-//            added: function(profile){
-//                self.added(profile);
-//            }
-//        });
-//    }
-//    conversationsHandle = Conversations.find({}, {limit: limit, skip: skip}).observe({
-////    conversationsHandle = Conversations.find({owner: this.userId}, {limit: limit, skip: skip}).observe({
-//        added: function(conversation){
-////            publishProfile(conversation);
-//            self.added(conversation);
-//        }
-//
-//    });
-//
-//    self.ready();
-//
-//    self.onStop(function(){
-//        conversationsHandle.stop();
-//        _.each(profileHandle, function(p){ p.stop()});
-//    });
-//});
+Meteor.publish("myConversations", function(limit) {
+    Meteor.publishWithRelations({
+        handle: this,
+        collection: Conversations,
+        filter: {owner: this.userId},
+        options: {limit: limit},
+        mappings: [{  // Publish people sending message as well, as they might not be in your friendlist.
+            key: 'with',
+            collection: Meteor.users,
+            options: {fields: Meteor.user.publicProfileInformation}
+        }]
+    });
+});
 
-Meteor.publish("myConversations", function(limit, skip){
-    return Conversations.find({owner: this.userId}, {limit: limit, skip: skip});
+Meteor.publish("oneConversation", function(conversation, limit){
+
+    if(!conversation){
+        return [];
+    }
+
+    var conv = Conversations.findOne(conversation);
+    console.log(conv);
+    return Messages.find({
+            $or: [{from: conv.owner, to: conv.with},{from: conv.with, to: conv.owner}]
+        });
 });
 
 Meteor.publish("myMessages", function(limit, skip){
     return Messages.find({ $or: { to: this.userId, from: this.userId}}, {limit: limit, skip: skip});
 });
 
-Meteor.publish("myFriends", function(limit, skip){
+
+Meteor.publish("myFriendList", function(){
+    // load a very light version of the friendlist
     var me = Meteor.users.findOne(this.userId);
-    return Meteor.users.find({_id : {$in : me.friends}}, {fields: { profile: 1 } });
+    return Meteor.users.find(
+        {_id : {$in : me.friends}, 'visible': 1},
+        {
+            sort: {'profile.name': 1},
+            fields: {'profile.name': 1, _id: 1, 'profile.picture': 1}
+        }
+    );
+});
+
+// Remove!
+Meteor.publish("showFuckingEveryone", function(){
+    var user = Meteor.users.findOne(this.userId);
+    if(user.isAdmin){
+        return Meteor.users.find({});
+    } else {
+        return [];
+    }
 });
 
 // Also maintains user online/offline status
 Meteor.publish("myOnlineFriends", function(){
     var friends = Meteor.users.findOne(this.userId).friends || [];
-    return Meteor.users.find({ 'profile.online': 1, 'settings.invisible': false, _id: {$in: friends}}, {sort: {lastConnected : -1}});
+    return Meteor.users.find(
+        { 'profile.online': 1, 'visible': 1, 'settings.invisible': false, _id: {$in: friends}},
+        {
+            sort: {lastConnected : -1},
+            fields: Meteor.user.privateProfileInformation
+        }
+    );
 });
+
 
 Meteor.publish("userProfile", function(userId){
     // Check that this user can see each others.
@@ -88,26 +88,17 @@ Meteor.publish("userProfile", function(userId){
     var fields = {};
 
     if(target && target.blacklist && _.contains(target.blacklist ,source._id)){ // You're blocked
-        fields = {
-            'profile.name': 1,
-            'profile.gender': 1
-        };
+        fields = Meteor.users.publicProfileInformation;
     } else if(target.friends && _.contains(target.friends, source._id)){ // You're friends
         // show all profile.
         if(target.friends && _.contains(target.friends, source._id)){
-            fields = {
-                'profile': 1
-            }
+            fields = Meteor.users.privateProfileInformation;
         }
     } else {
-        fields = {
-            'profile.name': 1,
-            'profile.gender': 1
-        };
+        fields = Meteor.users.publicProfileInformation;
     }
     return Meteor.users.find({_id: userId}, {fields: fields});
 });
-
 
 Meteor.publish('oneUserPictures', function(userId){
     if(userId){

@@ -4,7 +4,6 @@ var presenceTick;
 Meteor.startup(function(){
     // update presences every interval
     presenceTick = Meteor.setInterval(function() {
-        console.log('tick');
         Meteor.Presence.update();
     }, Presence.checkInterval || 1000);
 });

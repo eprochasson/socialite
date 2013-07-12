@@ -11,13 +11,38 @@ if(Meteor.isClient){
 }
 
 /*
+    Users
+ */
+// What fields are public for everyone
+Meteor.user.publicProfileInformation = {
+    // show selected information
+    'profile.name' : 1,
+    'profile.dob': 1,
+    'profile.gender': 1,
+    'profile.online': 1,
+    'profile.picture': 1
+};
+// What fields are reserved for friends only
+Meteor.user.privateProfileInformation = {
+    'profile': 1 // show all profile
+};
+
+// What field I can see about myself
+Meteor.user.myProfileInformation = {
+    // show more information
+    'profile': 1,
+    'friends': 1,
+    'settings': 1
+};
+
+
+/*
     Messages
 */
 // Duration to measure velocity (default 2 minutes).
-//Messages.velocityCaliber = 60*1000*2;
 Messages.velocityCaliber = 30*1000;
 // If target user is online, how many messages per velocityCaliber millisecond can the emitter send
-Messages.onlineMaxVelocity = 5;
+Messages.onlineMaxVelocity = 15;
 // If target is offline
 Messages.offlineMaxVelocity = 5;
 // Cooldown penalty (def: 1 minute)
