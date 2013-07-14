@@ -1,4 +1,4 @@
-Meteor.Forms = {
+Meteor.FormsValidation = {
     'date': function(validation, date){
         var valid = true;
         var format = validation.format || 'DD-MM-YYYY';

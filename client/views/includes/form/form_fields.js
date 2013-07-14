@@ -1,8 +1,9 @@
-
 // pick default question value, or user input if available.
 var getInputValue = function(self){
-    if(Meteor.user().profile && Meteor.user().profile[self.name]){
-        return Meteor.user().profile[self.name]
+    // trick to avoid blinking when updating the user profile. (instead of calling Meteor.user())
+    var user = Meteor.users.findOne(Meteor.userId, {reactive: false});
+    if(user.profile && user.profile[self.name]){
+        return user.profile[self.name]
     } else {
         return self.value;
     }

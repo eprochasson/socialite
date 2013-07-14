@@ -6,9 +6,6 @@ Meteor.startup(function(){
     // My own picture.
     Meteor.subscribe('myPictures');
 
-    // Online friends widget.
-    Meteor.subscribe('myOnlineFriends');
-
     // The list of my friends.
     Meteor.subscribe('myFriendList');
 
@@ -28,6 +25,7 @@ Meteor.startup(function(){
     // Questions for the profile form.
     Meteor.subscribe('questions');
 
-    Meteor.subscribe('adminShowEveryone');
 
+//    Meteor.subscribe('adminShowEveryone');
+    filepicker.setKey(filePickerKey);
 });

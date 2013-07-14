@@ -3,13 +3,24 @@
 //Check user presence
 Meteor.methods({
     setUserPresence: function(){
-        if(!Presences.findOne({user: Meteor.userId()})){
+        var presence;
+        // User connected for the first time, he's not registered.
+        if(!(presence = Presences.findOne({user: Meteor.userId()}))){
+            // Mark it online for his friends.
+            Friends.update({ target: Meteor.userId(), live: 1 }, {$set: {online: 1}});
+
+            // Record it's presence
             return Presences.insert({
                 user: Meteor.userId(),
                 lastseen: new Date().getTime(),
                 online: 1
-            })
+            });
         } else {
+            // If the user is not invisible, and the user previously was offline
+            // tell all his friends he connected
+            if(!presence.invisible && !presence.online){
+                Friends.update({ target: Meteor.userId(), live: 1 }, {$set: {online: 1}});
+            }
             return Presences.update(
                 {user: Meteor.userId()},
                 {$set: {lastseen: new Date().getTime(), 'online': 1}}
@@ -17,14 +28,20 @@ Meteor.methods({
         }
     },
     setInvisible: function(invisible){
-        return Presences.update({user: this.userId}, {$set: {invisible: Boolean(invisible)}}) &&
-            Meteor.users.findOne(this.userId, {$set: {'settings.invisible': Boolean(invisible)}});
+        Friends.update({ target: Meteor.userId(), live: 1 }, {$set: {online: !Boolean(invisible)}});
+        Presences.update({user: this.userId}, {$set: {invisible: Boolean(invisible)}});
+        Meteor.users.findOne(this.userId, {$set: {'settings.invisible': Boolean(invisible)}});
     }
 });
 
 Meteor.startup(function(){
     // Update user not connected.
     Meteor.setInterval(function(){
-        Presences.update({lastseen: {$lt:(new Date().getTime() - Presences.TimeOut)}}, {$set: {'online': 0}});
+        var presences = Presences.find({lastseen: {$lt:(new Date().getTime() - Presences.TimeOut)}, online: 1});
+        presences.forEach(function(p){
+            // Tell all his friends he got offline
+            Friends.update({target:p.user},{ $set: {online: 0}});
+            Presences.update({user:p.user}, {$set: {online: 0}});
+        });
     }, Presences.checkInterval || 1000);
 });

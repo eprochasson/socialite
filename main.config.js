@@ -15,7 +15,7 @@ if(Meteor.isClient){
     Users configuration
  */
 // What fields are public for everyone
-Meteor.user.publicProfileInformation = {
+Meteor.users.publicProfileInformation = {
     // show selected information
     'profile.name' : 1,
     'profile.dob': 1,
@@ -24,12 +24,12 @@ Meteor.user.publicProfileInformation = {
     'profile.picture': 1
 };
 // What fields are reserved for friends only
-Meteor.user.privateProfileInformation = {
+Meteor.users.privateProfileInformation = {
     'profile': 1 // show all profile
 };
 
 // What field I can see about myself
-Meteor.user.myProfileInformation = {
+Meteor.users.myProfileInformation = {
     'profile': 1,
     'friends': 1,
     'settings': 1
@@ -66,4 +66,3 @@ Pictures.maxFilePerUser = -1;
 Presences.checkInterval = 2000;
 // How long before a user is considered out (ms).
 Presences.TimeOut = 10000;
-

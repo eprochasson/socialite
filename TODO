@@ -1,8 +1,15 @@
 Make sure logout users are redirected to the front page, always.
+Make sure non login users don't get much subscription nor database insert.
+
 Browse users
+
 Setting page
+
 Activities: what did one do, what can of activity can the others see.
+
 Check user security: do not allow user to change all their profile.
-myFriends and myOnlineFriends are redundant.
+
 Move images to S3 with Filepicker.
-Friends management (need to take it out of the user profile).
+
+Some error handling/notification to client.
+

@@ -23,8 +23,8 @@ Meteor.methods({
             console.log('simulation');
         }
         _.each(validations, function(validation, method){
-            if(typeof Meteor.Forms[method] == 'function'){
-                if(!(Meteor.Forms[method])(validation, value)){
+            if(typeof Meteor.FormsValidation[method] == 'function'){
+                if(!(Meteor.FormsValidation[method])(validation, value)){
                     if(validation.error){
                         throw new Meteor.Error(0, validation.error);
                     } else {

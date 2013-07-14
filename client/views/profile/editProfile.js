@@ -26,9 +26,6 @@ Template.editProfile.helpers({
     },
     pictures: function(){
         return Pictures.find({owner: Meteor.userId()}, {sort: {sortorder: -1}});
-    },
-    image: function(){
-
     }
 });
 
@@ -51,7 +48,7 @@ Template.editProfile.events = {
             }
         });
 
-        console.log('values', values);
+        console.log('values', JSON.stringify(values));
 
         Meteor.call('update_profile', values);
     },

@@ -3,9 +3,11 @@
     {{#if count}}
     You have {{count}} friend(s) online
     <ul>
+        {{#with onlinefriends}}
         {{#each friends}}
-        {{> online_friend}}
+            {{> online_friend}}
         {{/each}}
+        {{/with}}
     </ul>
     {{else}}
     No friend online

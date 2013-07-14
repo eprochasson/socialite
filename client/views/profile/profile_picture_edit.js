@@ -10,5 +10,17 @@ Template.profile_picture_edit.events({
                 throw new Meteor.Error(500, 'Something went wrong');
             }
         });
+    },
+    'click .image-upload': function(e){
+        filepicker.pick({
+            mimetype: 'image/*',
+            container: 'modal',
+            service: 'COMPUTER',
+            openTo: 'COMPUTER',
+            maxSize: 1024*1024
+        },
+        function(err, res){
+
+        });
     }
 });

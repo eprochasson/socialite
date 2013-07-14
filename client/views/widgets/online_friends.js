@@ -1,15 +1,17 @@
 Template.online_friends.helpers({
+    onlinefriends: function(){
+        return Friends.find({online: 1});
+    },
     friends: function(){
-        var friends = Presences.find({});
-        var ids = [];
-        friends.forEach(function(f){
-            ids.push(f.user);
+        var friendlist = [];
+        //this: onlinefriends Friends collection.
+        this.forEach(function(f){
+            friendlist.push(f.target);
         });
-
-        return Meteor.users.find({_id: {$in: ids}}, {sort:{'profile.name': 1}});
+        return Meteor.users.find({_id: {$in: friendlist}}, {sort: {'profile.name': 1}});
     },
     count: function(){
         // Presence subscription only show online users...
-        return Presences.find({}).count() + 1;
+        return Friends.find({online: 1}).count();
     }
 });

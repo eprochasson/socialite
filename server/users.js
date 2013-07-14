@@ -13,8 +13,8 @@ Meteor.methods({
                 } else {
                     var validations = question.validation;
                     _.each(validations, function(validation, method){
-                        if(typeof validationProcedures[method] == 'function'){
-                            if(!(validationProcedures[method])(validation, val)){
+                        if(typeof Meteor.FormsValidation[method] == 'function'){
+                            if(!(Meteor.FormsValidation[method])(validation, val)){
                                 valid = false;
                             } else {
                                 // All good, let's input
@@ -48,7 +48,7 @@ Meteor.methods({
     },
     denormalizeProfilePicture: function(pixHandler){
         if(pixHandler){
-            Meteor.users.update(Meteor.userId(), {$set: {'picture': pixHandler}});
+            Meteor.users.update(Meteor.userId(), {$set: {'profile.picture': pixHandler}});
             return true;
         } else {
             throw new Meteor.Error(500, 'Internal Error');
