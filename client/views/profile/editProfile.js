@@ -25,7 +25,7 @@ Template.editProfile.helpers({
         return Questions.find({}, {sort: {sortorder: 1}});
     },
     pictures: function(){
-        return Pictures.find({owner: Meteor.userId()}, {sort: {sortorder: -1}});
+        return Photos.find({owner: Meteor.userId()}, {sort: {sortorder: -1}});
     }
 });
 

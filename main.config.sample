@@ -7,7 +7,8 @@ if(Meteor.isClient){
     Meteor.setLocale('en_GB');
 
     //FilePicker API Key
-    filePickerKey = "YOUR_FILEPICKER_KEY";
+    Meteor.filePickerKey = "";
+    Meteor.S3Url = "";
 }
 
 

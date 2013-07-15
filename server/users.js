@@ -46,9 +46,9 @@ Meteor.methods({
             }
         })
     },
-    denormalizeProfilePicture: function(pixHandler){
-        if(pixHandler){
-            Meteor.users.update(Meteor.userId(), {$set: {'profile.picture': pixHandler}});
+    denormalizeProfilePicture: function(url){
+        if(url){
+            Meteor.users.update(Meteor.userId(), {$set: {'profile.picture': url}});
             return true;
         } else {
             throw new Meteor.Error(500, 'Internal Error');

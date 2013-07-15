@@ -87,14 +87,14 @@ Meteor.publish('oneUserPictures', function(targetId){
     }
     var friendship = Friends.findOne({target: this.userId, me: targetId, live: 1});
     if(friendship){
-        return Pictures.find({ owner: userId});
+        return Photos.find({ owner: userId});
     } else {
         return [];
     }
 });
 
 Meteor.publish('myPictures', function(){
-    return Pictures.find({owner: this.userId});
+    return Photos.find({owner: this.userId});
 });
 
 /******************************

@@ -15,5 +15,5 @@
 </template>
 
 <template name="online_friend">
-    <li><img src="{{profile.picture.thumbnail50x50}}" /><a href="{{profilePath}}/{{_id}}">{{profile.name}}</a> is online (<a class="startChat" href="#">chat</a>)</a></li>
+    <li><img src="{{thumbnail profile.picture 100 100 'max'}}" /><a href="{{profilePath}}/{{_id}}">{{profile.name}}</a> is online (<a class="startChat" href="#">chat</a>)</a></li>
 </template>

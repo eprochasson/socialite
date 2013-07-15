@@ -26,5 +26,4 @@ Meteor.startup(function(){
     Meteor.subscribe('questions');
 
 //    Meteor.subscribe('adminShowEveryone');
-    filepicker.setKey(filePickerKey);
 });

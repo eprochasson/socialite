@@ -13,3 +13,4 @@ Move images to S3 with Filepicker.
 
 Some error handling/notification to client.
 
+Check filepicker secret/security thingy. Not sure it's cool.

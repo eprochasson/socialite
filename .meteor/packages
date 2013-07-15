@@ -15,8 +15,8 @@ i18n
 momentjs
 collectionFS
 imagemagick
-loadpicker
 page-js-ie-support
 spin
 publish-with-relations
 paginated-subscription
+filepicker

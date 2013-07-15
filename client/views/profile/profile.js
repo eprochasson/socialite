@@ -29,6 +29,6 @@ Template.profile.helpers({
         }
     },
     pictures: function(){
-        return Pictures.find({}, {sort: { sortorder: -1 }});
+        return Photos.find({}, {sort: { sortorder: -1 }});
     }
 });

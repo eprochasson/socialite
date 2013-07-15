@@ -16,7 +16,8 @@
       "publish-with-relations": {},
       "spin": {},
       "paginated-subscription": {},
-      "pagination": {}
+      "pagination": {},
+      "filepicker": {}
     },
     "packages": {
       "accounts-ui-bootstrap-dropdown": {
@@ -36,8 +37,8 @@
       },
       "momentjs": {
         "git": "https://github.com/crapthings/meteor-momentjs.git",
-        "tag": "v2.0.0.1",
-        "commit": "2200ae0f0472164b7cc33dfd9b3ba729a7deb805"
+        "tag": "v2.1.0",
+        "commit": "f421f51c2cb40093374a83adb932937da2f991d3"
       },
       "collectionFS": {
         "git": "https://github.com/raix/Meteor-CollectionFS.git",
@@ -73,6 +74,11 @@
         "git": "https://github.com/egtann/meteor-pagination.git",
         "tag": "v1.0.0",
         "commit": "df546295d4bf11a89e57198c8074aa812d85755c"
+      },
+      "filepicker": {
+        "git": "https://github.com/Filepicker/meteor.git",
+        "tag": "v0.3.0",
+        "commit": "dcb6f3779e5fc105520ba06b0392e3a79c73a7e6"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
