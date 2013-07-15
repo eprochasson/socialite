@@ -25,7 +25,6 @@ Meteor.startup(function(){
     // Questions for the profile form.
     Meteor.subscribe('questions');
 
-
 //    Meteor.subscribe('adminShowEveryone');
     filepicker.setKey(filePickerKey);
 });

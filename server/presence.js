@@ -18,8 +18,8 @@ Meteor.methods({
         } else {
             // If the user is not invisible, and the user previously was offline
             // tell all his friends he connected
-            if(!presence.invisible && !presence.online){
-                Friends.update({ target: Meteor.userId(), live: 1 }, {$set: {online: 1}});
+            if(!presence.invisible){
+                Friends.update({ target: Meteor.userId(), live: 1, online: 0 }, {$set: {online: 1}});
             }
             return Presences.update(
                 {user: Meteor.userId()},
