@@ -1,9 +1,0 @@
-console.log('loading sample config');
-
-Accounts.ui.config({
-    passwordSignupFields: 'EMAIL_ONLY'
-});
-
-Meteor.setLocale('en_GB');
-
-filePickerKey = "Av2HCAqJSM2aHdX5yKTZtz";
