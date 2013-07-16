@@ -18,6 +18,11 @@ Template.compose.events({
         if(values.to && values.body){
             Meteor.call('sendMessage', values, function(err, res){
                 console.log(err, res);
+                if(err){
+                    Errors.modal(err);
+                } else {
+                    Errors.notification({text: __('message.message_sent')});
+                }
             })
         }
     }

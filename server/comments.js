@@ -9,17 +9,17 @@ Meteor.methods({
             case 'status':
                 break;
             default:
-                throw new Meteor.Error(404, "Invalid Object reference");
+                throw new Meteor.Error(404, "Invalid Object");
         }
 
         if(!doc.ref || !(target = collection.findOne(doc.ref))){
-            throw new Meteor.Error(404, 'Object not found');
+            throw new Meteor.Error(404, 'Object Not Found');
         }
 
         // the owner of the object.
         var owner = Meteor.users.findOne(doc.owner);
         if(!owner){
-            throw new Meteor.Error(404, 'Owner not found');
+            throw new Meteor.Error(404, 'User Not Found');
         }
 
         // Check that the emitter is not blacklisted by the receiver.
@@ -31,7 +31,7 @@ Meteor.methods({
             penalty;
 
         if(penalty = Cooldown.checkCooldown(Meteor.userId(), velocity)){
-            throw new Meteor.Error(300, 'Posting too fast, wait ' + moment.duration(penalty).humanize());
+            throw new Meteor.Error(300, 'Posting Too Fast', moment.duration(penalty).humanize());
         }
 
         // All good, let's post that comment

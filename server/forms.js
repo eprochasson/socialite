@@ -8,11 +8,11 @@ Meteor.methods({
         // Get the question and its validations from the database, don't trust the client
         var field = Questions.findOne(docid);
         if(!field){
-            throw new Meteor.Error(404, 'Question can not be found');
+            throw new Meteor.Error(404, 'Question Not Found');
         }
 
         if(field.required && !value){
-            throw new Meteor.Error(0, 'errors.field_required');
+            throw new Meteor.Error(400, 'errors.field_required');
         }
 
         if(field.validation){

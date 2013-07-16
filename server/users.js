@@ -30,7 +30,7 @@ Meteor.methods({
             }
         });
         if(!valid){
-            throw new Meteor.Error(300, 'errors.not_saved');
+            throw new Meteor.Error(400, 'Invalid Data');
         } else {
             // Account only visible if at least those two information are made available.
             var visible = 0;
@@ -38,7 +38,6 @@ Meteor.methods({
                 visible = 1;
             }
 
-            console.log('Updating profile', cleaned);
             Meteor.users.update(Meteor.userId(), {
                 $set: {
                     profile : cleaned,
@@ -57,7 +56,7 @@ Meteor.methods({
 
         var pix = Photos.findOne(picture);
         if(!pix || !pix.owner === Meteor.userId()){
-            throw new Error(300, "Forbidden");
+            throw new Meteor.Error(403, "Forbidden");
         }
 
         if(pix.url){

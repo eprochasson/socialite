@@ -2,10 +2,10 @@ Meteor.methods({
     addAsFriend: function(target){
         target = Meteor.users.findOne(target);
         if(!target){
-            throw new Meteor.Error(404, 'Person not found');
+            throw new Meteor.Error(404, 'User Not Found');
         }
         if(_.contains(target.blacklist, this.userId)){
-            throw new Meteor.Error(300, 'Blocked');
+            throw new Meteor.Error(403, 'Permission Denied');
         }
 
         var id;
@@ -65,12 +65,12 @@ Meteor.methods({
         // Just kill the link, keep the connection.
         target = Meteor.users.findOne(target);
         if(!target){
-            throw new Meteor.Error(404, 'Person not found');
+            throw new Meteor.Error(404, 'User Not Found');
         }
 
         var friend = Friends.findOne({target: target._id, me: this.userId});
         if(!friend){
-            throw new Meteor.Error(404, 'User not found');
+            throw new Meteor.Error(404, 'User Not Found');
         }
         Friends.update({target: target._id, me: this.userId}, {$set: {live: 0, reciprocal: 0}}, function(err){
             if(!err){
@@ -88,7 +88,7 @@ Meteor.methods({
 
         friend = Friends.findOne({me: target._id, target: this.userId});
         if(!friend){
-            throw new Meteor.Error(404, 'User not found');
+            throw new Meteor.Error(404, 'User Not found');
         }
         Friends.update({me: target._id, target: this.userId}, {$set: {live: 0, reciprocal: 0}}, function(err){
             if(!err){

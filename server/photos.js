@@ -2,7 +2,7 @@ Meteor.methods({
     uploadPhoto: function(options){
         var user = this.userId;
         if(!user){
-            throw new Meteor.Error(300, 'Forbidden');
+            throw new Meteor.Error(403, 'Permission Denied');
         }
 
         // Store the image.

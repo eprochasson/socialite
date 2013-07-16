@@ -1,18 +1,13 @@
+Browse/search users
+User geolocalisation.
+
 Make sure logout users are redirected to the front page, always.
 Make sure non login users don't get much subscription nor database insert.
+Check user security: do not allow user to change all their profile.
+Check filepicker secret/security thingy. Not sure it's cool.
 
-Browse users
 
 Setting page
 
-Activities: what did one do, what can of activity can the others see.
-
-Check user security: do not allow user to change all their profile.
-
-Move images to S3 with Filepicker.
-
-Some error handling/notification to client.
-
-Check filepicker secret/security thingy. Not sure it's cool.
-
 Thing needs serious design work.
+Complete Lexicon...

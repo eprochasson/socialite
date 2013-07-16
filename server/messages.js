@@ -3,11 +3,11 @@ Meteor.methods({
         // Check that the emitter exists
         var target ;
         if(!(target = Meteor.users.findOne(doc.to))){
-            throw new Meteor.Error(404, 'User not found');
+            throw new Meteor.Error(404, 'User Not Found');
         }
         // Check that the emitter is not blacklisted by the receiver.
         if(_.contains(target.blacklist, Meteor.userId())){
-            throw new Meteor.Error(300, 'Permission Denied');
+            throw new Meteor.Error(403, 'Permission Denied');
         }
 
         // Sender
@@ -18,7 +18,7 @@ Meteor.methods({
             penalty;
 
         if(penalty = Cooldown.checkCooldown(Meteor.userId(), velocity)){
-            throw new Meteor.Error(300, 'Posting too fast, wait ' + moment.duration(penalty).humanize());
+            throw new Meteor.Error(403, 'Posting Too Fast', moment.duration(penalty).humanize());
         }
 
         // All good, let's send that message
