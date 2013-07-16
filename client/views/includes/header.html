@@ -10,10 +10,15 @@
                 <li class="{{activeRouteClass 'settings'}}">
                     <a href="{{settingsPath}}">Settings</a>
                 </li>
-                <li class="{{activeRouteClass 'mailbox'}}">
-                    <a href="{{mailboxPath}}"><i class="icon-envelope"></i></a>
-                </li>
 
+                {{#if currentUser}}
+                <li class="dropdown">
+                    {{> mailbox_header}}
+                </li>
+                <li class="dropdown">
+                    {{> notifications}}
+                </li>
+                {{/if}}
             </ul>
             {{/if}}
             <ul class="nav pull-right">

@@ -26,11 +26,28 @@ Meteor.methods({
         if(Friends.findOne({me: target._id, target: this.userId, live: 1})){
             fields.reciprocal = 1;
             Friends.update({me: target._id, target: this.userId}, {$set: {reciprocal: 1}});
+            Notifications.insertNotification({
+                owner: target._id,
+                type: 'accepted_friend_request',
+                from: this.userId,
+                body: '',
+                viewed: 0
+            });
+
+        } else {
+            Notifications.insertNotification({
+                owner: target._id,
+                type: 'friend_request',
+                from: this.userId,
+                body: '',
+                viewed: 0
+            });
         }
 
         id = Friends.insert(fields);
 
-        return Activities.sendFriendRequest(this.userId, target._id) && id;
+        // Also send a notification to the target user if it's not a reply.
+        return id;
     },
     removeFriend: function(target){
         // Just kill the link, keep the connection.
@@ -41,9 +58,6 @@ Meteor.methods({
 
         Friends.remove({target: target._id, me: this.userId});
         Friends.remove({me: target._id, target: this.userId});
-
-//        Friends.update({target: target._id, me: this.userId}, {$set: {live: 0, reciprocal: 0}});
-//        Friends.update({me: target._id, target: this.userId}, {$set: {live: 0, reciprocal: 0}});
 
         return true;
     }

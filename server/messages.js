@@ -1,6 +1,5 @@
 Meteor.methods({
     sendMessage: function(doc){
-
         // Check that the emitter exists
         var target ;
         if(!(target = Meteor.users.findOne(doc.to))){
@@ -14,29 +13,17 @@ Meteor.methods({
         // Sender
         var user = Meteor.users.findOne(Meteor.userId());
 
-        // Check if the user is under a cooldown penalty.
-        var cooldown = user.cooldown;
-
-        if(cooldown && cooldown > new Date().getTime()){
-            //Add an extra cooldown.
-            Meteor.users.update(Meteor.userId(), { $inc : {cooldown: Messages.cooldownPenalty} });
-            throw new Meteor.Error(300, 'Posting too fast, wait ' + moment.duration(cooldown+Messages.cooldownPenalty-new Date().getTime()).humanize());
-        }
-
         // Check user message sending velocity.
-        var velocity = target.profile.online ? Messages.onlineMaxVelocity : Messages.offlineMaxVelocity;
+        var velocity = target.profile.online ? Cooldown.onlineMaxVelocity : Cooldown.offlineMaxVelocity,
+            penalty;
 
-        var messages = Messages.find({from: Meteor.userId(), sent: {$gt: new Date().getTime() - Messages.velocityCaliber}});
-
-        if(messages.count() > velocity){ // Posting too fast
-            // Give a cooldown penalty
-            Meteor.users.update(Meteor.userId(), {$set : { cooldown: new Date().getTime()+Messages.cooldownPenalty }});
-            throw new Meteor.Error(300, 'Posting too fast, wait ' + moment.duration(Messages.cooldownPenalty).humanize());
+        if(penalty = Cooldown.checkCooldown(Meteor.userId(), velocity)){
+            throw new Meteor.Error(300, 'Posting too fast, wait ' + moment.duration(penalty).humanize());
         }
 
         // All good, let's send that message
         // Reset potential user penalty
-        Meteor.users.update(Meteor.userId(), {$set: {cooldown: 0}});
+        Cooldown.resetCooldown(Meteor.userId());
 
         doc.sent = new Date().getTime();
         doc.viewed = 0;
@@ -46,7 +33,7 @@ Meteor.methods({
 
         var id = Messages.insert(message);
         // Create the conversations between those two uses if it does not exist already.
-        // apparently upsert is fucked up with Meteor, so that's the best I could find.
+        // apparently upsert is fucked up with Meteor, so that's the best I could do.
         if(Conversations.findOne({
             owner: Meteor.userId(),
             with: target._id
@@ -59,7 +46,8 @@ Meteor.methods({
                     timestamp: new Date().getTime(),
                     lastMessageId: id,
                     lastMessage: doc.body,
-                    lastMessageFrom: Meteor.userId()
+                    lastMessageFrom: Meteor.userId(),
+                    viewed: 1
                 }
             });
         } else {
@@ -69,7 +57,8 @@ Meteor.methods({
                 with: target._id,
                 lastMessageId: id,
                 lastMessage: doc.body,
-                lastMessageFrom: Meteor.userId()
+                lastMessageFrom: Meteor.userId(),
+                viewed: 1
             });
         }
         if(Conversations.findOne({
@@ -84,7 +73,8 @@ Meteor.methods({
                     timestamp: new Date().getTime(),
                     lastMessageId: id,
                     lastMessage: doc.body,
-                    lastMessageFrom: Meteor.userId()
+                    lastMessageFrom: Meteor.userId(),
+                    viewed: 0
                 }
                 });
         } else {
@@ -94,7 +84,8 @@ Meteor.methods({
                 owner: target._id,
                 lastMessageId: id,
                 lastMessage: doc.body,
-                lastMessageFrom: Meteor.userId()
+                lastMessageFrom: Meteor.userId(),
+                viewed: 0
             });
         }
 

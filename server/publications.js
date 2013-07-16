@@ -97,6 +97,21 @@ Meteor.publish('myPictures', function(){
     return Photos.find({owner: this.userId});
 });
 
+// Return unread notifications
+Meteor.publish('notifications', function(){
+    Meteor.publishWithRelations({
+        handle: this,
+        collection: Notifications,
+        filter: {owner: this.userId},
+        options: {limit: 7, sort: {timestamp: -1}, fields: {from: 1, timestamp: 1, body: 1, type: 1, viewed: 1}},
+        mappings: [{
+            collection: Meteor.users,
+            key: 'from',
+            options: {fields: Meteor.users.publicProfileInformation}
+        }]
+    });
+});
+
 /******************************
     Admin !
  ******************************/
@@ -110,6 +125,8 @@ Meteor.publish("adminShowEveryone", function(){
         } else {
             return [];
         }
+    } else {
+        return [];
     }
 });
 

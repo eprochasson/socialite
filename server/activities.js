@@ -1,3 +1,0 @@
-Activities.sendFriendRequest = function(target){
-
-};

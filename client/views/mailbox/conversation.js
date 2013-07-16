@@ -41,7 +41,7 @@ Template.conversation.events({
         e.preventDefault();
         oneConversationHandle.loadNextPage();
     }
-})
+});
 Template.message.helpers({
     timestamp: function(){
         return moment(this.sent).fromNow();
@@ -53,3 +53,9 @@ Template.message.helpers({
         return this.to == Meteor.userId()? __('messages.you') : Meteor.users.findOne(this.to)['profile'].name;
     }
 });
+
+Template.conversation.rendered = function(){
+    console.log('marking conversation read', Session.get('currentConversation'));
+    // Mark conversation as read.
+    Conversations.update(Session.get('currentConversation'), {$set: {viewed: 1}});
+};

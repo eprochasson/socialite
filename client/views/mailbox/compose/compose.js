@@ -1,7 +1,7 @@
 Template.compose.helpers({
     friendsList: function(){
         if(Meteor.user()){
-            return Meteor.users.find({_id : {$in : Meteor.user().friends}}, {reactive: false});
+            return Meteor.users.find({ _id: {$ne : Meteor.userId()}}, {reactive: false});
         } else {
             return {};
         }

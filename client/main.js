@@ -25,5 +25,7 @@ Meteor.startup(function(){
     // Questions for the profile form.
     Meteor.subscribe('questions');
 
+    Meteor.subscribe('notifications');
+
 //    Meteor.subscribe('adminShowEveryone');
 });
