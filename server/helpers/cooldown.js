@@ -8,12 +8,19 @@ Cooldown = {
         }
 
         // Check if the user is under a cooldown penalty.
-        var cooldown = user.cooldown;
+        var cooldown = user.cooldown,
+            penalty = 0;
+
 
         if(cooldown && cooldown > new Date().getTime()){
             //Add an extra cooldown.
             Meteor.users.update(Meteor.userId(), { $inc : {cooldown: Cooldown.cooldownPenalty} });
-            return (cooldown+Cooldown.cooldownPenalty-new Date().getTime());
+            penalty = cooldown+Cooldown.cooldownPenalty-new Date().getTime();
+
+            // Record cooldown penalty.
+            Activities.insertActivity({from: Meteor.userId(), to: null, type: 'cooldown_penalty'});
+
+            return penalty;
         }
 
         // Check posted messages+comments.
@@ -22,7 +29,9 @@ Cooldown = {
 
         if(messages.count()+comments.count() > velocity){ // Posting too fast
             // Give a cooldown penalty
-            Meteor.users.update(Meteor.userId(), {$set : { cooldown: new Date().getTime()+Cooldown.cooldownPenalty }});
+            Meteor.users.update(Meteor.userId(), {$set : { cooldown: new Date().getTime()+Cooldown.cooldownPenalty}});
+
+            Activities.insertActivity({from: Meteor.userId(), to: null, type: 'cooldown_penalty'});
             return Cooldown.cooldownPenalty;
         }
 

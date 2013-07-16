@@ -1,7 +1,5 @@
 Meteor.methods({
     uploadPhoto: function(options){
-        console.log(options);
-
         var user = this.userId;
         if(!user){
             throw new Meteor.Error(300, 'Forbidden');
@@ -16,6 +14,16 @@ Meteor.methods({
             size: options.size,
             type: options.mimetype,
             owner: user
+        });
+
+        Activities.insertActivity({
+            from: Meteor.userId(),
+            to: null,
+            on: {
+                objtype: 'picture',
+                ref: photoId
+            },
+            type: 'picture'
         });
 
         return photoId;

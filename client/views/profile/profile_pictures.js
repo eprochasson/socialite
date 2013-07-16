@@ -23,7 +23,7 @@ Template.profile_pictures.events({
         // Set it on the chosen one
         Photos.update(this._id, {$set: {main:1}});
 
-        Meteor.call('denormalizeProfilePicture', photo.url, function(err, res){
+        Meteor.call('denormalizeProfilePicture', photo._id, function(err, res){
             if(err){
                 throw err;
             }

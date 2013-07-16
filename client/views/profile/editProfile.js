@@ -48,8 +48,7 @@ Template.editProfile.events = {
             }
         });
 
-        console.log('values', JSON.stringify(values));
-
+        console.log('calling update profile');
         Meteor.call('update_profile', values);
     },
     'blur form#editProfile input': function(e){

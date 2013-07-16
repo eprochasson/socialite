@@ -1,7 +1,7 @@
 Meteor.publish("myData", function () {
     return Meteor.users.find(
-        {_id: this.userId},
-        { fields: Meteor.user.myProfileInformation }
+        this.userId,
+        { fields: Meteor.users.myProfileInformation }
     );
 });
 
@@ -19,6 +19,54 @@ Meteor.publish("myConversations", function(limit) {
             key: 'with',
             collection: Meteor.users,
             options: {fields: Meteor.user.publicProfileInformation}
+        }]
+    });
+});
+
+Meteor.publish('myPictures', function(){
+    return Photos.find({owner: this.userId});
+});
+
+// Return unread notifications
+Meteor.publish('myNotifications', function(){
+    Meteor.publishWithRelations({
+        handle: this,
+        collection: Notifications,
+        filter: {owner: this.userId},
+        options: {limit: 7, sort: {timestamp: -1}, fields: {from: 1, timestamp: 1, body: 1, type: 1, viewed: 1}},
+        mappings: [{
+            collection: Meteor.users,
+            key: 'from',
+            options: {fields: Meteor.users.publicProfileInformation}
+        }]
+    });
+});
+
+Meteor.publish('myNewsfeed', function(limit){
+
+    // All my friends.
+    var friends = Friends.find({me: this.userId, reciprocal: 1, live: 1});
+    var friendlist = [];
+    friends.forEach(function(f){
+        friendlist.push(f.target);
+    });
+
+    Meteor.publishWithRelations({
+        handle: this,
+        collection: Activities,
+        filter: {
+            type: {$in: Activities.publicActivities}, // only some activities
+            $or: [{from: {$in: friendlist}},{to: {$in: friendlist}}]  // happening to my friends
+        },
+        options: {limit: limit, sort: {timestamp: -1}, fields: {}},
+        mappings: [{
+            collection: Meteor.users,
+            key: 'to',
+            options: {fields: Meteor.users.publicProfileInformation}
+        },{
+            collection: Meteor.users,
+            key: 'from',
+            options: {fields: Meteor.users.publicProfileInformation}
         }]
     });
 });
@@ -93,24 +141,22 @@ Meteor.publish('oneUserPictures', function(targetId){
     }
 });
 
-Meteor.publish('myPictures', function(){
-    return Photos.find({owner: this.userId});
+Meteor.publish('oneUserActivities', function(userId, limit){
+    if(!this.userId || !userId){
+        return null;
+    }
+    var friendship = Friends.findOne({target: this.userId, me: targetId, live: 1});
+    if(friendship){
+        return Activities.find(
+            { $or: [{from: userId}, {to: userId}], type: {$in : Activities.publicActivities}},
+            {limit: limit, sort: {timestamp: -1}}
+        );
+    } else {
+        return [];
+    }
 });
 
-// Return unread notifications
-Meteor.publish('notifications', function(){
-    Meteor.publishWithRelations({
-        handle: this,
-        collection: Notifications,
-        filter: {owner: this.userId},
-        options: {limit: 7, sort: {timestamp: -1}, fields: {from: 1, timestamp: 1, body: 1, type: 1, viewed: 1}},
-        mappings: [{
-            collection: Meteor.users,
-            key: 'from',
-            options: {fields: Meteor.users.publicProfileInformation}
-        }]
-    });
-});
+
 
 /******************************
     Admin !

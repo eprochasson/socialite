@@ -28,27 +28,51 @@ Meteor.methods({
             } else {
                 valid = false;
             }
-            if(!valid){
-                throw new Meteor.Error(300, 'errors.not_saved');
-            } else {
-                // Account only visible if at least those two information are made available.
-                var visible = 0;
-                if(cleaned.name && cleaned.gender){
-                    visible = 1;
-                }
-
-                return Meteor.users.update(Meteor.userId(), {
-                    $set: {
-                        profile : cleaned,
-                        visible: visible
-                    }
-                });
+        });
+        if(!valid){
+            throw new Meteor.Error(300, 'errors.not_saved');
+        } else {
+            // Account only visible if at least those two information are made available.
+            var visible = 0;
+            if(cleaned.name && cleaned.gender){
+                visible = 1;
             }
-        })
+
+            console.log('Updating profile', cleaned);
+            Meteor.users.update(Meteor.userId(), {
+                $set: {
+                    profile : cleaned,
+                    visible: visible
+                }
+            });
+
+            Activities.insertActivity({
+                type: 'update_profile',
+                from: Meteor.userId(),
+                to: null
+            })
+        }
     },
-    denormalizeProfilePicture: function(url){
-        if(url){
-            Meteor.users.update(Meteor.userId(), {$set: {'profile.picture': url}});
+    denormalizeProfilePicture: function(picture){
+
+        var pix = Photos.findOne(picture);
+        if(!pix || !pix.owner === Meteor.userId()){
+            throw new Error(300, "Forbidden");
+        }
+
+        if(pix.url){
+            Activities.insertActivity({
+                type: 'update_profile_picture',
+                from: Meteor.userId(),
+                to: null,
+                on: {
+                    objtype: 'picture',
+                    ref: pix._id
+                }
+            });
+
+            Meteor.users.update(Meteor.userId(), {$set: {'profile.picture': pix.url}});
+
             return true;
         } else {
             throw new Meteor.Error(500, 'Internal Error');

@@ -21,6 +21,13 @@ Meteor.methods({
             reciprocal: 0, // Connection goes both way
             timestamp: new Date().getTime()
         };
+        var activity = {
+            from: this.userId,
+            to: target._id,
+            on: {
+                objtype: 'friend'
+            }
+        };
 
         // Answering a friend request.
         if(Friends.findOne({me: target._id, target: this.userId, live: 1})){
@@ -33,6 +40,7 @@ Meteor.methods({
                 body: '',
                 viewed: 0
             });
+            activity.type = 'accepted_friend_request';
 
         } else {
             Notifications.insertNotification({
@@ -42,11 +50,15 @@ Meteor.methods({
                 body: '',
                 viewed: 0
             });
+            activity.type = 'friend_request';
         }
 
         id = Friends.insert(fields);
 
-        // Also send a notification to the target user if it's not a reply.
+        activity.on.ref = id;
+
+        Activities.insertActivity(activity);
+
         return id;
     },
     removeFriend: function(target){
@@ -56,8 +68,41 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Person not found');
         }
 
-        Friends.remove({target: target._id, me: this.userId});
-        Friends.remove({me: target._id, target: this.userId});
+        var id = Friends.findOne({target: target._id, me: this.userId});
+        if(!id){
+            throw new Meteor.Error(404, 'User not found');
+        }
+        Friends.update({target: target._id, me: this.userId}, {$set: {live: 0}}, function(err){
+            if(!err){
+                Activities.insertActivity({
+                    from: Meteor.userId(),
+                    to: target._id,
+                    type: 'remove_friendship',
+                    on: {
+                        objtype: 'friend',
+                        ref: id
+                    }
+                });
+            }
+        });
+
+        id = Friends.findOne({me: target._id, target: this.userId});
+        if(!id){
+            throw new Meteor.Error(404, 'User not found');
+        }
+        Friends.update({me: target._id, target: this.userId}, {$set: {live: 0}}, function(err){
+            if(!err){
+                Activities.insertActivity({
+                    to: Meteor.userId(),
+                    from: target._id,
+                    type: 'friendship_removed',
+                    on: {
+                        objtype: 'friend',
+                        ref: id
+                    }
+                });
+            }
+        });
 
         return true;
     }

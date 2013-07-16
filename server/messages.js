@@ -89,6 +89,15 @@ Meteor.methods({
             });
         }
 
+        // record activity
+        Activities.insertActivity({
+            from: Meteor.userId(),
+            to: target._id,
+            ref: id,
+            on: {},
+            type: 'message'
+        });
+
         return true;
     }
 });

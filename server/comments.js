@@ -56,6 +56,19 @@ Meteor.methods({
             reftype: comment.reftype
         });
 
+        // record activity
+        Activities.insertActivity({
+            from: Meteor.userId(),
+            to: target._id,
+            ref: id,
+            on: {
+                objtype: doc.objtype,
+                ref: doc.ref
+            },
+            type: 'comment'
+        });
+
+
         return id;
     }
 });

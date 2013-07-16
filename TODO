@@ -16,3 +16,5 @@ Some error handling/notification to client.
 Check filepicker secret/security thingy. Not sure it's cool.
 
 Thing needs serious design work.
+
+record time spent on the website.

@@ -3,11 +3,12 @@ Meteor.startup(function(){
     Meteor.subscribe('myData', function(){
         Session.set('settings', Meteor.user().settings||{});
     });
-    // My own picture.
     Meteor.subscribe('myPictures');
+    Meteor.subscribe('myNotifications');
 
-    // The list of my friends.
     Meteor.subscribe('myFriendList');
+
+    myNewsFeedHandle = Meteor.subscribeWithPagination('myNewsfeed', Newsfeed.activitiesPerPage);
 
     // My conversations
     conversationsHandle = Meteor.subscribeWithPagination('myConversations', 3);
@@ -20,12 +21,13 @@ Meteor.startup(function(){
     Deps.autorun(function () {
         userProfileHandle = Meteor.subscribe("oneUserProfile", Session.get("currentUserProfile"));
         userPictureHandle = Meteor.subscribe("oneUserPictures", Session.get("currentUserProfile"));
+        userActivitiesHandle = Meteor.subscribeWithPagination("oneUserActivities", function(){
+            return Session.get("currentUserProfile") || null;
+        }, Activities.activitiesPerPage);
     });
 
     // Questions for the profile form.
     Meteor.subscribe('questions');
-
-    Meteor.subscribe('notifications');
 
 //    Meteor.subscribe('adminShowEveryone');
 });
