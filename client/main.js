@@ -6,7 +6,7 @@ Meteor.startup(function(){
     Meteor.subscribe('myPictures');
     Meteor.subscribe('myNotifications');
 
-    Meteor.subscribe('myFriendList');
+        Meteor.subscribe('myFriendList');
 
     myNewsFeedHandle = Meteor.subscribeWithPagination('myNewsfeed', Newsfeed.activitiesPerPage);
 

@@ -68,11 +68,11 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Person not found');
         }
 
-        var id = Friends.findOne({target: target._id, me: this.userId});
-        if(!id){
+        var friend = Friends.findOne({target: target._id, me: this.userId});
+        if(!friend){
             throw new Meteor.Error(404, 'User not found');
         }
-        Friends.update({target: target._id, me: this.userId}, {$set: {live: 0}}, function(err){
+        Friends.update({target: target._id, me: this.userId}, {$set: {live: 0, reciprocal: 0}}, function(err){
             if(!err){
                 Activities.insertActivity({
                     from: Meteor.userId(),
@@ -80,25 +80,25 @@ Meteor.methods({
                     type: 'remove_friendship',
                     on: {
                         objtype: 'friend',
-                        ref: id
+                        ref: friend._id
                     }
                 });
             }
         });
 
-        id = Friends.findOne({me: target._id, target: this.userId});
-        if(!id){
+        friend = Friends.findOne({me: target._id, target: this.userId});
+        if(!friend){
             throw new Meteor.Error(404, 'User not found');
         }
-        Friends.update({me: target._id, target: this.userId}, {$set: {live: 0}}, function(err){
+        Friends.update({me: target._id, target: this.userId}, {$set: {live: 0, reciprocal: 0}}, function(err){
             if(!err){
                 Activities.insertActivity({
                     to: Meteor.userId(),
                     from: target._id,
-                    type: 'friendship_removed',
+                    type: 'remove_friendship',
                     on: {
                         objtype: 'friend',
-                        ref: id
+                        ref: friend.id
                     }
                 });
             }

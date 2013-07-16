@@ -7,7 +7,7 @@ Meteor.methods({
         // User connected for the first time, he's not registered.
         if(!(presence = Presences.findOne({user: Meteor.userId()}))){
             // Mark it online for his friends.
-            Friends.update({ target: Meteor.userId(), live: 1 }, {$set: {online: 1}});
+            Friends.update({ target: Meteor.userId(), live: 1 }, {$set: {online: 1, timespent: 0}});
 
             // Record it's presence
             return Presences.insert({
@@ -16,14 +16,13 @@ Meteor.methods({
                 online: 1
             });
         } else {
-            // If the user is not invisible
-            // tell all his friends he is connected (if they didn't know before).
+            // If the user is not invisible, tell all his friends he is connected.
             if(!presence.invisible){
-                Friends.update({ target: Meteor.userId(), live: 1, online: 0 }, {$set: {online: 1}});
+                Friends.update({ target: Meteor.userId(), live: 1 }, {$set: {online: 1}});
             }
             return Presences.update(
                 {user: Meteor.userId()},
-                {$set: {lastseen: new Date().getTime(), 'online': 1}}
+                {$set: {lastseen: new Date().getTime(), online: 1}, $inc : {timespent: Presences.checkInterval}}
             );
         }
     },
