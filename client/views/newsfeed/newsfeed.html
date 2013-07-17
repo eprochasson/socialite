@@ -1,10 +1,12 @@
 <template name="newsfeed">
-    <h2>Newsfeed</h2>
-    <ul>
-    {{#each news}}
-    {{> news}}
-    {{else}}
-    Nothing to show here
-    {{/each}}
-    </ul>
+    <div class="newsfeed widget">
+        <h2>Newsfeed</h2>
+        <ul class="unstyled">
+        {{#each news}}
+        {{> news}}
+        {{else}}
+        Nothing to show here
+        {{/each}}
+        </ul>
+    </div>
 </template>

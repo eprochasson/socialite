@@ -1,20 +1,23 @@
 <template name="online_friends">
-
-    <h2>Online Users</h2>
-    {{#if count}}
-    You have {{count}} friend(s) online
-    <ul>
-        {{#with onlinefriends}}
-        {{#each friends}}
-            {{> online_friend}}
-        {{/each}}
-        {{/with}}
-    </ul>
-    {{else}}
-    No friend online
-    {{/if}}
+    <div class="online-user widget">
+        <h2>{{Lex 'friends.friends_online'}}</h2>
+        {{#if count}}
+        <ul class="unstyled">
+            {{#with onlinefriends}}
+            {{#each friends}}
+                {{> online_friend}}
+            {{/each}}
+            {{/with}}
+        </ul>
+        {{else}}
+        No friend online
+        {{/if}}
+    </div>
 </template>
 
 <template name="online_friend">
-    <li><img src="{{thumbnail profile.picture 100 100 'max'}}" /><a href="{{profilePath}}/{{_id}}">{{profile.name}}</a> is online (<a class="startChat" href="#">chat</a>)</a></li>
+    <li>
+        <img src="{{thumbnail profile.picture 30 30 'crop'}}" />
+        <a href="{{profilePath}}/{{_id}}">{{profile.name}}</a>
+    </li>
 </template>

@@ -7,23 +7,28 @@
                 <li class="{{activeRouteClass 'profile'}}">
                     <a href="{{profilePath}}">Profile</a>
                 </li>
-                <li class="{{activeRouteClass 'settings'}}">
-                    <a href="{{settingsPath}}">Settings</a>
+                <li class="{{activeRouteClass 'profile'}}">
+                    <a href="{{searchPath}}"><i class="icon-search"> </i></a>
                 </li>
 
-                {{#if currentUser}}
+            </ul>
+            {{/if}}
+            <ul class="nav pull-right">
                 <li class="dropdown">
                     {{> mailbox_header}}
                 </li>
                 <li class="dropdown">
                     {{> notifications}}
                 </li>
+
+                <li>{{loginButtons}}</li>
+                {{#if currentUser}}
+                <li class="{{activeRouteClass 'settings'}}">
+                    <a href="{{settingsPath}}"><i class="icon-cog"> </i></a>
+                </li>
                 {{/if}}
             </ul>
-            {{/if}}
-            <ul class="nav pull-right">
-                <li>{{loginButtons}}</li>
-            </ul>
+
         </div>
     </header>
 </template>

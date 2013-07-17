@@ -46,3 +46,7 @@ Meteor.i18nMessages.messages = {
 Meteor.i18nMessages.button = {
     close: 'Close'
 };
+
+Meteor.i18nMessages.friends = {
+    friends_online: 'Friends online'
+};

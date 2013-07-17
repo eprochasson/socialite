@@ -2,12 +2,15 @@ Browse/search users
 User geolocalisation.
 
 Make sure logout users are redirected to the front page, always.
-Make sure non login users don't get much subscription nor database insert.
+
 Check user security: do not allow user to change all their profile.
 Check filepicker secret/security thingy. Not sure it's cool.
 
 
 Setting page
 
-Thing needs serious design work.
+Thing needs serious design work. Finish notification template (for single notification)
 Complete Lexicon...
+
+Subscription process + email validation.
+Check input security (not too long, invalid characters, injection...).

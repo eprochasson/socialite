@@ -72,6 +72,9 @@ Meteor.publish('myNewsfeed', function(limit){
 });
 
 Meteor.publish("oneConversation", function(conversation, limit){
+    if(!this.userId){
+        return;
+    }
     if(conversation){
         var conv = Conversations.findOne(conversation);
         if(conv.owner == this.userId){
@@ -98,6 +101,9 @@ Meteor.publish("oneConversation", function(conversation, limit){
 Meteor.publish("myFriendList", function(limit){
     // load a very light version of the friendlist
     // Not very reactive.
+    if(!this.userId){
+        return;
+    }
 
     if(this.userId){
         Meteor.publishWithRelations({

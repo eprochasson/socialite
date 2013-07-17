@@ -17,10 +17,11 @@ Meteor.Presence = {
 // Update last seen date.
 Meteor.autorun(function(){
     Session.get('last-presence-at'); // Just to hit the context.
-
-    Meteor.call('setUserPresence', function(err,res){
-        if(err){
-            console.log('setUserPresence: huho');
-        }
-    })
+    if(Meteor.userId()){
+        Meteor.call('setUserPresence', function(err,res){
+            if(err){
+                console.log('setUserPresence: huho');
+            }
+        })
+    }
 });

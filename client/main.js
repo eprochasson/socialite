@@ -1,21 +1,29 @@
 Meteor.startup(function(){
-    // All my data
-    Meteor.subscribe('myData', function(){
-        Session.set('settings', Meteor.user().settings||{});
+
+    Deps.autorun(function(){
+        // All my data. Provide only to logged-in users.
+        if(!Meteor.loggingIn() && Meteor.userId()){
+            Meteor.subscribe('myData', function(){
+                Session.set('settings', Meteor.user().settings||{});
+            });
+            Meteor.subscribe('myPictures');
+            Meteor.subscribe('myNotifications');
+
+            Meteor.subscribe('myFriendList');
+            myNewsFeedHandle = Meteor.subscribeWithPagination('myNewsfeed', Newsfeed.activitiesPerPage);
+
+            // My conversations
+            conversationsHandle = Meteor.subscribeWithPagination('myConversations', 3);
+
+            oneConversationHandle = Meteor.subscribeWithPagination('oneConversation', function(){
+                return Session.get('currentConversation') || null;
+            }, Messages.messagePerPage);
+
+            // Questions for the profile form.
+            Meteor.subscribe('questions');
+
+        }
     });
-    Meteor.subscribe('myPictures');
-    Meteor.subscribe('myNotifications');
-
-        Meteor.subscribe('myFriendList');
-
-    myNewsFeedHandle = Meteor.subscribeWithPagination('myNewsfeed', Newsfeed.activitiesPerPage);
-
-    // My conversations
-    conversationsHandle = Meteor.subscribeWithPagination('myConversations', 3);
-
-    oneConversationHandle = Meteor.subscribeWithPagination('oneConversation', function(){
-        return Session.get('currentConversation') || null;
-    }, Messages.messagePerPage);
 
     // When visiting someone's profile
     Deps.autorun(function () {
@@ -25,9 +33,6 @@ Meteor.startup(function(){
             return Session.get("currentUserProfile") || null;
         }, Activities.activitiesPerPage);
     });
-
-    // Questions for the profile form.
-    Meteor.subscribe('questions');
 
 //    Meteor.subscribe('adminShowEveryone');
 });
