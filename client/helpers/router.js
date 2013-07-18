@@ -30,6 +30,7 @@ Meteor.Router.add({
         to: 'profile',
         and: function(id){ Session.set('currentUserProfile', id);}
     },
+    '/search': 'search',
     '*': 'p404'
 });
 

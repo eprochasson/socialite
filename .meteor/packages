@@ -5,7 +5,6 @@
 
 preserve-inputs
 accounts-ui-bootstrap-dropdown
-bootstrap
 accounts-password
 accounts-base
 underscore
@@ -20,3 +19,4 @@ publish-with-relations
 paginated-subscription
 filepicker
 less
+bootstrap-cerulean

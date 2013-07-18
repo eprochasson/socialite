@@ -13,6 +13,7 @@
     "spin": {},
     "paginated-subscription": {},
     "pagination": {},
-    "filepicker": {}
+    "filepicker": {},
+    "bootstrap-cerulean": {}
   }
 }

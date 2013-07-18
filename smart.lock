@@ -15,13 +15,19 @@
       "spin": {},
       "paginated-subscription": {},
       "pagination": {},
-      "filepicker": {}
+      "filepicker": {},
+      "bootstrap-cerulean": {}
     },
     "packages": {
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
         "tag": "v0.1.5",
         "commit": "e12b128f140caa2797720cbd5fae084de7810c6a"
+      },
+      "router": {
+        "git": "https://github.com/tmeasday/meteor-router.git",
+        "tag": "v0.5.3",
+        "commit": "7bd3a1bdd1099625bb8b49406d9b8f961d6f4a17"
       },
       "i18n": {
         "git": "https://github.com/jerico-dev/meteor-i18n.git",
@@ -62,6 +68,16 @@
         "git": "https://github.com/Filepicker/meteor.git",
         "tag": "v0.3.0",
         "commit": "dcb6f3779e5fc105520ba06b0392e3a79c73a7e6"
+      },
+      "bootstrap-cerulean": {
+        "git": "https://github.com/eprochasson/bootstrap-cerulean",
+        "tag": "v0.0.1",
+        "commit": "a0ec20bf3c0ddcacdb51574a387e9436f67ed53b"
+      },
+      "page-js-ie-support": {
+        "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
+        "tag": "v1.3.5",
+        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
       }
     }
   }
