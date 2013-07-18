@@ -1,0 +1,25 @@
+.newsfeed{
+  .border-radius(3px);
+  border: 1px @blueLessLight solid;
+
+  ul {
+    margin-left: 0;
+    list-style: none;
+    border-top: 1px @blueLessLight solid;
+    border-bottom: 1px @blueLessLight solid;
+  }
+  ul li{
+    width: 100%;
+  }
+  ul li img{
+    height: 30px;
+    widht: 30px;
+    float: left;
+    margin-right:3px;
+  }
+  h2{
+    font-size:1.1em;
+    line-height: normal;
+    text-align: center;
+  }
+}

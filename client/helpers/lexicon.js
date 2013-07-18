@@ -48,5 +48,5 @@ Meteor.i18nMessages.button = {
 };
 
 Meteor.i18nMessages.friends = {
-    friends_online: 'Friends online'
+    friends_online: 'Online friends'
 };

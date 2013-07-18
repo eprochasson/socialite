@@ -1,0 +1,27 @@
+<template name="news_now_friend">
+    {{#if isValid}}
+    {{> profile_popover from}} and {{> profile_popover to}} are now friends ({{when}})
+    {{/if}}
+</template>
+
+<template name="news_update_profile">
+    {{#if isValid}}
+         {{> profile_popover from}} update his profile! ({{when}})
+    {{/if}}
+
+</template>
+
+<template name="news_update_profile_picture">
+    {{#if isValid}}
+        {{> profile_popover from}} update his profile picture! ({{when}})
+
+    {{/if}}
+</template>
+
+<template name="news_info">
+    This is the default template. Should not happen
+</template>
+
+<template name="profile_popover">
+    <a href="#" data-trigger="hover" data-toggle="popover" data-placement="top" title="{{profile.name}}" data-content="YOLO">{{profile.name}}</a>
+</template>

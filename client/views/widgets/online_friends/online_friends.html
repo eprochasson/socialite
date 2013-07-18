@@ -2,7 +2,7 @@
     <div class="online-user widget">
         <h2>{{Lex 'friends.friends_online'}}</h2>
         {{#if count}}
-        <ul class="unstyled">
+        <ul>
             {{#with onlinefriends}}
             {{#each friends}}
                 {{> online_friend}}
@@ -17,7 +17,6 @@
 
 <template name="online_friend">
     <li>
-        <img src="{{thumbnail profile.picture 30 30 'crop'}}" />
-        <a href="{{profilePath}}/{{_id}}">{{profile.name}}</a>
+        <a href="{{profilePath}}/{{_id}}"><img width="30" height="30" src="{{thumbnail profile.picture 30 30 'crop'}}" />{{profile.name}}</a>
     </li>
 </template>

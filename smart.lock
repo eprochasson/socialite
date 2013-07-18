@@ -16,7 +16,7 @@
       "paginated-subscription": {},
       "pagination": {},
       "filepicker": {},
-      "bootstrap-cerulean": {}
+      "bootstrap-themes": {}
     },
     "packages": {
       "accounts-ui-bootstrap-dropdown": {
@@ -69,10 +69,10 @@
         "tag": "v0.3.0",
         "commit": "dcb6f3779e5fc105520ba06b0392e3a79c73a7e6"
       },
-      "bootstrap-cerulean": {
-        "git": "https://github.com/eprochasson/bootstrap-cerulean",
-        "tag": "v0.0.1",
-        "commit": "a0ec20bf3c0ddcacdb51574a387e9436f67ed53b"
+      "bootstrap-themes": {
+        "git": "https://github.com/eprochasson/meteor-bootstrap-themes",
+        "tag": "v0.0.2",
+        "commit": "6b07b81832f133cf7dcbeba9cd98d3257a2a7714"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

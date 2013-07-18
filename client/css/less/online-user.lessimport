@@ -1,0 +1,39 @@
+
+.online-user{
+  .border-radius(3px);
+  border: 1px @blueLessLight solid;
+
+  ul {
+    margin-left: 0;
+    list-style: none;
+    border-top: 1px @blueLessLight solid;
+    border-bottom: 1px @blueLessLight solid;
+  }
+  ul li{
+    width: 100%;
+  }
+  ul li img{
+    height: 30px;
+    widht: 30px;
+    float: left;
+    margin-right:3px;
+  }
+  ul li a {
+    color: @grayDarker;
+    height: 32px;
+    background: @blueLight;
+    display: block;
+    width: 100%;
+    line-height: 32px;
+    font-size:0.90em;
+  }
+  ul li a:hover{
+    background: @blueLessLight;
+    text-decoration: none;
+  }
+  h2{
+    font-size:1.1em;
+    line-height: normal;
+    text-align: center;
+  }
+}
