@@ -1,3 +1,7 @@
+/***********************************************
+ * Client side configuration
+ ********************************************* */
+
 if(Meteor.isClient){
     Accounts.ui.config({
         passwordSignupFields: 'EMAIL_ONLY'
@@ -8,57 +12,84 @@ if(Meteor.isClient){
 
     //FilePicker API Key
     Meteor.filePickerKey = "";
-    Meteor.S3Url = "";
+    Meteor.fpUrl = "https://www.filepicker.io/api/file/";
+    Meteor.googleMapApiKey = "";
 }
 
 
-/*
-    Users configuration
- */
-// What fields are public for everyone
-Meteor.users.publicProfileInformation = {
-    // show selected information
-    'profile.name' : 1,
-    'profile.dob': 1,
-    'profile.gender': 1,
-    'profile.online': 1,
-    'profile.picture': 1
-};
-// What fields are reserved for friends only
-Meteor.users.privateProfileInformation = {
-    'profile': 1 // show all profile
-};
+/***********************************************
+ * Server side configuration
+ * *********************************************/
 
-// What field I can see about myself
-Meteor.users.myProfileInformation = {
-    'profile': 1,
-    'friends': 1,
-    'settings': 1
-};
+if(Meteor.isServer){
+     /*
+        Users configuration
+     */
+    // What fields are public for everyone
+    Meteor.users.publicProfileInformation = {
+        // show selected information
+        'profile.name' : 1,
+        'profile.dob': 1,
+        'profile.gender': 1,
+        'profile.online': 1,
+        'profile.picture': 1
+    };
+    // What fields are reserved for friends only
+    Meteor.users.privateProfileInformation = {
+        'profile': 1 // show all profile
+    };
+
+    // What field I can see about myself
+    Meteor.users.myProfileInformation = {
+        'profile': 1,
+        'friends': 1,
+        'settings': 1
+    };
+
+    /*
+        Post cooldown configuration
+    */
+    // Duration to measure velocity (default 2 minutes).
+    Cooldown.velocityCaliber = 30*1000;
+    // If target user is online, how many messages per velocityCaliber millisecond can the emitter send
+    Cooldown.onlineMaxVelocity = 15;
+    // If target is offline
+    Cooldown.offlineMaxVelocity = 5;
+    // Cooldown penalty (def: 1 minute)
+    Cooldown.cooldownPenalty = 10*1000;
+
+    //    List of visible activities (= stuff we show in the newsfeed)
+    Activities.publicActivities = ['accepted_friend_request','update_profile', 'update_profile_picture'];
+
+    // Best variable name ever. When user triggers several identical activities in a row, we don't create a new one
+    // but update the previous one. How long until we actually create a new one.
+    Activities.delayForIgnore = 1000*60*2;
+}
+
+/* *****************************************************
+    A bit of both
+ ***************************************************** */
 
 /*
-    Messages configuration
+    Various display options.
 */
-// Duration to measure velocity (default 2 minutes).
-Messages.velocityCaliber = 30*1000;
-// If target user is online, how many messages per velocityCaliber millisecond can the emitter send
-Messages.onlineMaxVelocity = 15;
-// If target is offline
-Messages.offlineMaxVelocity = 5;
-// Cooldown penalty (def: 1 minute)
-Messages.cooldownPenalty = 10*1000;
-// How many messages to display per page.
+// How many messages to display per page, for the mailbox.
 Messages.messagePerPage = 2;
 
+// number of items to show in the newsfeed
+Activities.activitiesPerPage = 10;
+
+Newsfeed = {
+    activitiesPerPage: Activities.activitiesPerPage
+};
+
 /*
-    User posted Pictures configuration
-*/
+   User posted Photos configuration, stored on filepicker.io
+ */
 // Fields people can change
-Pictures.authorizedFields = ['main'];
-// Max file size allowed for upload
-Pictures.maxFileSize = 1024*1024;
+Photos.authorizedFields = ['main'];
 // Max number of file per user (-1 = infinite)
-Pictures.maxFilePerUser = -1;
+Photos.maxFilePerUser = -1;
 
 /*
     Check user presence configuration
@@ -67,3 +98,12 @@ Pictures.maxFilePerUser = -1;
 Presences.checkInterval = 2000;
 // How long before a user is considered out (ms).
 Presences.TimeOut = 10000;
+
+// Google Map widget configuration
+Meteor.GMap = {};
+Meteor.GMap.defaultLocation = [45.490946,2.504883];
+Meteor.GMap.defaultZoomLevel = 5;
+Meteor.GMap.minZoomLevel = 4;
+Meteor.GMap.maxZoomLevel = 6;
+// Order list of favorite type for the reverse geocoding. Sort by preference order and the algorithm will try to pick the best match.
+Meteor.GMap.favoriteGeocodingType = ['administrative_area_level_2', 'administrative_area_level_1', 'locality', 'country'];
