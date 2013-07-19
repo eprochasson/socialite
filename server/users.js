@@ -16,14 +16,15 @@ Meteor.methods({
                         if(typeof Meteor.FormsValidation[method] == 'function'){
                             if(!(Meteor.FormsValidation[method])(validation, val)){
                                 valid = false;
-                            } else {
-                                // All good, let's input
-                                cleaned[question.name] = val;
                             }
                         } else {
                             valid = false;
                         }
                     });
+                    if(valid){
+                        // All good, let's input
+                        cleaned[question.name] = val;
+                    }
                 }
             } else {
                 valid = false;

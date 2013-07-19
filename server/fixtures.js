@@ -1,3 +1,4 @@
+
 if(Questions.find().count() == 0){
     Questions.insert({
         name: 'name',
@@ -45,6 +46,33 @@ if(Questions.find().count() == 0){
         sortorder: 3,
         required: true
     });
+    Questions.insert({
+        "domid": "geocoding",
+        "label": "question.geocoding",
+        "name": "geocoding",
+        "required": false,
+        "sortorder": 3,
+        "tpl": "form_geocoding",
+        "validation": [
+
+        ],
+        "value": null
+    });
+    Questions.insert({
+        "domid": "location",
+        "help": "question.location_help",
+        "label": "question.location",
+        "name": "location",
+        "required": true,
+        "sortorder": 3,
+        "tpl": "form_location",
+        "validation": [
+
+        ],
+        "value": null
+    });
+
+
 }
 if(Meteor.users.find({}).count() <= 4){
 //    Meteor.users.insert({

@@ -2,10 +2,14 @@
 
     <h5>Yo, blablabla</h5>
 
-    {{{makeQuestion 'name'}}}
-    {{{makeQuestion 'gender'}}}
+    <form id="profile_creation">
+        {{{makeQuestion 'name'}}}
+        {{{makeQuestion 'gender'}}}
 
-    {{{makeQuestion 'location'}}}
-    {{{makeQuestion 'geocoding'}}}
+        {{{makeQuestion 'location'}}}
+        {{{makeQuestion 'geocoding'}}}
+
+        <button class="btn btn-submit">{{Lex 'default.save'}}</button>
+    </form>
 
 </template>

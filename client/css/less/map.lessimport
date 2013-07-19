@@ -1,8 +1,12 @@
 #googlemap{
-  height: 500px;
+  height: 400px;
   width: 500px;
   margin: 0 auto;
   img {
     max-width: none;
   }
+}
+
+span#geocoding_target{
+  font-weight: bold;
 }

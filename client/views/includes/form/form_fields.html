@@ -30,7 +30,7 @@
         <div class="controls">
             <select id="{{domid}}" data-validate='{{validation}}' data-id="{{docid}}">
                 {{#each options}}
-                    <option value="{{value}}">{{Lex text}}</option>
+                    <option value="{{value}}">{{#if text}}{{Lex text}}{{/if}}</option>
                 {{/each}}
             </select>
         </div>
@@ -42,12 +42,13 @@
         <a class="btn btn-success geolocalisation" href="#">{{Lex 'question.find_your_location'}}</a>
         <a class="btn btn-info show_map" role="button" href="#map" data-toggle="modal">{{Lex 'question.pick_on_the_map'}}</a>
 
-        <input type="hidden" name="{{name}}" id="{{domid}}" value="{{value}}" />
+        <input type="hidden" name="{{name}}" id="{{domid}}" value="{{value}}"  data-id="{{docid}}" />
 
         <div id="map" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>Pick your location on the map</h3>
+                <h3>Point your location on the map</h3>
+                <p>{{Lex help}}</p>
             </div>
             <div class="modal-body">
                 <div id="googlemap">{{> loading}}</div>
@@ -63,7 +64,7 @@
 
 <template name="form_geocoding">
     <div class="control-group">
-        <input type="hidden" name="{{name}}" value="{{value}}" id="{{domid}}" />
-        Your current location:<span id="geocoding_target">{{#if value}}{{value}}{{else}}unknown :({{/if}}</span>
+        <input type="hidden" name="{{name}}" value="{{value}}" id="{{domid}}"  data-id="{{docid}}" />
+        {{Lex label}}:<span id="geocoding_target">{{#if value}}{{value}}{{else}}{{Lex 'question.unknown'}}{{/if}}</span>
     </div>
 </template>

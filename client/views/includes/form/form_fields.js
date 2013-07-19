@@ -20,6 +20,13 @@ Template.form_field_datepicker.helpers({
 Template.form_field_text.helpers({
     'value' : function(){ return getInputValue(this); }
 });
+Template.form_location.helpers({
+    'value' : function(){ return getInputValue(this); }
+});
+Template.form_geocoding.helpers({
+    'value' : function(){ return getInputValue(this); }
+});
+
 Template.form_field_dropdown.helpers({
     'value' : function(){ return getInputValue(this); },
     'options': function(){
@@ -76,8 +83,6 @@ Template.form_location.events({
         var center = getInputValue(this);
         var isPointing = false, marker, initPosition;
 
-
-
         if(!center){
             center = Meteor.GMap.defaultLocation;
 
@@ -95,11 +100,9 @@ Template.form_location.events({
 
         function updateMarkerPosition(latlng){
             if(isPointing){
-                console.log('updating marker position, poiting');
                 marker.setPosition(latlng);
                 updatePosition(latlng);
             } else {
-                console.log('moving marker');
                 marker = new google.maps.Marker({
                     map:map,
                     draggable:true,
@@ -109,7 +112,6 @@ Template.form_location.events({
                 updatePosition(latlng);
 
                 google.maps.event.addListener(marker, 'dragend', function(){
-                    console.log('updating marker position, draging');
                     updatePosition(marker.getPosition());
                 });
                 isPointing = true;
@@ -138,6 +140,7 @@ Template.form_location.events({
             }
         }
 
+        // Make sure to only initialize once, 1. once gmap is loaded 2. once the modal is fully shown.
         window.gmapcallback = function(){
             $('#map').on('shown',function(){
                 if(!window.maploaded){
@@ -147,10 +150,8 @@ Template.form_location.events({
             })
         };
 
+        // Load the gmap script, call previous function on success.
         load_gmap('gmapcallback');
-
-
-
     },
     'click .save_change': function(e){
         if($('.save_change').hasClass('disabled')){
@@ -160,6 +161,7 @@ Template.form_location.events({
         $('#location').val(window.mapposition.jb+','+window.mapposition.kb);
         $('#map').modal('hide');
 
+        // Get a humanly readable location
         reverseGeodecode(window.mapposition, function(err, res){
             if(err){
                 Errors.notification("Oops, we were unable to determine your location");
@@ -174,6 +176,16 @@ Template.form_location.events({
     'click .geolocalisation': function(){
         function success(location){
             $('#location').val(location.latitude+";"+location.longitude);
+            // Get a humanly readable location
+            reverseGeodecode(window.mapposition, function(err, res){
+                if(err){
+                    Errors.notification("Oops, we were unable to determine your location");
+                } else {
+                    $('#geocoding_target').html(res);
+                    $('#geocoding').val(res);
+                }
+            });
+
             Errors.notification('Got it!', 'center');
         }
 

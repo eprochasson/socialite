@@ -37,8 +37,13 @@ Meteor.i18nMessages.question = {
     dob: 'Date of Birth',
     dob_help: 'Select your date of birth',
     find_your_location: 'Let us determine your location',
-    pick_on_the_map: 'Pick your location on a map'
-
+    pick_on_the_map: 'Point your location on a map',
+    location_help: "We don't want to know your precise address! Just help you locate people near you",
+    gender: "Gender",
+    geocoding: "Your current location",
+    unknown: "Unknown :(",
+    male: "Male",
+    female: "Female"
 };
 
 Meteor.i18nMessages.messages = {

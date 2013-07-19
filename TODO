@@ -15,3 +15,5 @@ Complete Lexicon...
 Subscription process + email validation.
 Check input security (not too long, invalid characters, injection...).
 Fix Bug in Profile page.
+
+Find a way to factorize some client code.
