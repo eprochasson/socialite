@@ -1,0 +1,12 @@
+<template name="profile_popover">
+    <a href="{{profilePath}}/{{_id}}" class="profile_popover" data-trigger="hover" data-toggle="popover" data-placement="top" title="{{profile.name}}" data-html="true">{{profile.name}}</a>
+</template>
+
+
+
+<template name="short_profile">
+    <div class="short_profile">
+        <img src="{{thumbnail profile.picture 40 40}}" />
+        {{profile.name}} ({{age profile.dob}})
+    </div>
+</template>

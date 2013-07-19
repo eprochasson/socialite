@@ -18,16 +18,6 @@ Template.profile.helpers({
             return '';
         }
     },
-    age : function(){
-        var user = getUser();
-        if(user && user.profile && user.profile.dob){
-            var age = moment(user.profile.dob, 'DD-MM-YYYY');
-            var now = moment();
-            return now.diff(age, 'years');
-        } else {
-            return 0;
-        }
-    },
     pictures: function(){
         return Photos.find({}, {sort: { sortorder: -1 }});
     }

@@ -17,7 +17,9 @@ Handlebars.registerHelper('Lex', function(k, options){
 });
 
 Handlebars.registerHelper('thumbnail', function(url, w,h,fit){
-    if(!url){ return ''; }
+    if(!url){
+        url = "https://www.filepicker.io/api/file/A3WeRoNIR8aAg93xbyFe/"
+    }
     var str = url+'/convert?';
     var options = {
         w: w || null,
@@ -32,4 +34,40 @@ Handlebars.registerHelper('thumbnail', function(url, w,h,fit){
     res = res.join('&');
 
     return str+res;
+});
+
+Handlebars.registerHelper('age', function(date, hash){
+    if(!typeof date === 'string'){
+        return 0;
+    }
+
+    var age = moment(date, 'DD-MM-YYYY');
+    var now = moment();
+    return now.diff(age, 'years');
+});
+
+Handlebars.registerHelper('profileComplete', function(){
+    var user = Meteor.userId();
+    if(!user){
+        return false;
+    }
+    user = Meteor.users.findOne(user);
+    return  user.profile_complete;
+});
+
+Handlebars.registerHelper('makeQuestion', function(name){
+    if(!typeof name === 'string'){
+        return '';
+    }
+
+    var question = Questions.findOne({name: name});
+    if(!question){
+        return '';
+    }
+
+    var tpl = question.tpl || 'form_field_text';
+    if(!Template[tpl]){
+        return '';
+    }
+    return Template[tpl](question);
 });

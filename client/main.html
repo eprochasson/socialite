@@ -1,13 +1,21 @@
 <head>
     <title>Socialite</title>
-    <link href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
 <div class="container">
     {{> header}}
     <div id="main" class="row-fluid">
-        {{renderPage}}
+        {{#if currentUser}}
+            {{#if profileComplete}}
+                {{renderPage}}
+            {{else}}
+                {{> profile_creation}}
+            {{/if}}
+        {{else}}
+            {{> front}}
+        {{/if}}
     </div>
 </div>
 

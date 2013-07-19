@@ -11,7 +11,6 @@
 
 
 <template name="form_field_datepicker">
-
     <div class="control-group">
         <label class="control-label {{class}}" for="{{domid}}">{{Lex label}}</label>
 
@@ -22,7 +21,6 @@
             <span class="help-inline">{{Lex help}}</span>
         </div>
     </div>
-
 </template>
 
 <template name="form_field_dropdown">
@@ -36,5 +34,36 @@
                 {{/each}}
             </select>
         </div>
+    </div>
+</template>
+
+<template name="form_location">
+    <div class="control-group">
+        <a class="btn btn-success geolocalisation" href="#">{{Lex 'question.find_your_location'}}</a>
+        <a class="btn btn-info show_map" role="button" href="#map" data-toggle="modal">{{Lex 'question.pick_on_the_map'}}</a>
+
+        <input type="hidden" name="{{name}}" id="{{domid}}" value="{{value}}" />
+
+        <div id="map" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Pick your location on the map</h3>
+            </div>
+            <div class="modal-body">
+                <div id="googlemap">{{> loading}}</div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-primary disabled save_change">Ok</a>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<template name="form_geocoding">
+    <div class="control-group">
+        <input type="hidden" name="{{name}}" value="{{value}}" id="{{domid}}" />
+        Your current location:<span id="geocoding_target">{{#if value}}{{value}}{{else}}unknown :({{/if}}</span>
     </div>
 </template>

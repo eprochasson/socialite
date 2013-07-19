@@ -1,10 +1,35 @@
-@import "/.meteor/meteorite/packages/bootstrap-themes/lib/themes/cerulean/cerulean.lessimport";
-
-
-// Colors:
+// Variables:
 @blueLight: #effffd;
 @blueLessLight: #d8fffd;
+@pageWidth: 600px;
 
 
+@import "/.meteor/meteorite/packages/bootstrap-themes/lib/themes/cerulean/cerulean.lessimport";
 @import "less/online-user.lessimport";
 @import "less/newsfeed.lessimport";
+@import "less/map.lessimport";
+
+body{
+  padding-top: 55px;
+}
+.navbar{
+  position: fixed;
+  top: 0;
+  width: @pageWidth;
+  margin: 0 auto;
+}
+
+@media all and (max-width: @pageWidth) {
+  .navbar{
+    position: static;
+    width: auto;
+    margin: auto;
+  }
+  body{
+    padding-top: 0;
+  }
+}
+
+.container{
+  max-width: @pageWidth;
+}

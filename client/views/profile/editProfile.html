@@ -10,9 +10,7 @@
     <form id="editProfile">
 
         {{#each questions}}
-        {{#constant}}
-            {{{callPartial tpl this 'form_field_text'}}}
-        {{/constant}}
+            {{{makeQuestion name}}}
         {{/each}}
 
 

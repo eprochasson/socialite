@@ -17,12 +17,11 @@ var validateControlGroup = function(input){
             }
         });
     });
-
 };
 
 Template.editProfile.helpers({
     questions: function(){
-        return Questions.find({}, {sort: {sortorder: 1}});
+        return Questions.find({}, {sort: {sortorder: 1}, reactive: 0});
     },
     pictures: function(){
         return Photos.find({owner: Meteor.userId()}, {sort: {sortorder: -1}});
@@ -48,7 +47,6 @@ Template.editProfile.events = {
             }
         });
 
-        console.log('calling update profile');
         Meteor.call('update_profile', values);
     },
     'blur form#editProfile input': function(e){

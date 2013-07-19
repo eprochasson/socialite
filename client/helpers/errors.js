@@ -8,9 +8,17 @@ Errors = {
     },
     //Show a small popup on the side.
     notification: function(err, position){
+        console.log('showing something', err, position);
+
         position = position || 'top-right';
-        var html = err.html || false,
+        var html, text;
+
+        if(typeof err === 'string'){
+            text = err;
+        } else {
+            html = err.html || false;
             text = err.text || false;
+        }
         if(!html && !text){
             return;
         }

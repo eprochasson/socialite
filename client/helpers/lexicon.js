@@ -35,7 +35,10 @@ Meteor.i18nMessages.question = {
     name_help: 'This is the name other people will see',
 
     dob: 'Date of Birth',
-    dob_help: 'Select your date of birth'
+    dob_help: 'Select your date of birth',
+    find_your_location: 'Let us determine your location',
+    pick_on_the_map: 'Pick your location on a map'
+
 };
 
 Meteor.i18nMessages.messages = {

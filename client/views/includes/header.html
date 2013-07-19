@@ -3,32 +3,39 @@
         <div class="navbar-inner">
             <a class="brand" href="/">Socialite</a>
             {{#if currentUser}}
+            {{#if profileComplete}}
             <ul class="nav">
                 <li class="{{activeRouteClass 'profile'}}">
                     <a href="{{profilePath}}">Profile</a>
                 </li>
-                <li class="{{activeRouteClass 'search'}}">
-                    <a href="{{searchPath}}"><i class="icon-search"> </i></a>
-                </li>
-
             </ul>
             {{/if}}
+            {{/if}}
+
             <ul class="nav pull-right">
+                {{#if currentUser}}
+                {{#if profileComplete}}
                 <li class="dropdown">
                     {{> mailbox_header}}
                 </li>
                 <li class="dropdown">
                     {{> notifications}}
                 </li>
+                {{/if}}
+                {{/if}}
 
                 <li>{{loginButtons}}</li>
                 {{#if currentUser}}
+                {{#if profileComplete}}
+                <li class="{{activeRouteClass 'search'}}">
+                    <a href="{{searchPath}}"><i class="icon-search"> </i></a>
+                </li>
                 <li class="{{activeRouteClass 'settings'}}">
                     <a href="{{settingsPath}}"><i class="icon-cog"> </i></a>
                 </li>
                 {{/if}}
+                {{/if}}
             </ul>
-
         </div>
     </header>
 </template>
