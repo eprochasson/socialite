@@ -7,15 +7,7 @@
 <div class="container">
     {{> header}}
     <div id="main" class="row-fluid">
-        {{#if currentUser}}
-            {{#if profileComplete}}
-                {{renderPage}}
-            {{else}}
-                {{> profile_creation}}
-            {{/if}}
-        {{else}}
-            {{> front}}
-        {{/if}}
+        {{renderPage}}
     </div>
 </div>
 

@@ -26,6 +26,7 @@ Meteor.i18nMessages.errors = {
     name_between_3_and_30: 'Your name must contain between 3 and 30 characters',
     undefined: 'Undefined error',
     field_required: 'This field is required',
+    invalid_location: 'Invalid location',
     date_of_birth: 'Please select a valid date. You must be more than 18 years old.'
 };
 
@@ -33,14 +34,15 @@ Meteor.i18nMessages.question = {
     name: 'Name',
     name_placeholder: 'Your Screen Name',
     name_help: 'This is the name other people will see',
-
     dob: 'Date of Birth',
     dob_help: 'Select your date of birth',
     find_your_location: 'Let us determine your location',
     pick_on_the_map: 'Point your location on a map',
     location_help: "We don't want to know your precise address! Just help you locate people near you",
     gender: "Gender",
+    gender_help: "",
     geocoding: "Your current location",
+    geocoding_help: "",
     unknown: "Unknown :(",
     male: "Male",
     female: "Female"

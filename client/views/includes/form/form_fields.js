@@ -1,7 +1,7 @@
 // pick default question value, or user input if available.
 var getInputValue = function(self){
     // trick to avoid blinking when updating the user profile. (instead of calling Meteor.user())
-    var user = Meteor.users.findOne(Meteor.userId, {reactive: false});
+    var user = Meteor.users.findOne(Meteor.userId(), {reactive: false});
     if(user.profile && user.profile[self.name]){
         return user.profile[self.name]
     } else {
@@ -38,6 +38,27 @@ Template.form_field_dropdown.helpers({
     }
 });
 
+Template.form_profile_picture.helpers({
+    'filepickerApiKey': function(){ return Meteor.filePickerKey;},
+    value: function(){ return getInputValue(this); }
+});
+
+Template.form_profile_picture.events({
+    'change #filepicker': function(e){
+        e.preventDefault();
+        Meteor.call('uploadPhoto', e.fpfile, function(err, res){
+            console.log(err, res);
+        })
+    }
+});
+Template.form_profile_picture.rendered = function(){
+    var fp = document.getElementById('filepicker');
+    if(fp){
+        filepicker.constructWidget(fp);
+    }
+
+};
+
  var load_gmap = function(callback){
     if(!window.gmaploaded){
         var url = "//maps.googleapis.com/maps/api/js?key="+Meteor.googleMapApiKey+"&sensor=true";
@@ -49,32 +70,40 @@ Template.form_field_dropdown.helpers({
         script.src = url;
         document.body.appendChild(script);
         window.gmaploaded = true;
+    } else {
+        // Not loading gmap, but calling the callback nevertheless
+        if(callback && window[callback]){
+            window[callback]();
+        }
     }
 };
 var reverseGeodecode = function(latlng, callback){
-    load_gmap();
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({latLng : window.mapposition}, function(res, status){
-        if(status == google.maps.GeocoderStatus.OK) {
-            var result = res[0].formatted_address, best = Infinity;
-            result = res[0].formatted_address;
-            _.each(res, function(t){
-                _.each(t.types, function(l){
-                    if(_.contains(Meteor.GMap.favoriteGeocodingType, l)){
-                        if(_.indexOf(Meteor.GMap.favoriteGeocodingType, l) < best){
-                            best = _.indexOf(Meteor.GMap.favoriteGeocodingType, l);
-                            result = t.formatted_address;
+    window.cb = function(){
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({latLng : new google.maps.LatLng(latlng.lat, latlng.lng)}, function(res, status){
+            if(status == google.maps.GeocoderStatus.OK) {
+                var result = res[0].formatted_address, best = Infinity;
+                result = res[0].formatted_address;
+                _.each(res, function(t){
+                    _.each(t.types, function(l){
+                        if(_.contains(Meteor.GMap.favoriteGeocodingType, l)){
+                            if(_.indexOf(Meteor.GMap.favoriteGeocodingType, l) < best){
+                                best = _.indexOf(Meteor.GMap.favoriteGeocodingType, l);
+                                result = t.formatted_address;
+                            }
                         }
-                    }
-                })
-            });
+                    })
+                });
 
-            callback(null, result);
-        } else {
-            callback(true, null);
-        }
-    });
-
+                callback(null, result);
+            } else {
+                console.log(latlng, status);
+                callback(true, null);
+            }
+        });
+    };
+    load_gmap('cb');
 };
 
 Template.form_location.events({
@@ -84,9 +113,12 @@ Template.form_location.events({
         var isPointing = false, marker, initPosition;
 
         if(!center){
-            center = Meteor.GMap.defaultLocation;
-
-
+            if(center = $('#location').val()){
+                center = center.split(',');
+                initPosition = center;
+            } else{
+                center = Meteor.GMap.defaultLocation;
+            }
         } else {
             $('.save_change').removeClass('disabled');
             center = center.split(',');
@@ -154,15 +186,14 @@ Template.form_location.events({
         load_gmap('gmapcallback');
     },
     'click .save_change': function(e){
-        if($('.save_change').hasClass('disabled')){
-            e.preventDefault();
-            return false;
-        }
-        $('#location').val(window.mapposition.jb+','+window.mapposition.kb);
+        e.preventDefault();
+
+        $('#location').val(window.mapposition.lat()+','+window.mapposition.lng());
         $('#map').modal('hide');
 
         // Get a humanly readable location
-        reverseGeodecode(window.mapposition, function(err, res){
+
+        reverseGeodecode({lat: window.mapposition.lat(), lng: window.mapposition.lng()}, function(err, res){
             if(err){
                 Errors.notification("Oops, we were unable to determine your location");
             } else {
@@ -173,18 +204,22 @@ Template.form_location.events({
 
         return true;
     },
-    'click .geolocalisation': function(){
+    'click .geolocalisation': function(e){
+        e.preventDefault();
         function success(location){
-            $('#location').val(location.latitude+";"+location.longitude);
+            $('#location').val(location.coords.latitude+","+location.coords.longitude);
             // Get a humanly readable location
-            reverseGeodecode(window.mapposition, function(err, res){
-                if(err){
-                    Errors.notification("Oops, we were unable to determine your location");
-                } else {
-                    $('#geocoding_target').html(res);
-                    $('#geocoding').val(res);
-                }
-            });
+            if($('#geocoding_target')){
+                reverseGeodecode({lat: location.coords.latitude, lng: location.coords.longitude}, function(err, res){
+                    if(err){
+                        console.log(err);
+                        Errors.notification("Oops, we were unable to determine your location");
+                    } else {
+                        $('#geocoding_target').html(res);
+                        $('#geocoding').val(res);
+                    }
+                });
+            }
 
             Errors.notification('Got it!', 'center');
         }

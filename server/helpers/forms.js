@@ -30,6 +30,19 @@ Meteor.FormsValidation = {
         return valid;
     },
     'dropdown': function(validation, selection){
-        return _.contains(validation, selection);
+        return _.contains(validation.values, selection);
+    },
+    coordinates: function(validation, str){
+        if(validation){
+            var values = str.split(',');
+            if((values[0] == undefined) || (values[1] == undefined)){
+                return false;
+            }
+            var lat = values[0]+0;
+            var lng = values[0]+0;
+            return lat < 90 && lat > -90 && lng < 180 && lng > -180;
+        } else {
+            return true;
+        }
     }
 };

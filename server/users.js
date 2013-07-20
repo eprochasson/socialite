@@ -3,7 +3,8 @@
 Meteor.methods({
     'update_profile': function(values){
         var valid = true;
-        var cleaned = {}; // store name -> value
+        var cleaned = Meteor.user().profile; // store name -> value
+        if(!cleaned) cleaned = {}; // Empty profile
         _.each(values, function(val, docid){
             if(docid){
                 // Validate the response
@@ -76,6 +77,25 @@ Meteor.methods({
             return true;
         } else {
             throw new Meteor.Error(500, 'Internal Error');
+        }
+    },
+    profile_completed: function(){
+        // Check that we had enough information, then make user profile completed and public.
+        var profile = Meteor.user().profile;
+        if(!profile){
+            throw new Meteor.Error(404, 'User Not Found');
+        }
+
+        if(Meteor.profileCreation && Meteor.profileCreation.requiredFieldForCompletion){
+            if(_.every(Meteor.profileCreation.requiredFieldForCompletion, function(f){ return !_.isUndefined(profile[f])})){
+                Meteor.users.update(this.userId, {$set: {profile_complete: 1, visible: 1}});
+                return true;
+            } else {
+                console.log('Something wrong, seems like we allowed a user to go public with invalid profile', profile);
+                throw new Meteor.Error(500, 'Internal Error');
+            }
+        } else {
+            return true;
         }
     }
 });

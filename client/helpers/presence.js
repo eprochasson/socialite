@@ -10,18 +10,13 @@ Meteor.startup(function(){
 
 Meteor.Presence = {
     update: function(){
-        Session.set('last-presence-at', new Date());
+        if(Meteor.userId()){
+            Meteor.call('setUserPresence', function(err,res){
+                if(err){
+                    console.log('setUserPresence: huho');
+                }
+            })
+        }
     }
 };
 
-// Update last seen date.
-Meteor.autorun(function(){
-    Session.get('last-presence-at'); // Just to hit the context.
-    if(Meteor.userId()){
-        Meteor.call('setUserPresence', function(err,res){
-            if(err){
-                console.log('setUserPresence: huho');
-            }
-        })
-    }
-});

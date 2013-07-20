@@ -47,12 +47,11 @@ Handlebars.registerHelper('age', function(date, hash){
 });
 
 Handlebars.registerHelper('profileComplete', function(){
-    var user = Meteor.userId();
-    if(!user){
-        return false;
+    var res = Session.get('profileComplete');
+    if(!(res === undefined)){
+        return res;
     }
-    user = Meteor.users.findOne(user);
-    return  user.profile_complete;
+
 });
 
 Handlebars.registerHelper('makeQuestion', function(name){

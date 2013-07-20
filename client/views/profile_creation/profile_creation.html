@@ -1,15 +1,7 @@
 <template name="profile_creation">
-
     <h5>Yo, blablabla</h5>
-
     <form id="profile_creation">
-        {{{makeQuestion 'name'}}}
-        {{{makeQuestion 'gender'}}}
-
-        {{{makeQuestion 'location'}}}
-        {{{makeQuestion 'geocoding'}}}
-
-        <button class="btn btn-submit">{{Lex 'default.save'}}</button>
+        {{{profileCreationCurrentStep}}}
+        <button class="btn btn-submit btn-primary btn-large">{{Lex 'default.save'}}</button>
     </form>
-
 </template>

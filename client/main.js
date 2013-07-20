@@ -5,6 +5,7 @@ Meteor.startup(function(){
         if(!Meteor.loggingIn() && Meteor.userId()){
             Meteor.subscribe('myData', function(){
                 Session.set('settings', Meteor.user().settings||{});
+                Session.set('profileComplete', Meteor.user().profile_complete||0);
             });
             Meteor.subscribe('myPictures');
             Meteor.subscribe('myNotifications');

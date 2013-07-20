@@ -30,6 +30,7 @@ Meteor.Router.add({
         to: 'profile',
         and: function(id){ Session.set('currentUserProfile', id);}
     },
+    'profile_done': 'profile_done',
     '/search': 'search',
     '*': 'p404'
 });
@@ -38,8 +39,17 @@ Meteor.Router.filters({
     'requireLogin': function(page) {
         if (Meteor.loggingIn()) {
             return 'loading';
-        } else if (Meteor.user()) {
-            return page;
+        } else if (Meteor.userId()){
+            if(!Session.get('profileComplete')){
+                if(Session.get('profileComplete') === undefined){
+                    return page;
+                } else {
+                    return 'profile_creation';
+                }
+            } else {
+                console.log('profile complete true');
+                return page;
+            }
         } else {
             return 'front';
         }

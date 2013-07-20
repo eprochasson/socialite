@@ -39,7 +39,31 @@ Template.profile_creation.events = {
             }
         });
 
-        Meteor.call('update_profile', values);
+        Meteor.call('update_profile', values, function(err, res){
+            if(err){
+                console.log(err);
+                Errors.modal({});
+            } else {
+                var currentStep = Session.get('profileCreationCurrentStep');
+                if(currentStep == Meteor.profileCreation.numberOfStep){
+                    console.log('Moving one!');
+
+                    Meteor.call('profile_completed', function(err, res){
+                        if(err){
+                            console.log(err);
+                        } else {
+
+                            // Profile completed!
+                            Session.set('profileComplete', 1);
+                            Meteor.Router.to('profile_done');
+                        }
+                    })
+                } else {
+                    Session.set('profileCreationCurrentStep', currentStep+1);
+                }
+
+            }
+        });
     },
     'blur form input': function(e){
         e.preventDefault();
@@ -60,3 +84,17 @@ Template.profile_creation.events = {
         })
     }
 };
+
+Template.profile_creation.helpers({
+    profileCreationCurrentStep: function(){
+        var step = Session.get('profileCreationCurrentStep');
+        if(step === undefined){
+            Session.set('profileCreationCurrentStep', 1);
+            return ; //function will be called again with update step.
+        }
+
+        if(Template['profile_creation_step'+step]){
+            return Template['profile_creation_step'+step]();
+        }
+    }
+});
