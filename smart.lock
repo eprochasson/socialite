@@ -2,7 +2,7 @@
   "meteor": {
     "git": "https://github.com/meteor/meteor.git",
     "branch": "master",
-    "commit": "9bb2b5447e845c4f483df5e9b42a2c1de5ab909b"
+    "commit": "2e78d0d110443ac6fb9471e6be1c136f15f03fd2"
   },
   "dependencies": {
     "basePackages": {
@@ -16,7 +16,8 @@
       "paginated-subscription": {},
       "pagination": {},
       "filepicker": {},
-      "bootstrap-themes": {}
+      "bootstrap-themes": {},
+      "font-awesome": {}
     },
     "packages": {
       "accounts-ui-bootstrap-dropdown": {
@@ -71,8 +72,13 @@
       },
       "bootstrap-themes": {
         "git": "https://github.com/eprochasson/meteor-bootstrap-themes",
-        "tag": "v0.0.2",
-        "commit": "6b07b81832f133cf7dcbeba9cd98d3257a2a7714"
+        "tag": "v0.0.3",
+        "commit": "e587bb068b9284b5d3d4efc103669811a2f2623d"
+      },
+      "font-awesome": {
+        "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
+        "tag": "v3.2.0",
+        "commit": "2cba6f907a2579cae2d399b522f9544c13d5e091"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

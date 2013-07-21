@@ -14,6 +14,7 @@
     "paginated-subscription": {},
     "pagination": {},
     "filepicker": {},
-    "bootstrap-themes": {}
+    "bootstrap-themes": {},
+    "font-awesome": {}
   }
 }

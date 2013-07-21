@@ -30,7 +30,7 @@ Meteor.Router.add({
         to: 'profile',
         and: function(id){ Session.set('currentUserProfile', id);}
     },
-    'profile_done': 'profile_done',
+    '/profile_done': 'profile_done',
     '/search': 'search',
     '*': 'p404'
 });
@@ -47,7 +47,6 @@ Meteor.Router.filters({
                     return 'profile_creation';
                 }
             } else {
-                console.log('profile complete true');
                 return page;
             }
         } else {

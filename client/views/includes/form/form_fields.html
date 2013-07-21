@@ -79,7 +79,7 @@
             <img src="{{thumbnail value 200 200}}" width=200 height=200 />
             <a href="#" class="btn">Resize</a>
             {{else}}
-            <input type="filepicker" id="filepicker" data-fp-apikey="{{filepickerApiKey}}" data-fp-mimetypes="image/*" data-fp-container="modal" data-fp-maxsize="2097152" data-fp-services="COMPUTER,WEBCAM">
+            <input type="filepicker" id="filepicker" data-id="{{docid}}" data-fp-apikey="{{filepickerApiKey}}" data-fp-mimetypes="image/*" data-fp-container="modal" data-fp-maxsize="2097152" data-fp-services="COMPUTER,WEBCAM">
             <span class="help-inline">{{Lex help}}</span>
             {{/if}}
         </div>

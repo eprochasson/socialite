@@ -2,15 +2,6 @@
     <header class="navbar">
         <div class="navbar-inner">
             <a class="brand" href="/">Socialite</a>
-            {{#if currentUser}}
-            {{#if profileComplete}}
-            <ul class="nav">
-                <li class="{{activeRouteClass 'profile'}}">
-                    <a href="{{profilePath}}">Profile</a>
-                </li>
-            </ul>
-            {{/if}}
-            {{/if}}
 
             <ul class="nav pull-right">
                 {{#if currentUser}}
@@ -21,21 +12,24 @@
                 <li class="dropdown">
                     {{> notifications}}
                 </li>
-                {{/if}}
-                {{/if}}
-
-                <li>{{loginButtons}}</li>
-
-                {{#if currentUser}}
-                {{#if profileComplete}}
                 <li class="{{activeRouteClass 'search'}}">
                     <a href="{{searchPath}}"><i class="icon-search"> </i></a>
                 </li>
-                <li class="{{activeRouteClass 'settings'}}">
-                    <a href="{{settingsPath}}"><i class="icon-cog"> </i></a>
+                <li class="{{activeRouteClass 'settings'}} dropdown">
+                    <a href="#" class="dropdown-toggle" title="Settings" data-toggle="dropdown">
+                        <i class="icon-cog"> </i>
+                    </a>
+                    <ul class="settings dropdown-menu">
+                        <li><a href="{{settingsPath}}">Your account</a></li>
+                        <li><a href="{{profilePath}}">Your profile</a></li>
+                        <li><a href="{{editProfilePath}}">Edit your profile</a></li>
+                    </ul>
+
                 </li>
                 {{/if}}
                 {{/if}}
+                <li>{{loginButtons}}</li>
+
             </ul>
         </div>
     </header>

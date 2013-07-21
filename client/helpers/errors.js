@@ -3,7 +3,7 @@ Errors = {
     modal: function(err){
         $('#modalWindow').html(Template.error_modal(this.getErrorMessage(err)));
         $('#error_modal').modal().on('hidden', function(){
-            this.remove();
+            $('#error_modal').remove();
         });
     },
     //Show a small popup on the side.

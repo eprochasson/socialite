@@ -41,8 +41,8 @@ Template.profile_creation.events = {
 
         Meteor.call('update_profile', values, function(err, res){
             if(err){
-                console.log(err);
-                Errors.modal({});
+
+                Errors.modal(err);
             } else {
                 var currentStep = Session.get('profileCreationCurrentStep');
                 if(currentStep == Meteor.profileCreation.numberOfStep){

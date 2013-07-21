@@ -20,5 +20,8 @@ Template.profile.helpers({
     },
     pictures: function(){
         return Photos.find({}, {sort: { sortorder: -1 }});
+    },
+    selfUser: function(){
+        return(!Session.get('currentUserProfile') || Session.get('currentUserProfile') === Meteor.userId());
     }
 });

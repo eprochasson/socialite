@@ -5,6 +5,7 @@ Meteor.methods({
         var valid = true;
         var cleaned = Meteor.user().profile; // store name -> value
         if(!cleaned) cleaned = {}; // Empty profile
+        console.log('updating profile', values);
         _.each(values, function(val, docid){
             if(docid){
                 // Validate the response
