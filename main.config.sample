@@ -43,8 +43,11 @@ if(Meteor.isServer){
     Meteor.users.myProfileInformation = {
         'profile': 1,
         'friends': 1,
-        'settings': 1
+        'settings': 1,
+        'profile_complete': 1
     };
+
+    Meteor.users.searchResultsLimit = 10;
 
     /*
         Post cooldown configuration
@@ -107,3 +110,9 @@ Meteor.GMap.minZoomLevel = 4;
 Meteor.GMap.maxZoomLevel = 6;
 // Order list of favorite type for the reverse geocoding. Sort by preference order and the algorithm will try to pick the best match.
 Meteor.GMap.favoriteGeocodingType = ['administrative_area_level_2', 'administrative_area_level_1', 'locality', 'country'];
+
+// User profile creation process
+Meteor.profileCreation = {};
+Meteor.profileCreation.numberOfStep = 3;
+// Profile won't be validated/completed/published until all those profile fields are set.
+Meteor.profileCreation.requiredFieldForCompletion = ['name','location','gender','picture','geocoding','dob'];
