@@ -162,6 +162,36 @@ Meteor.publish('oneUserActivities', function(userId, limit){
     }
 });
 
+Meteor.publish('searchResults', function(options,limit){
+    if(!options||!this.userId){
+        return false;
+    }
+
+    var user = Meteor.users.findOne(this.userId);
+    var userloc = user.loc;
+    var friends = Friends.find({me: this.userId});
+    var friendlist = [];
+    friends.forEach(function(f){
+        friendlist.push(f.target);
+    });
+
+    options._id = {$nin: friendlist};
+    if(userloc){
+        options.loc = {
+            $near: {
+                $geometry: {
+                    type: 'Point',
+                    coordinates: userloc
+                }
+            }
+        };
+    }
+
+    options.visible = 1;
+    return Meteor.users.find(options, {sort: {lastseen: -1}, limit: limit, fields: Meteor.users.publicProfileInformation});
+});
+
+
 
 
 /******************************

@@ -69,8 +69,40 @@ if(Questions.find().count() == 0){
         "validation": {},
         "value": ""
     });
-
 }
+
+
+if(Meteor.users.find({}).count() <= 2){
+    var gender = "F";
+    for(var i = 1 ; i < 10 ; i++){
+        gender = (i % 2) ? "F" : "M";
+        Meteor.users.insert({
+            "createdAt": 1372216131137,
+            "emails": [
+                {
+                    "address": "user"+i+"@test.com",
+                    "verified": false
+                }
+            ],
+            "lastseen": 1473524657763,
+            "online": 1,
+            "profile": {
+                "dob": "08-11-1982",
+                "gender": gender,
+                "name": "Fake User"+i
+            },
+            "services": {
+            },
+            "settings": {
+                "invisible": false
+            },
+            "visible": 1,
+            "profile_complete": 1,
+            "loc": [22.2861678+Math.random(),114.1425153+Math.random()]
+        });
+    }
+}
+
 //if(Meteor.users.find({}).count() <= 4){
 ////    Meteor.users.insert({
 ////        "createdAt": 1372216131137,

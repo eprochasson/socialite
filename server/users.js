@@ -35,18 +35,21 @@ Meteor.methods({
         if(!valid){
             throw new Meteor.Error(400, 'Invalid Data');
         } else {
-            // Account only visible if at least those two information are made available.
-            var visible = 0;
-            if(cleaned.name && cleaned.gender){
-                visible = 1;
+
+            var change = {
+                $set: {
+                    profile : cleaned
+                }
+            };
+            // Update location if specify, set mongo 2d coordinates.
+            if(cleaned && cleaned.location){
+                var loc = cleaned.location.split(',');
+                change.$set.loc =  [parseFloat(loc[0]), parseFloat(loc[1])]
             }
 
-            Meteor.users.update(Meteor.userId(), {
-                $set: {
-                    profile : cleaned,
-                    visible: visible
-                }
-            });
+            Meteor.users.update(Meteor.userId(), change);
+
+
 
             Activities.insertActivity({
                 type: 'update_profile',

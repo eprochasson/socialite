@@ -35,5 +35,9 @@ Meteor.startup(function(){
         }, Activities.activitiesPerPage);
     });
 
+    Deps.autorun(function(){
+        searchHandle = Meteor.subscribe("searchResults", Session.get("searchQuery", Meteor.user.searchResultsLimit));
+    });
+
 //    Meteor.subscribe('adminShowEveryone');
 });
