@@ -1,4 +1,3 @@
-
 if(Questions.find().count() == 0){
     Questions.insert({
         name: 'name',
@@ -74,8 +73,10 @@ if(Questions.find().count() == 0){
 
 if(Meteor.users.find({}).count() <= 2){
     var gender = "F";
-    for(var i = 1 ; i < 10 ; i++){
+    for(var i = 1 ; i < 30 ; i++){
         gender = (i % 2) ? "F" : "M";
+        var dob = 1977 + Math.floor(Math.random()*10);
+        dobtime = moment('08-11-'+dob, 'DD-MM-YYYY').unix();
         Meteor.users.insert({
             "createdAt": 1372216131137,
             "emails": [
@@ -87,9 +88,10 @@ if(Meteor.users.find({}).count() <= 2){
             "lastseen": 1473524657763,
             "online": 1,
             "profile": {
-                "dob": "08-11-1982",
+                "dob": "08-11-"+dob,
                 "gender": gender,
-                "name": "Fake User"+i
+                "name": "Fake User"+i,
+                "dobtime": dobtime
             },
             "services": {
             },
@@ -98,245 +100,7 @@ if(Meteor.users.find({}).count() <= 2){
             },
             "visible": 1,
             "profile_complete": 1,
-            "loc": [22.2861678+Math.random(),114.1425153+Math.random()]
+            "loc": [22.2861678+(Math.random()*2),114.1425153+(Math.random()*2)]
         });
     }
 }
-
-//if(Meteor.users.find({}).count() <= 4){
-////    Meteor.users.insert({
-////        "createdAt": 1372216131137,
-////        "emails": [
-////            {
-////                "address": "whatever",
-////                "verified": false
-////            }
-////        ],
-////        "friends": [
-////            "L7SLCm9mJyetnb3oD"
-////        ],
-////        "invisible": false,
-////        "lastseen": 1373524657763,
-////        "online": 1,
-////        "profile": {
-////            "dob": "08-11-1982",
-////            "gender": "Female",
-////            "name": "Fake User 1",
-////            "online": 0
-////        },
-////        "services": {
-////        },
-////        "settings": {
-////            "invisible": false
-////        },
-////        "visible": 1
-////    });
-////    Meteor.users.insert({
-////        "createdAt": 1372216131137,
-////        "emails": [
-////            {
-////                "address": "whatever2",
-////                "verified": false
-////            }
-////        ],
-////        "friends": [
-////            "L7SLCm9mJyetnb3oD"
-////        ],
-////        "invisible": false,
-////        "lastseen": 1373524657763,
-////        "online": 1,
-////        "profile": {
-////            "dob": "08-11-1992",
-////            "gender": "Male",
-////            "name": "Fake User 2",
-////            "online": 0
-////        },
-////        "services": {        },
-////        "settings": {
-////            "invisible": false
-////        },
-////        "visible": 1
-////    });
-//    Meteor.users.insert({
-//        "createdAt": 1372216131137,
-//        "emails": [
-//            {
-//                "address": "3",
-//                "verified": false
-//            }
-//        ],
-//        "friends": [
-//            "L7SLCm9mJyetnb3oD"
-//        ],
-//        "invisible": false,
-//        "lastseen": 1373524657763,
-//        "online": 1,
-//        "profile": {
-//            "dob": "08-11-1992",
-//            "gender": "Male",
-//            "name": "Fake User 3",
-//            "online": 0
-//        },
-//        "services": {        },
-//        "settings": {
-//            "invisible": false
-//        },
-//        "visible": 1
-//    });
-//    Meteor.users.insert({
-//        "createdAt": 1372216131137,
-//        "emails": [
-//            {
-//                "address": "4",
-//                "verified": false
-//            }
-//        ],
-//        "friends": [
-//            "L7SLCm9mJyetnb3oD"
-//        ],
-//        "invisible": false,
-//        "lastseen": 1373524657763,
-//        "online": 1,
-//        "profile": {
-//            "dob": "08-11-1992",
-//            "gender": "Female",
-//            "name": "Fake User 4",
-//            "online": 0
-//        },
-//        "services": {        },
-//        "settings": {
-//            "invisible": false
-//        },
-//        "visible": 1
-//    });
-//    Meteor.users.insert({
-//        "createdAt": 1372216131137,
-//        "emails": [
-//            {
-//                "address": "5",
-//                "verified": false
-//            }
-//        ],
-//        "friends": [
-//            "L7SLCm9mJyetnb3oD"
-//        ],
-//        "invisible": false,
-//        "lastseen": 1373524657763,
-//        "online": 1,
-//        "profile": {
-//            "dob": "08-11-1992",
-//            "gender": "Female",
-//            "name": "Fake User 5",
-//            "online": 0
-//        },
-//        "services": {        },
-//        "settings": {
-//            "invisible": false
-//        },
-//        "visible": 1
-//    });
-//    Meteor.users.insert({
-//        "createdAt": 1372216131137,
-//        "emails": [
-//            {
-//                "address": "6",
-//                "verified": false
-//            }
-//        ],
-//        "friends": [
-//            "L7SLCm9mJyetnb3oD"
-//        ],
-//        "invisible": false,
-//        "lastseen": 1373524657763,
-//        "online": 1,
-//        "profile": {
-//            "dob": "08-11-1992",
-//            "gender": "Male",
-//            "name": "Fake User 6",
-//            "online": 0
-//        },
-//        "services": {        },
-//        "settings": {
-//            "invisible": false
-//        },
-//        "visible": 1
-//    });
-//    Meteor.users.insert({
-//        "createdAt": 1372216131137,
-//        "emails": [
-//            {
-//                "address": "7",
-//                "verified": false
-//            }
-//        ],
-//        "friends": [
-//            "L7SLCm9mJyetnb3oD"
-//        ],
-//        "invisible": false,
-//        "lastseen": 1373524657763,
-//        "online": 1,
-//        "profile": {
-//            "dob": "08-11-1992",
-//            "gender": "Female",
-//            "name": "Fake User 7",
-//            "online": 0
-//        },
-//        "services": {        },
-//        "settings": {
-//            "invisible": false
-//        },
-//        "visible": 1
-//    });
-//    Meteor.users.insert({
-//        "createdAt": 1372216131137,
-//        "emails": [
-//            {
-//                "address": "8",
-//                "verified": false
-//            }
-//        ],
-//        "friends": [
-//            "L7SLCm9mJyetnb3oD"
-//        ],
-//        "invisible": false,
-//        "lastseen": 1373524657763,
-//        "online": 1,
-//        "profile": {
-//            "dob": "08-11-1992",
-//            "gender": "Male",
-//            "name": "Fake User 8",
-//            "online": 0
-//        },
-//        "services": {        },
-//        "settings": {
-//            "invisible": false
-//        },
-//        "visible": 1
-//    });
-//    Meteor.users.insert({
-//        "createdAt": 1372216131137,
-//        "emails": [
-//            {
-//                "address": "9",
-//                "verified": false
-//            }
-//        ],
-//        "friends": [
-//            "L7SLCm9mJyetnb3oD"
-//        ],
-//        "invisible": false,
-//        "lastseen": 1373524657763,
-//        "online": 1,
-//        "profile": {
-//            "dob": "08-11-1992",
-//            "gender": "Female",
-//            "name": "Fake User 9",
-//            "online": 0
-//        },
-//        "services": {        },
-//        "settings": {
-//            "invisible": false
-//        },
-//        "visible": 1
-//    });
-//}

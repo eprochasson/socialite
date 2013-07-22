@@ -16,3 +16,6 @@ Check input security (not too long, invalid characters, injection...).
 Find a way to factorize some client code.
 
 Still have some presence with empty users!!!
+
+Profile picture update field allow empty images. Also, show the image uploaded, allow for image resize. Improve..
+

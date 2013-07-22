@@ -22,14 +22,14 @@ if(Meteor.isClient){
  * *********************************************/
 
 if(Meteor.isServer){
-     /*
-        Users configuration
+    /*
+     Users configuration
      */
     // What fields are public for everyone
     Meteor.users.publicProfileInformation = {
         // show selected information
         'profile.name' : 1,
-        'profile.dob': 1,
+        'profile.dobtime': 1,
         'profile.gender': 1,
         'profile.online': 1,
         'profile.picture': 1
@@ -47,11 +47,10 @@ if(Meteor.isServer){
         'profile_complete': 1
     };
 
-    Meteor.users.searchResultsLimit = 10;
 
     /*
-        Post cooldown configuration
-    */
+     Post cooldown configuration
+     */
     // Duration to measure velocity (default 2 minutes).
     Cooldown.velocityCaliber = 30*1000;
     // If target user is online, how many messages per velocityCaliber millisecond can the emitter send
@@ -70,12 +69,12 @@ if(Meteor.isServer){
 }
 
 /* *****************************************************
-    A bit of both
+ A bit of both
  ***************************************************** */
 
 /*
-    Various display options.
-*/
+ Various display options.
+ */
 // How many messages to display per page, for the mailbox.
 Messages.messagePerPage = 2;
 
@@ -86,8 +85,11 @@ Newsfeed = {
     activitiesPerPage: Activities.activitiesPerPage
 };
 
+// Number of search result per query.
+Meteor.users.searchResultsLimit = 12;
+
 /*
-   User posted Photos configuration, stored on filepicker.io
+ User posted Photos configuration, stored on filepicker.io
  */
 // Fields people can change
 Photos.authorizedFields = ['main'];
@@ -95,8 +97,8 @@ Photos.authorizedFields = ['main'];
 Photos.maxFilePerUser = -1;
 
 /*
-    Check user presence configuration
-*/
+ Check user presence configuration
+ */
 // How often do we update presence (ms)
 Presences.checkInterval = 2000;
 // How long before a user is considered out (ms).

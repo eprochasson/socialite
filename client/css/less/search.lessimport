@@ -1,0 +1,60 @@
+
+#search_form{
+  padding: 15px;
+  border-bottom: 1px solid @blueLessLight;
+  background: @blueLight;
+  control{
+    float: left;
+    display: block;
+  }
+  #age{
+    width: 300px;
+  }
+  .slider-selection{
+    background: @blueDark;
+  }
+  .slider-track{
+    background: @blue;
+  }
+}
+
+div#searchresults{
+  clear: both;
+}
+
+ul.search_results{
+  margin:30px 0 0 5px 30px;
+
+  li{
+    list-style: none;
+    float: left;
+    width: 30%;
+    margin: 1%;
+    position: relative;
+    height: 200px;
+    .box-shadow(0 0 5px rgba(50, 50, 50, 0.75));
+    a{
+      width: 100%;
+      display:block;
+      position: relative;
+    }
+    img{
+      margin: 10px auto;
+      display: block;
+    }
+    .description{
+      text-align: center;
+      span.name{
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      span.age{
+        font-size: 1.1em;
+      }
+      span.geocoding{
+        font-size: 0.9em;
+        display: block;
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<template name="searchForm">
+    <form action="#" id="search_form">
+        <div class="control-group row-fluid">
+            <div class="control span4">
+                <label for="gender">
+                    {{Lex 'question.gender'}}
+                </label>
+                <select id="gender" class="span8">
+                    <option value="">All</option>
+                    <option value="F">Female</option>
+                    <option value="M">Male</option>
+                </select>
+            </div>
+            <div class="control span8">
+                <label for="age">
+                    Age between <strong><span id="age_min" class="text-info">{{minAge}}</span></strong> and <strong><span class="text-info" id="age_max">{{maxAge}}</span></strong>.
+                </label>
+                <input type="text" name="age" value="{{minAge}},{{maxAge}}" id="age" data-slider-min="18" data-slider-max="130" data-slider-step="1" data-slider-value="[{{minAge}},{{maxAge}}]" data-tooltip="hide" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</template>

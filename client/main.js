@@ -36,7 +36,10 @@ Meteor.startup(function(){
     });
 
     Deps.autorun(function(){
-        searchHandle = Meteor.subscribe("searchResults", Session.get("searchQuery", Meteor.user.searchResultsLimit));
+        console.log('updating publication searchResults');
+        searchHandle = Meteor.subscribe("searchResults", Session.get("searchQuery"), Meteor.users.searchResultsLimit, function(){
+            Session.set('searchQueryDone', Session.get('searchQuery'));
+        });
     });
 
 //    Meteor.subscribe('adminShowEveryone');

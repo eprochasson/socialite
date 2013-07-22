@@ -46,8 +46,6 @@ Template.profile_creation.events = {
             } else {
                 var currentStep = Session.get('profileCreationCurrentStep');
                 if(currentStep == Meteor.profileCreation.numberOfStep){
-                    console.log('Moving one!');
-
                     Meteor.call('profile_completed', function(err, res){
                         if(err){
                             console.log(err);

@@ -167,27 +167,28 @@ Meteor.publish('searchResults', function(options,limit){
         return false;
     }
 
+    limit = limit || Meteor.users.searchResultsLimit || 10;
+
     var user = Meteor.users.findOne(this.userId);
     var userloc = user.loc;
     var friends = Friends.find({me: this.userId});
-    var friendlist = [];
+    var excludes = [];
     friends.forEach(function(f){
-        friendlist.push(f.target);
+        excludes.push(f.target);
     });
 
-    options._id = {$nin: friendlist};
+    excludes.push(this.userId);
+
     if(userloc){
-        options.loc = {
+        options['loc'] = {
             $near: {
-                $geometry: {
-                    type: 'Point',
-                    coordinates: userloc
-                }
+                coordinates: userloc
             }
         };
     }
-
+    options._id = {$nin: excludes};
     options.visible = 1;
+
     return Meteor.users.find(options, {sort: {lastseen: -1}, limit: limit, fields: Meteor.users.publicProfileInformation});
 });
 

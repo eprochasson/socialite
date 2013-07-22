@@ -5,7 +5,6 @@ Meteor.methods({
         var valid = true;
         var cleaned = Meteor.user().profile; // store name -> value
         if(!cleaned) cleaned = {}; // Empty profile
-        console.log('updating profile', values);
         _.each(values, function(val, docid){
             if(docid){
                 // Validate the response
@@ -46,10 +45,12 @@ Meteor.methods({
                 var loc = cleaned.location.split(',');
                 change.$set.loc =  [parseFloat(loc[0]), parseFloat(loc[1])]
             }
+            if(cleaned && cleaned.dob){
+                var dobtime = moment(cleaned.dob, 'DD-MM-YYYY');
+                cleaned.dobtime = dobtime.unix();
+            }
 
             Meteor.users.update(Meteor.userId(), change);
-
-
 
             Activities.insertActivity({
                 type: 'update_profile',

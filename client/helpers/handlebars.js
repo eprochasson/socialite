@@ -37,13 +37,11 @@ Handlebars.registerHelper('thumbnail', function(url, w,h,fit){
 });
 
 Handlebars.registerHelper('age', function(date, hash){
-    if(!typeof date === 'string'){
+    if(typeof date === 'function'){
         return 0;
     }
 
-    var age = moment(date, 'DD-MM-YYYY');
-    var now = moment();
-    return now.diff(age, 'years');
+    return getAge(date);
 });
 
 Handlebars.registerHelper('profileComplete', function(){
