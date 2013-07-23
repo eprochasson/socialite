@@ -33,6 +33,14 @@ Template.conversation.helpers({
     },
     conversation: function(){
         return Conversations.findOne(Session.get('currentConversation'));
+    },
+    conversationWith: function(){
+        var conversation = Conversations.findOne(Session.get('currentConversation'));
+        if(!conversation){
+            return '';
+        }
+        var user = Meteor.users.findOne(conversation.with);
+        return user.profile && user.profile.name;
     }
 });
 
@@ -40,6 +48,33 @@ Template.conversation.events({
     'click .read-more': function(e){
         e.preventDefault();
         oneConversationHandle.loadNextPage();
+    },
+    'click .send': function(e){
+        e.preventDefault();
+        var conversation = Conversations.findOne(Session.get('currentConversation'));
+        if(!conversation){
+            Errors.modal('Internal Error');
+        }
+        var message = {};
+        message.body = $('[name=message]').val();
+        if(message.body.length == 0){
+            Errors.notification('The message is empty');
+        } else {
+            message.to = conversation.with;
+            Meteor.call('sendMessage', message, function(err,res){
+                if(err){
+                    Errors.modal(err);
+                } else {
+                    Errors.notification('Message sent');
+                    $('.conversation textarea').val('');
+                }
+            })
+        }
+    },
+    'change [name=message]': function(e){
+        if($('[name=message]').val()){
+            $('button.send').removeClass('disabled');
+        }
     }
 });
 Template.message.helpers({
@@ -47,15 +82,21 @@ Template.message.helpers({
         return moment(this.sent).fromNow();
     },
     sender: function(){
-        return this.from == Meteor.userId()? __('messages.you') : Meteor.users.findOne(this.from)['profile'].name;
+        return this.from == Meteor.userId()? __('messages.me') : Meteor.users.findOne(this.from)['profile'].name;
     },
     receiver: function(){
-        return this.to == Meteor.userId()? __('messages.you') : Meteor.users.findOne(this.to)['profile'].name;
+        return this.to == Meteor.userId()? __('messages.me') : Meteor.users.findOne(this.to)['profile'].name;
+    },
+    class: function(){
+        if(this.to == Meteor.userId()){
+            return 'incoming';
+        }
+        return 'outgoing';
     }
 });
 
 Template.conversation.rendered = function(){
-    console.log('marking conversation read', Session.get('currentConversation'));
     // Mark conversation as read.
     Conversations.update(Session.get('currentConversation'), {$set: {viewed: 1}});
 };
+

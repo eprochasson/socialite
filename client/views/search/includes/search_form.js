@@ -1,5 +1,4 @@
 Template.searchForm.rendered = function(){
-    console.log('rendering searchForm');
     var age = $('#age');
     age.slider().on('slide', function(e){
         $('span#age_min').html(e.value[0]);
@@ -45,7 +44,6 @@ Template.searchForm.events({
         var gender = $('#gender').val();
         var name = $('#name').val();
 
-
         var dob_min = moment().subtract(age_max, 'years').unix(), dob_max= moment().subtract(age_min, 'years').unix();
         query['profile.dobtime'] = { $gt: dob_min, $lt : dob_max};
         if(gender){
@@ -54,7 +52,6 @@ Template.searchForm.events({
 
         // Should trigger publication refresh.
         Session.set('searchQuery', query);
-        console.log('updating query');
         $('#searchresults').css('opacity', 0.5);
     }
 });

@@ -7,12 +7,11 @@ Template.searchResults.helpers({
 
         $("#searchresults").css('opacity', 1);
         var query = Session.get('searchQueryDone');
-        console.log('gettin search results', query);
         var friends = Friends.find({},{reactive: false}).fetch();
         var excludes = [];
         // Remove my friends
         _.each(friends, function(f){
-            excludes.push(f._id);
+            excludes.push(f.target);
         });
         // Remove myself...
         excludes.push(Meteor.userId());
@@ -35,5 +34,21 @@ Template.searchResults.helpers({
         excludes.push(Meteor.userId());
         query._id = { $nin: excludes };
         return Meteor.users.find(query).count();
+    }
+
+});
+
+Template.search_one_user.helpers({
+    userOnline: function(){
+        console.log(this);
+        var online = Presences.findOne({user: this._id});
+        console.log(online);
+        if(!online){
+            return 0;
+        }
+        if(online.online){
+            return 1;
+        }
+        return 0;
     }
 });

@@ -1,21 +1,8 @@
-
-Browse/search users
-
 Make sure logout users are redirected to the front page, always.
-
 Check filepicker secret/security thingy. Not sure it's cool.
-
-Setting page
-
+Setting page. Allow to change password. Merge with account-ui.
 Complete Lexicon...
-
-Subscription process + email validation.
-
+Email validation at subscription.
 Check input security (not too long, invalid characters, injection...).
-
-Find a way to factorize some client code.
-
-Still have some presence with empty users!!!
-
 Profile picture update field allow empty images. Also, show the image uploaded, allow for image resize. Improve..
-
+Profile edition.

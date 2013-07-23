@@ -12,12 +12,17 @@
 <template name="search_one_user">
     <li id="box_{{_id}}">
         <a href="{{profilePath}}/{{_id}}">
-            <img src="{{thumbnail profile.picture 200 200}}" />
+            <img src="{{thumbnail profile.picture 100 100}}" />
             <div class="description">
-                <span class="name">{{profile.name}}</span>
-                <span class="age">({{age profile.dobtime}})</span>
-                <span class="geocoding">{{profile.geocoding}}</span>
+                <span class="name">{{profile.name}}</span>            <span class="age">({{age profile.dobtime}})</span>
             </div>
         </a>
+
+            <span class="geocoding">{{profile.geocoding}}</span>
+
+        {{#if userOnline}}
+            <span class="text-info">Online</span>
+        {{/if}}
+
     </li>
 </template>

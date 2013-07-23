@@ -61,6 +61,12 @@ Errors = {
                     body: __('error.invalid_data')
                 };
                 break;
+            case 'Empty Message':
+                error = {
+                    title: __('error.empty_message_title'),
+                    body: __('error.empty_message')
+                };
+                break;
             default:
                 break;
         }

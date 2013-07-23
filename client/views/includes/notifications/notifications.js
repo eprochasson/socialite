@@ -1,3 +1,11 @@
+var getUser = function(id){
+    if(id){
+        return Meteor.users.findOne(id, {reactive: false});
+    } else {
+        return {};
+    }
+};
+
 Template.notifications.helpers({
     notifications: function() {
         return Notifications.find({}, {limit: 7, sort: {timestamp: -1}});
@@ -18,5 +26,53 @@ Template.notifications.events({
         notifications.forEach(function(a){
             Notifications.update(a._id, {$set: {viewed: 1}});
         });
+    }
+});
+
+Template.notification.helpers({
+    tpl: function(){
+        switch(this.type){
+            case 'friend_request':
+                return 'notification_friend_request';
+                break;
+            case 'accepted_friend_request':
+                return 'notification_accepted_friend_request';
+                break;
+            default:
+                return 'notification_default';
+        }
+    }
+});
+
+
+
+Template.notification_friend_request.helpers({
+    user: function(){
+        return getUser(this.from)
+    }
+});
+Template.notification_accepted_friend_request.helpers({
+    user: function(){
+        return getUser(this.from)
+    }
+});
+
+Template.notification_friend_request.events({
+    'click button.accept': function(e){
+        e.preventDefault();
+
+        Meteor.call('addAsFriend', this.from, function(err,res){
+            if(err){
+                Errors.modal(err);
+            } else {
+                // Remove the notification.
+                Notifications.remove(this._id);
+                Errors.notification('Friend request confirmed!');
+            }
+        });
+    },
+    'click button.ignore': function(e){
+        e.preventDefault();
+        Notifications.remove(this._id);
     }
 });

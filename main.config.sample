@@ -31,8 +31,8 @@ if(Meteor.isServer){
         'profile.name' : 1,
         'profile.dobtime': 1,
         'profile.gender': 1,
-        'profile.online': 1,
-        'profile.picture': 1
+        'profile.picture': 1,
+        'profile.geocoding': 1
     };
     // What fields are reserved for friends only
     Meteor.users.privateProfileInformation = {
@@ -76,7 +76,7 @@ if(Meteor.isServer){
  Various display options.
  */
 // How many messages to display per page, for the mailbox.
-Messages.messagePerPage = 2;
+Messages.messagePerPage = 20;
 
 // number of items to show in the newsfeed
 Activities.activitiesPerPage = 10;

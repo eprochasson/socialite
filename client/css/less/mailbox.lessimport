@@ -1,0 +1,154 @@
+.span3 ul.conversation_list{
+  list-style: none;
+  margin-left: 0;
+  li{
+    .active{
+      background: @blueLight;
+    }
+    width: 100%;
+    min-height: 30px;
+    a{
+      background: #fff;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    a:hover{
+      background: @blueLight;
+      text-decoration: none;
+    }
+    .from{
+      float: right;
+      font-size: 0.8em;
+      img{
+        margin-left: 2px;
+        width: 30px;
+      }
+      span{
+        display: none;
+      }
+    }
+    .body{
+      text-align: center;
+      overflow: hidden;
+      font-size:0.8em;
+    }
+    .when{
+      font-size: 0.8em;
+      display: none;
+    }
+  }
+}
+
+.span12 ul.conversation_list{
+  list-style: none;
+  margin-left: 0;
+  li{
+    width: 100%;
+    height: 50px;
+    a{
+      background: #fff;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    a:hover{
+      background: @blueLight;
+      text-decoration: none;
+    }
+    .from{
+      float: right;
+      font-size: 0.9em;
+      text-align: right;
+      width: 100%;
+      img{
+        margin-left: 5px;
+      }
+    }
+    .body{
+      padding: 15px;
+      overflow: hidden;
+    }
+    .when{
+      font-size: 0.8em;
+      float: right;
+    }
+  }
+}
+
+.conversation{
+  border-left: 1px solid @blueLessLight;
+  padding-left: 5px;
+
+  ul{
+    list-style: none;
+    margin-left:0;
+
+    li.outgoing{
+      background: #efefef;
+      float: right;
+      .body{
+        text-align: right;
+      }
+    }
+    li.incoming{
+      float:left;
+      background: #fff;
+      .body{
+        text-align: left;
+      }
+    }
+    li:hover{
+      background: #efefef;
+    }
+    li{
+      margin: 3px 0;
+      .box-shadow(0 0 5px #999);
+      width: 80%;
+      .meta{
+        padding: 5px;
+        font-size: 0.8em;
+        color: #ddd;
+        .from{
+          font-weight: bold;
+        }
+        .to{
+          font-weight: bold;
+        }
+        .when{
+          color: @blue;
+          float: right;
+        }
+      }
+      .body{
+        padding: 20px;
+      }
+    }
+    .body{
+    }
+  }
+  a.read-more{
+    clear: both;
+    display: block;
+    text-align: center;
+    width: 100%
+
+  }
+  textarea{
+    width: 98%;
+    max-width: 98%;
+  }
+  .send{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+h2.conversation_title{
+  font-size: 12px;
+  padding: 3px;
+  margin: 3px;
+  line-height: 30px;
+}
+

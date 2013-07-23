@@ -49,7 +49,8 @@ Meteor.i18nMessages.question = {
 };
 
 Meteor.i18nMessages.messages = {
-    you: 'you'
+    you: 'you',
+    me: 'me'
 };
 
 

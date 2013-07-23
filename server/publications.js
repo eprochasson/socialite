@@ -99,18 +99,12 @@ Meteor.publish("oneConversation", function(conversation, limit){
 
 
 Meteor.publish("myFriendList", function(limit){
-    // load a very light version of the friendlist
-    // Not very reactive.
-    if(!this.userId){
-        return;
-    }
-
     if(this.userId){
         Meteor.publishWithRelations({
            handle: this,
             collection: Friends,
             filter: {me: this.userId, live: 1},
-            options: {limit: limit},
+            options: {limit: limit, fields: { reciprocal: 1, target: 1, me: 1, online: 1}},
             mappings: [{
                 key: 'target',
                 collection: Meteor.users, // publish user profile along the list of friends.
@@ -121,18 +115,29 @@ Meteor.publish("myFriendList", function(limit){
 });
 
 Meteor.publish("userProfile", function(targetId){
-    if(!this.userId||!targetId){
-        return null;
-    }
+    if(this.userId && targetId){
+        var friendship = Friends.findOne({target: this.userId, me: targetId, live: 1});
+        var fields;
+        if(friendship){
+            fields = Meteor.users.privateProfileInformation;
+        } else {
+            fields = Meteor.users.publicProfileInformation;
+        }
 
-    var friendship = Friends.findOne({target: this.userId, me: targetId, live: 1});
-    var fields;
-    if(friendship){
-        fields = Meteor.users.privateProfileInformation;
-    } else {
-        fields = Meteor.users.publicProfileInformation;
+        Meteor.publishWithRelations({
+            handle: this,
+            collection: Meteor.users,
+            filter: {_id: targetId},
+            options: {fields: fields},
+            mappings: [{ // indicate if the user's online as well.
+                key: 'user',
+                reverse: true,
+                collection: Presences,
+                filter: { invisible: {$ne : 1} },
+                options: {fields: {'user':1, 'online':1}}
+            }]
+        });
     }
-    return Meteor.users.find({_id: targetId}, {fields: fields});
 });
 
 Meteor.publish('oneUserPictures', function(targetId){
@@ -141,7 +146,7 @@ Meteor.publish('oneUserPictures', function(targetId){
     }
     var friendship = Friends.findOne({target: this.userId, me: targetId, live: 1});
     if(friendship){
-        return Photos.find({ owner: userId});
+        return Photos.find({ owner: targetId});
     } else {
         return [];
     }
@@ -151,7 +156,7 @@ Meteor.publish('oneUserActivities', function(userId, limit){
     if(!this.userId || !userId){
         return null;
     }
-    var friendship = Friends.findOne({target: this.userId, me: targetId, live: 1});
+    var friendship = Friends.findOne({target: this.userId, me: userId, live: 1});
     if(friendship){
         return Activities.find(
             { $or: [{from: userId}, {to: userId}], type: {$in : Activities.publicActivities}},
@@ -189,7 +194,22 @@ Meteor.publish('searchResults', function(options,limit){
     options._id = {$nin: excludes};
     options.visible = 1;
 
-    return Meteor.users.find(options, {sort: {lastseen: -1}, limit: limit, fields: Meteor.users.publicProfileInformation});
+    Meteor.publishWithRelations({
+        handle: this,
+        collection: Meteor.users,
+        filter: options,
+        options: {sort: {lastseen: -1}, limit: limit, fields: Meteor.users.publicProfileInformation},
+        mappings: [{ // indicate if the user's online as well.
+            key: 'user',
+            reverse: true,
+            collection: Presences,
+            filter: { invisible: {$ne : 1} },
+            options: {fields: {'user':1, 'online':1}}
+        }]
+    });
+
+    return [];
+
 });
 
 

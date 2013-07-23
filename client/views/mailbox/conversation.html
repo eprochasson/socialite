@@ -1,21 +1,40 @@
 <template name="conversation">
-        <ul>
-        {{#each messages}}
-            {{> message}}
-        {{/each}}
-        </ul>
-        {{#if messagesReady}}
+
+    <div class="row-fluid">
+        <div class="span3">
+            <h2 class="conversation_title">Active conversations</h2>
+            {{> conversation_list}}
+        </div>
+        <div class="span9 conversation">
+            <h2 class="conversation_title">Conversation with {{conversationWith}}</h2>
+            <div class="row-fluid">
+                <div class="span10">
+                <textarea name="message"></textarea>
+                </div>
+                <div class="span2" style="position: relative;">
+                    <button class="send btn btn-primary">Reply</button>
+                </div>
+            </div>
+
+            <ul>
+                {{#each messages}}
+                {{> message}}
+                {{/each}}
+            </ul>
+            {{#if messagesReady}}
             {{#unless allMessagesLoaded}}
             <a class="read-more" href="#">Load more</a>
             {{/unless}}
-        {{else}}
+            {{else}}
             <div>{{> spinner}}</div>
-        {{/if}}
+            {{/if}}
+        </div>
+    </div>
 </template>
 
 <template name="message">
-    <li>
-        <p>From:{{sender}}. to:{{receiver}}, {{timestamp}}</p>
-        <p>{{body}}</p>
+    <li class="{{class}}">
+        <div class="meta"><span class="from">From: {{sender}}</span> <span class="when">{{timestamp}}</span></div>
+        <div class="body">{{body}}</div>
     </li>
 </template>

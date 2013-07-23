@@ -1,0 +1,34 @@
+<template name="conversation_list">
+    <ul class="conversation_list">
+        {{#each conversations}}
+            {{> one_conversation}}
+        {{/each}}
+
+        {{#if conversationReady}}
+            {{#unless allConversationsLoaded}}
+                <a class="load-more" href="#">Load more</a>
+            {{/unless}}
+        {{else}}
+            {{>spinner}}
+        {{/if}}
+    </ul>
+</template>
+
+<template name="one_conversation">
+    <li class="{{active}} ">
+        <a href="{{conversationPath _id}}" class="row-fluid">
+            <div class="span7">
+                <p class="body"><i class="icon-quote-left"> </i> {{ellipsis lastMessage 50}} <i class="icon-quote-right"> </i></p>
+            </div>
+            <div class="span5">
+                <div class="from">
+                    <img src="{{thumbnail userInfo.profile.picture 50 50}}" class="pull-right"/>
+                    <span>{{userInfo.profile.name}}</span><br/>
+                    <span class="when">{{when}}</span>
+                </div>
+            </div>
+
+
+        </a>
+    </li>
+</template>

@@ -49,7 +49,6 @@ Handlebars.registerHelper('profileComplete', function(){
     if(!(res === undefined)){
         return res;
     }
-
 });
 
 Handlebars.registerHelper('makeQuestion', function(name){
@@ -67,4 +66,31 @@ Handlebars.registerHelper('makeQuestion', function(name){
         return '';
     }
     return Template[tpl](question);
+});
+
+Handlebars.registerHelper('gender', function(gender){
+    if(gender === 'F'){
+        return __('question.female');
+    }
+    if(gender === 'M'){
+        return __('question.male');
+    }
+    return __('question.unknow');
+});
+
+Handlebars.registerHelper('ellipsis', function(text, len, hash){
+    if(typeof text === 'function'){
+        return '';
+    }
+    if(typeof len ===' function'){
+        len = 20;
+    } else{
+        len = len || 20;
+    }
+    if(text.length < len){
+        return text;
+    } else {
+        return text.slice(0, len)+'...';
+    }
+
 });

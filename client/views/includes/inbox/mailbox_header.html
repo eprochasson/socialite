@@ -12,16 +12,20 @@
         {{else}}
         <li><span>No unread messages</span></li>
         {{/each}}
-        <li><a href="{{mailboxPath}}">View all</a></li>
+
+        <li><a href="{{mailboxPath}}" class="text-center">View all</a></li>
     </ul>
 </template>
 
 <template name="message_li">
     <li>
+        <a href="{{conversationPath _id}}">
         {{#with participant}}
         <p><img src="{{thumbnail profile.picture 20 20}}"> {{profile.name}}</p>
         {{/with}}
-        <p><a href="{{conversationPath _id}}">{{lastMessage}}</a></p>
+        <p class="text-center"><i class="icon-quote-left"> </i> {{ellipsis lastMessage 50}} <i class="icon-quote-right"> </i></p>
         <p>{{sent}}</p>
+        </a>
     </li>
+    <li class="divider"></li>
 </template>

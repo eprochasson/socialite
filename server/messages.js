@@ -1,5 +1,9 @@
 Meteor.methods({
     sendMessage: function(doc){
+
+        if(!doc.body || doc.body.length == 0){
+            throw new Meteor.Error(400, "Empty Message");
+        }
         // Check that the emitter exists
         var target ;
         if(!(target = Meteor.users.findOne(doc.to))){

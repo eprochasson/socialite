@@ -1,0 +1,29 @@
+ul.notification{
+  li{
+    min-width: 200px;
+    font-size: 0.9em;
+  }
+  .friend_request{
+      min-width: 300px;
+      img.profile{
+        margin: 5px 10px 5px 5px;
+        float: left;
+      }
+      a{
+        display: inline;
+        padding:2px;
+      }
+      p{
+        min-height: 30px;
+      }
+
+    }
+  .accepted_friend_request{
+    a.text-center{
+      display: block;
+      padding:2px;
+      text-align: center;
+    }
+  }
+}
+

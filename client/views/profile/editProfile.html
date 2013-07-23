@@ -2,10 +2,7 @@
 <h1>Edit your profile</h1>
 
     {{#with currentUser}}
-    Your name: {{profile.name}}
-    Your date of birth: {{profile.dob}}
-    Your gender: {{profile.gender}}
-    Your location: {{profile.geocoding}}
+    {{> basic_information}}
     {{/with}}
 
 </template>

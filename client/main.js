@@ -28,7 +28,7 @@ Meteor.startup(function(){
 
     // When visiting someone's profile
     Deps.autorun(function () {
-        userProfileHandle = Meteor.subscribe("oneUserProfile", Session.get("currentUserProfile"));
+        userProfileHandle = Meteor.subscribe("userProfile", Session.get("currentUserProfile"));
         userPictureHandle = Meteor.subscribe("oneUserPictures", Session.get("currentUserProfile"));
         userActivitiesHandle = Meteor.subscribeWithPagination("oneUserActivities", function(){
             return Session.get("currentUserProfile") || null;
@@ -36,10 +36,12 @@ Meteor.startup(function(){
     });
 
     Deps.autorun(function(){
-        console.log('updating publication searchResults');
-        searchHandle = Meteor.subscribe("searchResults", Session.get("searchQuery"), Meteor.users.searchResultsLimit, function(){
-            Session.set('searchQueryDone', Session.get('searchQuery'));
-        });
+        if(Session.get("searchQuery")){
+            searchHandle = Meteor.subscribe("searchResults", Session.get("searchQuery"), Meteor.users.searchResultsLimit, function(){
+                Session.set('searchQueryDone', Session.get('searchQuery'));
+                console.log('updating publication searchResults');
+            });
+        }
     });
 
 //    Meteor.subscribe('adminShowEveryone');

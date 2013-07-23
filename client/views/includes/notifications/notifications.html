@@ -10,17 +10,33 @@
         {{#each notifications}}
         {{> notification}}
         {{else}}
-        <li><span>No Notifications</span></li>
+        <li class="text-center"><span class="text-info">No Notifications</span></li>
         {{/each}}
     </ul>
 </template>
 
 <template name="notification">
-    <li>
-        This is one notification
+    {{{callPartial tpl this}}}
+</template>
+
+<template name="notification_friend_request">
+    <li class="friend_request">
+        <a href="{{profilePath}}/{{user._id}}" class="pull-left"><img src="{{thumbnail user.profile.picture 30 30}}" class="profile" /></a>
+        <p>
+            <a href="{{profilePath}}/{{user._id}}">{{user.profile.name}}</a> sent you a friend request.
+            <br/>
+            <button class="btn btn-primary btn-small accept">Accept</button><button class="btn-small btn ignore">Ignore</button>
+        </p>
     </li>
 </template>
 
-<template name="friend_request_notification">
-
+<template name="notification_accepted_friend_request">
+    <li class="accepted_friend_request">
+        <a href="{{profilePath}}/{{user._id}}" class="pull-left"><img src="{{thumbnail user.profile.picture 30 30}}" class="profile" /></a>
+        <p>
+            <a href="{{profilePath}}/{{user._id}}">{{user.profile.name}}</a> accepted your friend request.
+            <br/>
+            <a href="{{profilePath}}/{{user._id}}" class="text-center">Visit {{user.profile.name}} profile</a>
+        </p>
+    </li>
 </template>

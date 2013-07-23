@@ -1,9 +1,66 @@
 <template name="profile">
-    {{#if selfUser}}
-    <h1>This is your profile</h1>
-    <p><a href="{{editProfilePath}}">Edit your profile</a></p>
-    {{else}}
-    <h1>{{Lex 'default.title_profile' name=currentUser.profile.name}}</h1>
+
+    {{#with currentUser}}
+    <h1>{{profile.name}}</h1>
+    <div class="profile" class="row-fluid">
+        <div class="span3">
+            <a href="#modalPicture" data-url="{{thumbnail profile.picture 400 400}}" role="button" class="modal_picture">
+                <img src="{{thumbnail profile.picture 150 150}}" title="{{profile.name}}" class="image-polaroid"/>
+            </a>
+        </div>
+        <div class="span9">
+            {{#if notMe}}
+                {{#if userOnline}}
+                    <p class="pull-right">{{profile.name}} is <strong class="text-info">online</strong></p>
+                {{else}}
+                    <p class="pull-right">{{profile.name}} is <strong class="muted">offline</strong></p>
+                {{/if}}
+
+                {{#if isFriend}}
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            Action
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#modalMessage" data-toggle="modal">Send a message</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" class="unfriend">Unfriend</a></li>
+                        </ul>
+                    </div>
+                {{else}}
+                    {{#if isFriendPending}}
+                    <p>Friend request sent</p>
+                    {{else}}
+                    <a href="#" class="addAsFriend"><i class="icon-user"> </i>Add as a friend</a>
+                    {{/if}}
+                {{/if}}
+            {{else}}
+                <p>This is you! <a href="{{editProfilePath}}">Edit your profile</a></p>
+            {{/if}}
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td>Name</td><td>{{profile.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td><td>{{gender profile.gender}}</td>
+                    </tr>
+                    <tr>
+                        <td>Age</td><td>{{age profile.dobtime}}</td>
+                    </tr>
+                    <tr>
+                        <td>Location</td><td>{{profile.geocoding}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{> modal_picture}}
+    {{#if isFriend}}
+        {{> modal_message}}
     {{/if}}
+    {{/with}}
 
 </template>
