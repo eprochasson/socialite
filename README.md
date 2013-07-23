@@ -1,5 +1,5 @@
 # Socialite
-## A social-network app
+## A social-network app made with Meteor
 
 Here come Socialite. It implements classic features from facebook-like networks, including:
 - Profile
