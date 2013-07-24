@@ -7,12 +7,11 @@ Template.friends.helpers({
         if(!id){
             return [];
         }
-        return Friends.find({me: id, reciprocal: 1});
+        return Friends.find({me: id});
     }
 });
 
 Template.one_friend.helpers({
-
     user: function(){
         return Meteor.users.findOne(this.target);
     }

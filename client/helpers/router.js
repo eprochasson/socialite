@@ -1,6 +1,5 @@
 // Is there a better way to do that?
 var resetSession = function(){
-    console.log('resetting session');
     Session.set('currentConversation', null);
     Session.set('currentUserProfile', null);
     Session.set('currentQuery', null);

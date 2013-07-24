@@ -18,7 +18,7 @@ Meteor.publish("myConversations", function(limit) {
         mappings: [{  // Publish people sending message as well, as they might not be in your friendlist.
             key: 'with',
             collection: Meteor.users,
-            options: {fields: Meteor.user.publicProfileInformation}
+            options: {fields: Meteor.users.publicProfileInformation}
         }]
     });
 });
@@ -91,7 +91,7 @@ Meteor.publish("oneConversation", function(conversation, limit){
                 mappings: [{  // Publish people sending message as well, as they might not be in your friendlist.
                     key: 'from',
                     collection: Meteor.users,
-                    options: {fields: Meteor.user.publicProfileInformation}
+                    options: {fields: Meteor.users.publicProfileInformation}
                 }]
             })
         }
@@ -136,6 +136,17 @@ Meteor.publish("userProfile", function(targetId){
                 collection: Presences,
                 filter: { invisible: {$ne : 1} },
                 options: {fields: {'user':1, 'online':1}}
+            },{
+                key: 'me',
+                reverse: true,
+                collection: Friends,
+                filter: {reciprocal: 1, live: 1},
+                options: {fields: {me: 1, target: 1}},
+                mappings: [{
+                    key: 'me',
+                    collection: Meteor.users,
+                    options: {fields: Meteor.users.publicProfileInformation}
+                }]
             }]
         });
     }

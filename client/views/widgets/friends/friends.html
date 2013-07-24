@@ -1,12 +1,9 @@
 <template name="friends">
-    <div class="friends widget">
-        <h2>Your friends</h2>
         <ul>
             {{#each friends}}
             {{> one_friend}}
             {{/each}}
         </ul>
-    </div>
 </template>
 
 <template name="one_friend">

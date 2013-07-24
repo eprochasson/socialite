@@ -14,7 +14,7 @@ Meteor.startup(function(){
             myNewsFeedHandle = Meteor.subscribeWithPagination('myNewsfeed', Newsfeed.activitiesPerPage);
 
             // My conversations
-            conversationsHandle = Meteor.subscribeWithPagination('myConversations', 3);
+            conversationsHandle = Meteor.subscribeWithPagination('myConversations', 10);
 
             // Questions for the profile form.
             Meteor.subscribe('questions');
@@ -44,7 +44,6 @@ Meteor.startup(function(){
         if(Session.get("searchQuery")){
             searchHandle = Meteor.subscribe("searchResults", Session.get("searchQuery"), Meteor.users.searchResultsLimit, function(){
                 Session.set('searchQueryDone', Session.get('searchQuery'));
-                console.log('updating publication searchResults');
             });
         }
     });
