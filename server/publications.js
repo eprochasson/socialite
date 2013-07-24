@@ -77,6 +77,7 @@ Meteor.publish("oneConversation", function(conversation, limit){
     }
     if(conversation){
         var conv = Conversations.findOne(conversation);
+
         if(conv.owner == this.userId){
             var query = {
                 $or: [{from: this.userId, to: conv.with},{from: conv.with, to: this.userId}]

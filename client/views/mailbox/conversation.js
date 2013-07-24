@@ -39,8 +39,8 @@ Template.conversation.helpers({
         if(!conversation){
             return '';
         }
-        var user = Meteor.users.findOne(conversation.with);
-        return user.profile && user.profile.name;
+        return Meteor.users.findOne(conversation.with);
+
     }
 });
 

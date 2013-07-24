@@ -40,9 +40,7 @@ Template.searchResults.helpers({
 
 Template.search_one_user.helpers({
     userOnline: function(){
-        console.log(this);
         var online = Presences.findOne({user: this._id});
-        console.log(online);
         if(!online){
             return 0;
         }

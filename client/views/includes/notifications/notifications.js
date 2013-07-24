@@ -45,7 +45,6 @@ Template.notification.helpers({
 });
 
 
-
 Template.notification_friend_request.helpers({
     user: function(){
         return getUser(this.from)
@@ -60,13 +59,14 @@ Template.notification_accepted_friend_request.helpers({
 Template.notification_friend_request.events({
     'click button.accept': function(e){
         e.preventDefault();
+        var self = this;
 
         Meteor.call('addAsFriend', this.from, function(err,res){
             if(err){
                 Errors.modal(err);
             } else {
                 // Remove the notification.
-                Notifications.remove(this._id);
+                Notifications.remove(self._id);
                 Errors.notification('Friend request confirmed!');
             }
         });

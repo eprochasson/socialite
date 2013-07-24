@@ -1,0 +1,20 @@
+<template name="friends">
+    <div class="friends widget">
+        <h2>Your friends</h2>
+        <ul>
+            {{#each friends}}
+            {{> one_friend}}
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="one_friend">
+    <li>
+        <a href="{{profilePath}}/{{user._id}}">
+            <img width="30" height="30" src="{{thumbnail user.profile.picture 30 30 'crop'}}" />
+            {{user.profile.name}}
+            {{#if online}}<i class="icon-circle pull-right"> </i>{{/if}}
+        </a>
+    </li>
+</template>

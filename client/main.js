@@ -16,23 +16,28 @@ Meteor.startup(function(){
             // My conversations
             conversationsHandle = Meteor.subscribeWithPagination('myConversations', 3);
 
+            // Questions for the profile form.
+            Meteor.subscribe('questions');
+        }
+    });
+
+    Deps.autorun(function(){
+        if(Session.get('currentConversation')){
             oneConversationHandle = Meteor.subscribeWithPagination('oneConversation', function(){
                 return Session.get('currentConversation') || null;
             }, Messages.messagePerPage);
-
-            // Questions for the profile form.
-            Meteor.subscribe('questions');
-
         }
     });
 
     // When visiting someone's profile
     Deps.autorun(function () {
-        userProfileHandle = Meteor.subscribe("userProfile", Session.get("currentUserProfile"));
-        userPictureHandle = Meteor.subscribe("oneUserPictures", Session.get("currentUserProfile"));
-        userActivitiesHandle = Meteor.subscribeWithPagination("oneUserActivities", function(){
-            return Session.get("currentUserProfile") || null;
-        }, Activities.activitiesPerPage);
+        if(Session.get('currentUserProfile')){
+            userProfileHandle = Meteor.subscribe("userProfile", Session.get("currentUserProfile"));
+            userPictureHandle = Meteor.subscribe("oneUserPictures", Session.get("currentUserProfile"));
+            userActivitiesHandle = Meteor.subscribeWithPagination("oneUserActivities", Session.get("currentUserProfile"), function(){
+                return Session.get("currentUserProfile") || null;
+            }, Activities.activitiesPerPage);
+        }
     });
 
     Deps.autorun(function(){

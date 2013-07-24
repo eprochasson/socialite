@@ -6,7 +6,7 @@
             {{> conversation_list}}
         </div>
         <div class="span9 conversation">
-            <h2 class="conversation_title">Conversation with {{conversationWith}}</h2>
+            <h2 class="conversation_title">Conversation with <a href="{{profilePath}}/{{conversationWith._id}}">{{conversationWith.profile.name}}</a></h2>
             <div class="row-fluid">
                 <div class="span10">
                 <textarea name="message"></textarea>

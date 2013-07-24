@@ -1,3 +1,12 @@
+// Is there a better way to do that?
+var resetSession = function(){
+    console.log('resetting session');
+    Session.set('currentConversation', null);
+    Session.set('currentUserProfile', null);
+    Session.set('currentQuery', null);
+    Session.set('searchQueryDone', null);
+};
+
 Meteor.Router.add({
     '/': {
         as: 'home',
@@ -7,31 +16,56 @@ Meteor.Router.add({
             } else{
                 return 'front'
             }
-        }
+        },
+        and: resetSession
     },
-    '/mailbox/compose': 'compose',
-    '/mailbox': 'mailbox',
+    '/mailbox': {
+        as:'mailbox',
+        to: function(){
+            return 'mailbox';
+        },
+        and: resetSession
+    },
     '/mailbox/:_id':{
         as: 'conversation',
         to: 'conversation',
         and: function(id){
+            resetSession();
             Session.set('currentConversation', id);
         }
     },
-    '/settings': 'settings',
+    '/settings': {
+        as:'settings',
+        to: 'setting',
+        and: resetSession
+    },
     '/profile': {
         as: 'profile',
         to: 'profile',
-        and: function(){ Session.set('currentUserProfile', null)}
+        and: function(){
+            resetSession();
+            Session.set('currentUserProfile', null)
+        }
     },
     '/profile/edit': 'editProfile',
     '/profile/:_id': {
         as: 'profile',
         to: 'profile',
-        and: function(id){ Session.set('currentUserProfile', id);}
+        and: function(id){
+            resetSession();
+            Session.set('currentUserProfile', id);
+        }
     },
-    '/profile_done': 'profile_done',
-    '/search': 'search',
+    '/profile_done': {
+        as: 'profile_done',
+        to: 'profile_done',
+        and: resetSession
+    },
+    '/search': {
+        to: 'search',
+        as: 'search',
+        and: resetSession
+    },
     '*': 'p404'
 });
 
@@ -55,4 +89,6 @@ Meteor.Router.filters({
     }
 });
 
+
 Meteor.Router.filter('requireLogin', {except: 'front'});
+

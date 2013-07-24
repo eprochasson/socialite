@@ -19,7 +19,8 @@ Meteor.methods({
             target: target._id,  // That's the person I'm becoming friend with.
             live: 1, // Link is alive.
             reciprocal: 0, // Connection goes both way
-            timestamp: new Date().getTime()
+            timestamp: new Date().getTime(),
+            online: 0
         };
         var activity = {
             from: this.userId,

@@ -1,8 +1,12 @@
-
-.online-user{
+.widget{
   .border-radius(3px);
   border: 1px @blueLessLight solid;
 
+  h2{
+    font-size:1.1em;
+    line-height: normal;
+    text-align: center;
+  }
   ul {
     margin-left: 0;
     list-style: none;
@@ -12,6 +16,12 @@
   ul li{
     width: 100%;
   }
+  margin-bottom: 5px;
+}
+
+
+.online-user{
+
   ul li img{
     height: 30px;
     widht: 30px;
@@ -31,9 +41,14 @@
     background: @blueLessLight;
     text-decoration: none;
   }
-  h2{
-    font-size:1.1em;
-    line-height: normal;
-    text-align: center;
+}
+
+
+.newsfeed{
+  ul li img{
+    height: 30px;
+    widht: 30px;
+    float: left;
+    margin-right:3px;
   }
 }
