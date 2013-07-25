@@ -1,13 +1,13 @@
 # Socialite
 ## A simple facebook-like app made with Meteor
 
-Here come Socialite. It implements classic features from facebook-like social networks, including:
+Here comes Socialite. It implements classic features from facebook-like social networks, including:
 - Profile
 - Pictures
 - Friends
 - Messaging system
 
-It is mostly a prototype. This project is mostly for my own amusement, and because I wanted to play with the [Meteor](http://meteor.com) platform.
+It is mostly a prototype. This project is for my own amusement, and because I wanted to play with the [Meteor](http://meteor.com) platform.
 
 ## How to run
 
@@ -16,7 +16,7 @@ It is mostly a prototype. This project is mostly for my own amusement, and becau
 
 Should do it. It should download all dependencies then initialize the database.
 
-You can tweak the fixture file to add/remove questions/fake users (default fake users all reside in Hong Kong). Also copy the main.config.sample file to main.config.js and edit what you want.
+You can tweak the `fixtures.js` file to add/remove questions/fake users (default fake users all reside in Hong Kong). Also copy the main.config.sample file to main.config.js and edit what you want.
 
 ## Cool stuff
 
@@ -92,9 +92,11 @@ Publish activities for a given user (from `currentUserProfile`).
 
 #### searchResults
 
-Publish a list of users (from Meteor.users) matching a search query. On-ready, set the `searchQueryDone` Session variable, to trigger client side update of the template.
+Publish a list of users (from Meteor.users) matching the search query in Session variable `searchQuery`. On-ready, set the `searchQueryDone` Session variable, to trigger client side update of the template.
 
 Publish related Presences objects to know the online status of users in the search results.
+
+Search is done according to the client criteria and the client current location. Result only includes user near the client location.
 
 ### Collections
 
