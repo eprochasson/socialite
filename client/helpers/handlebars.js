@@ -18,7 +18,7 @@ Handlebars.registerHelper('Lex', function(k, options){
 
 Handlebars.registerHelper('thumbnail', function(url, w,h,fit){
     if(!url){
-        url = "https://www.filepicker.io/api/file/A3WeRoNIR8aAg93xbyFe/"
+        return "/unknown.jpg";
     }
     var str = url+'/convert?';
     var options = {
