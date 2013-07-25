@@ -18,7 +18,7 @@ Should do it. It should download all dependencies then initialize the database.
 
 You can tweak the fixture file to add/remove questions/fake users. Also copy the main.config.sample file to main.config.js and edit what you want.
 
- ## Cool stuff
+## Cool stuff
 
 The questions for users' profile are stored in the database, with different type, custom template and validation. When a user update its profile, its inputs are checked against the question database and their validation. This ensure an easy and somehow secure way to administrate and render what is generally consider (at least by me) as a horrible pain in the neck.
 
@@ -96,8 +96,6 @@ Publish related Presences objects to know the online status of users in the sear
 
 ### Collections
 
-Not really API stuff, but help to understand the architecture of the app.
-
 #### Meteor.users
 
 The default Meteor.users collection, with nit much change. The profile information are stored in the `profile` field of a user document.
@@ -171,18 +169,33 @@ Unused.
 
 Allow for client side validation of form input, using the Questions validation.
 
-#### addAsFriend
+#### addAsFriend(target)
 
-#### removeFriend
+Attempt to connect the current user with user who's _id is `target`. If A and B have no relation, a friend request is sent to B, if B already asked for A's friendship, the relationship is confirmed and symetrical.
 
-#### sendMessage
+Also check if the requesting user is not in the target user's blacklist. Update Notifications and Activities.
 
-#### uploadPhoto
+#### removeFriend(target)
 
-#### setUserPresence
+Remove a friendship between two users, both ways (A to B AND B to A). Just make the relationship not live and not reciprocal anymore.
 
-#### setInvisible
+#### sendMessage(document)
 
+Send the message `document.body` to user whose `_id` is `document.to`. A couple thing happens there. We first check that the sender is allowed to communicate with the target, and also compute a velocity score, to prevent people from sending message too fast (aiming at preventing automatic spamming).
+
+The velocity/cooldown algorithm is quite trivial. Users are allowed to send X message per period of Y seconds (can be tuned in the `main.config.js` file). If they send faster than that, they get a penalty of Z seconds (again, can be configured). If they try again, they add Z second to the current penalty. An automatic spammer not throttling down it's sending rate will then automatically blocked itself for hours or days.
+
+#### uploadPhoto(options)
+
+Take the filePicker object and insert an entry in the database.
+
+#### setUserPresence()
+
+Record that the current user is connected to the website. If the user is visible (see `setInvisible`), broadcast the fact that he's online to his connections.
+
+#### setInvisible(invisible)
+
+If `invisible`, stop broadcasting the user online status to his connections, otherwise keep broadcasting.
 
 ## License stuff
 
