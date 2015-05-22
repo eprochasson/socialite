@@ -1,4 +1,7 @@
 # Socialite
+
+Hello there! This repo hasn't been updated in quite some time, if you're looking for example of up-to-date social apps with Meteor, check out this [great tutorial with Meteor/Angular](http://angular-meteor.com/tutorial/) 
+
 ## A simple facebook-like app made with Meteor
 
 Here comes Socialite. It implements classic features from facebook-like social networks, including:
